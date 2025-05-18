@@ -1,0 +1,33 @@
+"use client"
+
+import React, { useState } from 'react'
+import LayoutDashboard from '@/components/dashboard/LayoutDashboard'
+import { ADMIN_SIDEBAR_LINKS } from '@/lib/constants/sidebarLinks'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+
+function layout({ children }) {
+    const [queryClient] = useState(() => new QueryClient({
+        defaultOptions: {
+            queries: {
+                staleTime: 60 * 1000, // 1 minute cache
+                retry: false // Auto-retry disable
+            }
+        }
+    }))
+
+    return (
+        <QueryClientProvider client={queryClient}>
+            <LayoutDashboard sidebarLinks={ADMIN_SIDEBAR_LINKS}>
+                {children}
+            </LayoutDashboard>
+
+            {process.env.NODE_ENV === 'development' && (
+                <ReactQueryDevtools initialIsOpen={false} />
+            )}
+
+        </QueryClientProvider>
+    )
+}
+
+export default layout
