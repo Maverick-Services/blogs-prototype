@@ -3,9 +3,9 @@
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
-import BlogListView from './components/BlogListView'
+// import BlogListView from './components/BlogListView'
 // import { getAllBlogs } from '@/lib/firebase/blogs/blogs'
-import InnerDashboardLayout from '@/components/dashboard/InnerDashboardLayout'
+// import InnerDashboardLayout from '@/components/dashboard/InnerDashboardLayout'
 
 function page() {
 
@@ -31,20 +31,20 @@ function page() {
 
     return (
         <div>
-            <InnerDashboardLayout>
-                <div className="flex justify-between w-full items-center gap-3">
-                    <Link href={'/admin/blogs/categories'}>
-                        <Button variant={'outline'}>View Categories</Button>
-                    </Link>
-                    <Link href={'/admin/blogs/form'}>
-                        <Button>Add Blog</Button>
-                    </Link>
-                </div>
+            {/* <InnerDashboardLayout> */}
+            <div className="flex justify-between w-full items-center gap-3">
+                <Link href={'/admin/blogs/categories'}>
+                    <Button variant={'outline'}>View Categories</Button>
+                </Link>
+                <Link href={'/admin/blogs/form'}>
+                    <Button>Add Blog</Button>
+                </Link>
+            </div>
 
-                <div className="mt-3">
-                    {/* <BlogListView blogs={blogs} loading={loading} error={error} /> */}
-                </div>
-            </InnerDashboardLayout>
+            <div className="mt-3">
+                {/* <BlogListView blogs={blogs} loading={loading} error={error} /> */}
+            </div>
+            {/* </InnerDashboardLayout> */}
         </div>
     )
 }
