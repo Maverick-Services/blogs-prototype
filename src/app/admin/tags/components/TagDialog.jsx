@@ -41,18 +41,17 @@ export default function TagDialog({ open, onOpenChange, selectedTag, onCreate, o
 
 
     const onSubmit = async (data) => {
-        console.log(data)
         try {
             if (selectedTag?._id) {
                 await onUpdate({ id: selectedTag._id, data });
             } else {
                 await onCreate(data);
             }
+        } finally {
             onOpenChange(false);
-        } catch (error) {
-            // Error is already handled by mutation
         }
     };
+
 
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>

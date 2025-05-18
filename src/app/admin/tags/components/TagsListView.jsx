@@ -42,7 +42,7 @@ export default function TagsListView({ isLoading, error, tags, onEdit, onDelete,
                                         <Pencil size={16} />
                                     </Button>
                                     <Dialog>
-                                        <DialogTrigger asChild>
+                                        <DialogTrigger asChild id="delete-dialog-trigger">
                                             <Button
                                                 type="button"
                                                 className="bg-red-600 size-icon flex gap-2 items-center justify-center text-white py-2 px-4 rounded-md hover:bg-red-800 cursor-pointer transition"
@@ -61,7 +61,12 @@ export default function TagsListView({ isLoading, error, tags, onEdit, onDelete,
                                             <DialogFooter>
                                                 <Button
                                                     type="button"
-                                                    onClick={() => onDelete(item._id)}
+                                                    onClick={() => {
+                                                        const trigger = document.getElementById('delete-dialog-trigger');
+                                                        onDelete(item._id)
+                                                            .then(() => trigger?.click())
+                                                            .catch(() => trigger?.click());
+                                                    }}
                                                     disabled={isDeleting}
                                                     className="bg-red-600 w-full flex gap-2 items-center justify-center text-white py-2 px-4 rounded-md hover:bg-red-800 cursor-pointer transition"
                                                 >

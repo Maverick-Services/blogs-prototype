@@ -88,6 +88,7 @@ export async function PUT(request, { params }) {
     }
 }
 
+
 export async function DELETE(request, { params }) {
     try {
         const { id } = params;
@@ -101,9 +102,10 @@ export async function DELETE(request, { params }) {
             );
         }
 
+        // Return 200 with success message instead of 204
         return NextResponse.json(
-            { success: true },
-            { status: 204 } // 204 No Content is more standard for DELETE
+            { success: true, message: "Tag deleted successfully" },
+            { status: 200 }
         );
     } catch (e) {
         return NextResponse.json(

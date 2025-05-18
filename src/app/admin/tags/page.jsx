@@ -15,8 +15,6 @@ export default function Page() {
         deleteTag,
     } = useTags();
 
-
-    // console.log(tagsQuery.data)
     const [isDialogOpen, setIsDialogOpen] = useState(false);
     const [selectedTag, setSelectedTag] = useState();
 
@@ -47,7 +45,7 @@ export default function Page() {
                         setSelectedTag(tag);
                         setIsDialogOpen(true);
                     }}
-                    onDelete={deleteTag.mutate}
+                    onDelete={deleteTag.mutateAsync}
                     isLoading={tagsQuery.isLoading}
                     isDeleting={deleteTag.isLoading}
                     error={tagsQuery.error}
