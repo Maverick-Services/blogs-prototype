@@ -6,19 +6,11 @@ import InnerDashboardLayout from '@/components/dashboard/InnerDashboardLayout';
 import TagsListView from './components/TagsListView';
 import TagDialog from './components/TagDialog';
 import { useState } from 'react';
-
-import {
-    Breadcrumb,
-    BreadcrumbItem,
-    BreadcrumbLink,
-    BreadcrumbList,
-    BreadcrumbPage,
-    BreadcrumbSeparator,
-} from '@/components/ui/breadcrumb';
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator, } from '@/components/ui/breadcrumb';
 
 export default function Page() {
     // fetch tags query
-    const { tagsQuery } = useTags();
+    const { tagsQuery, createTag, updateTag, deleteTag } = useTags();
 
     // destructure createTag mutation
     const {
@@ -26,7 +18,7 @@ export default function Page() {
         isPending: isCreating,
         error: createError,
         reset: resetCreate,
-    } = useTags().createTag;
+    } = createTag;
 
     // destructure updateTag mutation
     const {
@@ -34,7 +26,7 @@ export default function Page() {
         isPending: isUpdating,
         error: updateError,
         reset: resetUpdate,
-    } = useTags().updateTag;
+    } = updateTag;
 
     // destructure deleteTag mutation
     const {
@@ -42,7 +34,7 @@ export default function Page() {
         isPending: isDeleting,
         error: deleteError,
         reset: resetDelete,
-    } = useTags().deleteTag;
+    } = deleteTag;
 
     const [isDialogOpen, setIsDialogOpen] = useState(false);
     const [selectedTag, setSelectedTag] = useState();
@@ -117,6 +109,3 @@ export default function Page() {
         </InnerDashboardLayout>
     );
 }
-
-
-

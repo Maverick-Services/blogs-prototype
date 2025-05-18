@@ -1,23 +1,21 @@
 "use client";
-import {
-    Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogFooter,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger,
-} from "@/components/ui/dialog"
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { Button } from '@/components/ui/button';
-import { Loader2, LucideDelete, Pencil, Trash } from "lucide-react";
-import { useTags } from "@/hooks/useTags";
+import { Loader2, Pencil, Trash } from "lucide-react";
+import { useState } from "react";
+import DeleteConfirmationDialog from "./DeleteConfirmationDialog ";
 
 export default function TagsListView({ isLoading, error, tags, onEdit, onDelete, isDeleting, deleteError }) {
-    const {
-        createTag,
-        updateTag,
-        deleteTag,
-    } = useTags();
+    const [deletingTagId, setDeletingTagId] = useState(null);
+
+    const handleDeleteClick = (tagId) => {
+        setDeletingTagId(tagId);
+    };
+
+    const handleDeleteConfirm = async () => {
+        await onDelete(deletingTagId);
+        setDeletingTagId(null);
+    };
 
     if (isLoading) return <div className="text-center p-4"><Loader2 className="animate-spin inline-block" /></div>;
     if (error) return <div className="text-red-600 p-4">Error: {error.message}</div>;
@@ -49,68 +47,32 @@ export default function TagsListView({ isLoading, error, tags, onEdit, onDelete,
                                         size="icon"
                                         variant="outline"
                                         className='cursor-pointer'
-                                        onClick={() => {
-                                            createTag.reset();
-                                            updateTag.reset();
-                                            deleteTag.reset();
-                                            onEdit(item)
-                                        }}
+                                        onClick={() => { onEdit(item) }}
                                     >
                                         <Pencil size={16} />
                                     </Button>
-
-                                    <Dialog>
-                                        <DialogTrigger asChild id="delete-dialog-trigger">
-                                            <Button
-                                                type="button"
-                                                className="bg-red-600 size-icon flex gap-2 items-center justify-center text-white py-2 px-4 rounded-md hover:bg-red-800 cursor-pointer transition"
-                                            >
-                                                <Trash size={20} />
-                                            </Button>
-                                        </DialogTrigger>
-                                        <DialogContent className="sm:max-w-[425px]">
-                                            <DialogHeader>
-                                                <DialogTitle>Delete Tag</DialogTitle>
-                                                <DialogDescription>
-                                                    Are you sure you want to delete this Tag?
-                                                </DialogDescription>
-                                            </DialogHeader>
-
-                                            {deleteError &&
-                                                <div className="text-red-600 p-4">Error: {deleteError}</div>
-                                            }
-
-                                            <DialogFooter>
-                                                <Button
-                                                    type="button"
-                                                    onClick={() => {
-                                                        onDelete(item._id)
-                                                            .then(() => {
-                                                                // Close dialog after successful deletion
-                                                                document.getElementById('delete-dialog-trigger')?.click();
-                                                            })
-                                                            .catch(() => {/* Error already handled */ });
-                                                    }}
-                                                    disabled={isDeleting}
-                                                    className="bg-red-600 w-full flex gap-2 items-center justify-center text-white py-2 px-4 rounded-md hover:bg-red-800 cursor-pointer transition"
-                                                >
-                                                    {isDeleting ? (
-                                                        <>  <Loader2 className="animate-spin" size={20} /> Deleting... </>
-                                                    ) : (
-                                                        <>
-                                                            <Trash size={20} /> Delete
-                                                        </>
-                                                    )}
-                                                </Button>
-                                            </DialogFooter>
-                                        </DialogContent>
-                                    </Dialog>
+                                    <Button
+                                        variant="destructive"
+                                        onClick={() => handleDeleteClick(item._id)}
+                                    >
+                                        <Trash size={16} />
+                                    </Button>
                                 </td>
                             </tr>
                         ))}
                     </tbody>
                 </table>
             </div>
+
+            <DeleteConfirmationDialog
+                isOpen={!!deletingTagId}
+                onOpenChange={(open) => !open && setDeletingTagId(null)}
+                onConfirm={handleDeleteConfirm}
+                isLoading={isDeleting}
+                error={deleteError}
+                title="Delete Tag"
+                description="Are you sure you want to delete this tag?"
+            />
         </section>
     );
 }

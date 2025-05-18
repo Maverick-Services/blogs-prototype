@@ -16,13 +16,7 @@ import { Loader2 } from 'lucide-react';
 
 export default function TagDialog({ open, onOpenChange, selectedTag, onCreate, onUpdate, isSubmitting, error, }) {
 
-    const {
-        register,
-        handleSubmit,
-        reset,
-        setValue,
-        formState: { errors },
-    } = useForm()
+    const { register, handleSubmit, reset, formState: { errors }, watch, setValue } = useForm()
 
     useEffect(() => {
         if (open) {
@@ -40,6 +34,18 @@ export default function TagDialog({ open, onOpenChange, selectedTag, onCreate, o
         }
     }, [open, selectedTag, reset]);
 
+    const watchName = watch("name");
+
+    useEffect(() => {
+        if (!selectedTag) {
+            const generatedSlug = watchName
+                ?.toLowerCase()
+                .replace(/\s+/g, '-')
+                .replace(/[^a-z0-9-]/g, '');
+            setValue('slug', generatedSlug);
+        }
+    }, [watchName, setValue, selectedTag]);
+
 
     const onSubmit = async (data) => {
         try {
@@ -53,7 +59,6 @@ export default function TagDialog({ open, onOpenChange, selectedTag, onCreate, o
         } catch (error) {
         }
     };
-
 
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>

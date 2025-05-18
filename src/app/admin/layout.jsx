@@ -5,6 +5,7 @@ import LayoutDashboard from '@/components/dashboard/LayoutDashboard'
 import { ADMIN_SIDEBAR_LINKS } from '@/lib/constants/sidebarLinks'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import { Toaster } from 'react-hot-toast'
 
 function layout({ children }) {
     const [queryClient] = useState(() => new QueryClient({
@@ -25,7 +26,7 @@ function layout({ children }) {
             {process.env.NODE_ENV === 'development' && (
                 <ReactQueryDevtools initialIsOpen={false} />
             )}
-
+            <Toaster position="top-right" />
         </QueryClientProvider>
     )
 }
