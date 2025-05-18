@@ -15,6 +15,7 @@ import clsx from "clsx";
 import { Loader2 } from 'lucide-react';
 
 export default function TagDialog({ open, onOpenChange, selectedTag, onCreate, onUpdate, isSubmitting, error, }) {
+
     const {
         register,
         handleSubmit,
@@ -44,11 +45,12 @@ export default function TagDialog({ open, onOpenChange, selectedTag, onCreate, o
         try {
             if (selectedTag?._id) {
                 await onUpdate({ id: selectedTag._id, data });
+                onOpenChange(false);
             } else {
                 await onCreate(data);
+                onOpenChange(false);
             }
-        } finally {
-            onOpenChange(false);
+        } catch (error) {
         }
     };
 
@@ -120,7 +122,7 @@ export default function TagDialog({ open, onOpenChange, selectedTag, onCreate, o
 
                     <DialogFooter>
                         <Button type="submit" disabled={isSubmitting}>
-                            {isSubmitting && <Loader2 className="animate-spin mr-2" />}
+                            {isSubmitting && <Loader2 className="animate-spin mr-1" />}
                             {selectedTag ? "Update" : "Create"}
                         </Button>
                     </DialogFooter>

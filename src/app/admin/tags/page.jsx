@@ -7,58 +7,111 @@ import TagsListView from './components/TagsListView';
 import TagDialog from './components/TagDialog';
 import { useState } from 'react';
 
+import {
+    Breadcrumb,
+    BreadcrumbItem,
+    BreadcrumbLink,
+    BreadcrumbList,
+    BreadcrumbPage,
+    BreadcrumbSeparator,
+} from '@/components/ui/breadcrumb';
+
 export default function Page() {
+    // fetch tags query
+    const { tagsQuery } = useTags();
+
+    // destructure createTag mutation
     const {
-        tagsQuery,
-        createTag,
-        updateTag,
-        deleteTag,
-    } = useTags();
+        mutateAsync: createTagAsync,
+        isPending: isCreating,
+        error: createError,
+        reset: resetCreate,
+    } = useTags().createTag;
+
+    // destructure updateTag mutation
+    const {
+        mutateAsync: updateTagAsync,
+        isPending: isUpdating,
+        error: updateError,
+        reset: resetUpdate,
+    } = useTags().updateTag;
+
+    // destructure deleteTag mutation
+    const {
+        mutateAsync: deleteTagAsync,
+        isPending: isDeleting,
+        error: deleteError,
+        reset: resetDelete,
+    } = useTags().deleteTag;
 
     const [isDialogOpen, setIsDialogOpen] = useState(false);
     const [selectedTag, setSelectedTag] = useState();
 
+    // open dialog to add new tag
+    const handleAddClick = () => {
+        resetCreate();
+        resetUpdate();
+        resetDelete();
+        setSelectedTag(undefined);
+        setIsDialogOpen(true);
+    };
+
+    // open dialog to edit
+    const handleEditClick = (tag) => {
+        resetCreate();
+        resetUpdate();
+        resetDelete();
+        setSelectedTag(tag);
+        setIsDialogOpen(true);
+    };
+
     return (
         <InnerDashboardLayout>
-            <div className='w-full items-center justify-between'>
-                <h1 className='text-primary font-bold sm:text-2xl lg:text-4xl mb-3'>Tags</h1>
+            <div className="w-full items-center justify-between">
+                <h1 className="text-primary font-bold sm:text-2xl lg:text-4xl mb-3">Tags</h1>
+                <Breadcrumb className="mb-3">
+                    <BreadcrumbList>
+                        <BreadcrumbItem>
+                            <BreadcrumbLink href="/admin">Dashboard</BreadcrumbLink>
+                        </BreadcrumbItem>
+                        <BreadcrumbSeparator />
+                        <BreadcrumbItem>
+                            <BreadcrumbPage>Tags</BreadcrumbPage>
+                        </BreadcrumbItem>
+                    </BreadcrumbList>
+                </Breadcrumb>
+
+
             </div>
-            <div className="">
+
+            <div>
                 <div className="flex justify-between items-center mb-4 mt-4">
-                    <div className='space-x-2 flex'>
-                        <Button variant="outline">
-                            Tags: {tagsQuery.data?.length || 0}
-                        </Button>
-                    </div>
-                    <Button onClick={() => {
-                        setSelectedTag(undefined);
-                        setIsDialogOpen(true);
-                    }}>
-                        <CirclePlus className="mr-2 h-4 w-4" />
-                        Add New
+                    <Button variant="outline">
+                        Tags: {tagsQuery.data?.length || 0}
+                    </Button>
+                    <Button onClick={handleAddClick}>
+                        <CirclePlus className="mr-2 h-4 w-4" /> Add New
                     </Button>
                 </div>
 
                 <TagsListView
                     tags={tagsQuery.data}
-                    onEdit={(tag) => {
-                        setSelectedTag(tag);
-                        setIsDialogOpen(true);
-                    }}
-                    onDelete={deleteTag.mutateAsync}
+                    onEdit={handleEditClick}
+                    onDelete={deleteTagAsync}
                     isLoading={tagsQuery.isLoading}
-                    isDeleting={deleteTag.isLoading}
                     error={tagsQuery.error}
+                    isDeleting={isDeleting}
+                    deleteError={deleteError}
                 />
 
                 <TagDialog
                     open={isDialogOpen}
                     onOpenChange={setIsDialogOpen}
                     selectedTag={selectedTag}
-                    onCreate={createTag.mutateAsync}
-                    onUpdate={updateTag.mutateAsync}
-                    isSubmitting={createTag.isLoading || updateTag.isLoading}
-                    error={createTag.error?.message || updateTag.error?.message}
+                    onCreate={createTagAsync}
+                    onUpdate={updateTagAsync}
+                    isSubmitting={isCreating || isUpdating}
+                    error={createError?.message || updateError?.message}
                 />
             </div>
         </InnerDashboardLayout>
@@ -66,25 +119,4 @@ export default function Page() {
 }
 
 
-//   <Breadcrumb className="mb-3">
-//                     <BreadcrumbList>
-//                         <BreadcrumbItem>
-//                             <BreadcrumbLink href="/admin">Dashboard</BreadcrumbLink>
-//                         </BreadcrumbItem>
-//                         <BreadcrumbSeparator />
-//                         <BreadcrumbItem>
-//                             <BreadcrumbPage>Tags</BreadcrumbPage>
-//                         </BreadcrumbItem>
-//                     </BreadcrumbList>
-//                 </Breadcrumb>
 
-
-
-// import {
-//     Breadcrumb,
-//     BreadcrumbItem,
-//     BreadcrumbLink,
-//     BreadcrumbList,
-//     BreadcrumbPage,
-//     BreadcrumbSeparator,
-// } from '@/components/ui/breadcrumb';

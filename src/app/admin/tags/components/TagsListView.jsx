@@ -10,9 +10,15 @@ import {
 } from "@/components/ui/dialog"
 import { Button } from '@/components/ui/button';
 import { Loader2, LucideDelete, Pencil, Trash } from "lucide-react";
+import { useTags } from "@/hooks/useTags";
 
-export default function TagsListView({ isLoading, error, tags, onEdit, onDelete, isDeleting }) {
-    // console.log(tags)
+export default function TagsListView({ isLoading, error, tags, onEdit, onDelete, isDeleting, deleteError }) {
+    const {
+        createTag,
+        updateTag,
+        deleteTag,
+    } = useTags();
+
     if (isLoading) return <div className="text-center p-4"><Loader2 className="animate-spin inline-block" /></div>;
     if (error) return <div className="text-red-600 p-4">Error: {error.message}</div>;
     if (!tags?.length) return <div className="text-center text-gray-500 p-4">No Tags Found!</div>;
@@ -38,9 +44,21 @@ export default function TagsListView({ isLoading, error, tags, onEdit, onDelete,
                                 <td className="px-6 py-3 border-b">{item?.name}</td>
                                 <td className="px-6 py-3 border-b">{item?.slug}</td>
                                 <td className="px-6 py-3 border-b text-center flex gap-2 items-center justify-center">
-                                    <Button size="icon" variant="outline" className='cursor-pointer' onClick={() => onEdit(item)} >
+
+                                    <Button
+                                        size="icon"
+                                        variant="outline"
+                                        className='cursor-pointer'
+                                        onClick={() => {
+                                            createTag.reset();
+                                            updateTag.reset();
+                                            deleteTag.reset();
+                                            onEdit(item)
+                                        }}
+                                    >
                                         <Pencil size={16} />
                                     </Button>
+
                                     <Dialog>
                                         <DialogTrigger asChild id="delete-dialog-trigger">
                                             <Button
@@ -58,20 +76,26 @@ export default function TagsListView({ isLoading, error, tags, onEdit, onDelete,
                                                 </DialogDescription>
                                             </DialogHeader>
 
+                                            {deleteError &&
+                                                <div className="text-red-600 p-4">Error: {deleteError}</div>
+                                            }
+
                                             <DialogFooter>
                                                 <Button
                                                     type="button"
                                                     onClick={() => {
-                                                        const trigger = document.getElementById('delete-dialog-trigger');
                                                         onDelete(item._id)
-                                                            .then(() => trigger?.click())
-                                                            .catch(() => trigger?.click());
+                                                            .then(() => {
+                                                                // Close dialog after successful deletion
+                                                                document.getElementById('delete-dialog-trigger')?.click();
+                                                            })
+                                                            .catch(() => {/* Error already handled */ });
                                                     }}
                                                     disabled={isDeleting}
                                                     className="bg-red-600 w-full flex gap-2 items-center justify-center text-white py-2 px-4 rounded-md hover:bg-red-800 cursor-pointer transition"
                                                 >
                                                     {isDeleting ? (
-                                                        <Loader2 className="animate-spin" size={20} />
+                                                        <>  <Loader2 className="animate-spin" size={20} /> Deleting... </>
                                                     ) : (
                                                         <>
                                                             <Trash size={20} /> Delete
