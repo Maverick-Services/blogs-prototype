@@ -72,8 +72,6 @@ export default function Page() {
                         </BreadcrumbItem>
                     </BreadcrumbList>
                 </Breadcrumb>
-
-
             </div>
 
             <div>
