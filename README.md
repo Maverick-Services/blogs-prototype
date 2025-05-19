@@ -20,3 +20,4 @@ install react hook form - npm install react-hook-form
 
 npm i mongoose
 npm i @tanstack/react-query
+npm install framer-motion react-icons

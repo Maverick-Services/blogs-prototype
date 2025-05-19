@@ -1,26 +1,20 @@
 'use client';
 import React, { useState } from 'react';
 import InnerDashboardLayout from '@/components/dashboard/InnerDashboardLayout';
-import {
-    Breadcrumb,
-    BreadcrumbItem,
-    BreadcrumbLink,
-    BreadcrumbList,
-    BreadcrumbPage,
-    BreadcrumbSeparator,
-} from '@/components/ui/breadcrumb';
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator, } from '@/components/ui/breadcrumb';
 import { Button } from '@/components/ui/button';
 import { CirclePlus } from 'lucide-react';
-
 import UploaderDialog from './components/UploaderDialog';
 import ImageGallery from './components/ImageGallery';
 import { useImages } from '@/hooks/useImages';
 
 export default function MediaPage() {
     const [isDialogOpen, setIsDialogOpen] = useState(false);
-    const { imagesQuery, deleteImage } = useImages();
+    const { imagesQuery } = useImages();
 
     const images = imagesQuery.data || [];
+
+    console.log(images)
 
     return (
         <InnerDashboardLayout>
@@ -59,11 +53,6 @@ export default function MediaPage() {
                 <ImageGallery
                     images={images}
                     isLoading={imagesQuery.isLoading}
-                    onDelete={(publicId) => {
-                        if (confirm('Delete this image?')) {
-                            deleteImage.mutate(publicId);
-                        }
-                    }}
                 />
             </div>
         </InnerDashboardLayout>

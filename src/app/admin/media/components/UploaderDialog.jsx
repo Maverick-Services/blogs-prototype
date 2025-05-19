@@ -30,7 +30,7 @@ export default function UploaderDialog({ open, onOpenChange }) {
     const handleFileChange = (e) => {
         const selected = e.target.files[0];
         if (!selected) return;
-        if (selected.size > 200 * 1024) {
+        if (selected.size > 300 * 1024) {
             alert('File size exceeds 200KB');
             return;
         }
@@ -134,9 +134,9 @@ export default function UploaderDialog({ open, onOpenChange }) {
                         </div>
                     </div>
 
-                    {/* {uploadError && (
+                    {uploadError && (
                         <p className="text-red-600 mb-5 text-sm">Error: {uploadError}</p>
-                    )} */}
+                    )}
 
                     <DialogFooter className="mt-6">
                         <Button
