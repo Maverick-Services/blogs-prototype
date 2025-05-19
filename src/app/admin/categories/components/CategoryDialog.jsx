@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import {
@@ -13,22 +13,26 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import clsx from "clsx";
 import { Loader2 } from 'lucide-react';
+import ImageSelector from "@/components/ImageSelector";
 
 export default function CategoryDialog({ open, onOpenChange, selectedCategory, onCreate, onUpdate, isSubmitting, error, }) {
 
     const { register, handleSubmit, reset, formState: { errors }, watch, setValue } = useForm()
+    const [isDialogOpen, setIsDialogOpen] = useState(false);
 
     useEffect(() => {
         if (open) {
             if (selectedCategory) {
                 reset({
                     name: selectedCategory.name,
-                    slug: selectedCategory.slug
+                    slug: selectedCategory.slug,
+                    imageURL: selectedCategory.imageURL
                 });
             } else {
                 reset({
                     name: '',
-                    slug: ''
+                    slug: '',
+                    imageURL: ''
                 });
             }
         }
@@ -74,6 +78,17 @@ export default function CategoryDialog({ open, onOpenChange, selectedCategory, o
 
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <div className="grid gap-4 py-4">
+
+                        {/* Image URL */}
+                        <div
+                            className="flex-1 border-2 border-dashed border-gray-300 rounded-xl flex items-center justify-center cursor-pointer h-48 mb-4 sm:mb-0"
+                            // onClick={triggerFileSelect}
+                            onClick={() => setIsDialogOpen(true)}
+                        >
+                            <span className="text-gray-500">Click to select image</span>
+                        </div>
+
+                        {/* name */}
                         <div className="grid grid-cols-4 items-start gap-4">
                             <Label htmlFor="name" className="text-right mt-2">
                                 Name<span className="text-red-500"> *</span>
@@ -97,6 +112,7 @@ export default function CategoryDialog({ open, onOpenChange, selectedCategory, o
                             </div>
                         </div>
 
+                        {/* slug */}
                         <div className="grid grid-cols-4 items-start gap-4">
                             <Label htmlFor="slug" className="text-right mt-2">
                                 Slug<span className="text-red-500"> *</span>
@@ -134,6 +150,11 @@ export default function CategoryDialog({ open, onOpenChange, selectedCategory, o
                     </DialogFooter>
                 </form>
             </DialogContent>
+
+            <ImageSelector
+                open={isDialogOpen}
+                onOpenChange={setIsDialogOpen}
+            />
         </Dialog>
     )
 }

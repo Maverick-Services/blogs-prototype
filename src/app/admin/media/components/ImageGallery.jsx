@@ -10,6 +10,7 @@ export default function ImageGallery({ images, isLoading }) {
     const [selectedImage, setSelectedImage] = useState(null);
     const { deleteImage } = useImages();
 
+    console.log(images)
     if (isLoading) {
         return <div><Loader /></div>;
     }
