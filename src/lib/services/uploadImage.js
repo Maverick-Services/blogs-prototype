@@ -13,12 +13,3 @@ export default async function uploadImage(image) {
 
     return imageURL;
 }
-
-export async function deleteImage(publicId) {
-    console.log("public id" + publicId)
-    await fetch('/api/delete', {
-        method: 'POST',
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ publicId })
-    })
-}

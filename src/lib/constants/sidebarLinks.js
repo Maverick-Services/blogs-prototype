@@ -7,6 +7,7 @@ import {
     FileText,
     Tag,
     Users as UsersIcon,
+    Images,
 } from 'lucide-react';
 
 export const ADMIN_SIDEBAR_LINKS = [
@@ -45,6 +46,12 @@ export const ADMIN_SIDEBAR_LINKS = [
         label: 'Tags',
         href: '/admin/tags',
         icon: <Tag />,
+    },
+    {
+        key: 'media',
+        label: 'Media',
+        href: '/admin/media',
+        icon: <Images />,
     },
 ];
 
