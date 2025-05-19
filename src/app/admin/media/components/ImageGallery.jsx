@@ -1,6 +1,6 @@
 // app/admin/media/components/ImageGallery.jsx
 'use client';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Loader from '@/components/Loader';
 import PreviewDialog from './PreviewDialog';
 import { useImages } from '@/hooks/useImages';
@@ -18,6 +18,15 @@ export default function ImageGallery({ images, isLoading }) {
         return <p className="text-center py-10 italic text-gray-500">
             No media uploaded yet.
         </p>;
+    }
+
+    async function handleDelete() {
+        const parts = selectedImage.public_id.split('/');
+        const id = (parts[parts.length - 1])
+
+        await deleteImage.mutateAsync(id);
+        setIsDialogOpen(false);
+        setSelectedImage(null);
     }
 
     return (
@@ -50,11 +59,7 @@ export default function ImageGallery({ images, isLoading }) {
                         if (!open) setSelectedImage(null);
                     }}
                     image={selectedImage}
-                    onDelete={async () => {
-                        await deleteImage.mutateAsync(selectedImage.public_id);
-                        setIsDialogOpen(false);
-                        setSelectedImage(null);
-                    }}
+                    onDelete={handleDelete}
                     deleting={deleteImage.isPending}
                     deleteError={deleteImage.isError ? deleteImage.error.message : null}
                 />

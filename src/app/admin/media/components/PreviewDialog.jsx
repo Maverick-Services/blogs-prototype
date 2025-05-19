@@ -1,15 +1,8 @@
 'use client';
 import React from 'react';
-import { motion } from 'framer-motion';
 import { Button } from "@/components/ui/button";
-import {
-    Dialog,
-    DialogContent,
-    DialogFooter,
-    DialogHeader,
-    DialogTitle,
-} from "@/components/ui/dialog";
-import { FiTrash2, FiImage, FiInfo, FiCalendar, FiDownload, FiAlertTriangle } from 'react-icons/fi';
+import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { FiTrash2, FiImage, FiInfo, FiCalendar, FiAlertTriangle } from 'react-icons/fi';
 import { Loader2 } from 'lucide-react';
 
 export default function PreviewDialog({ open, onOpenChange, image, onDelete, deleting, deleteError, }) {

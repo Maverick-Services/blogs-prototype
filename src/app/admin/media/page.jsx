@@ -11,11 +11,7 @@ import { useImages } from '@/hooks/useImages';
 export default function MediaPage() {
     const [isDialogOpen, setIsDialogOpen] = useState(false);
     const { imagesQuery } = useImages();
-
     const images = imagesQuery.data || [];
-
-    console.log(images)
-
     return (
         <InnerDashboardLayout>
             <div className="w-full flex items-center justify-between">
