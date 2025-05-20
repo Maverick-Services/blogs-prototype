@@ -10,7 +10,7 @@ export default function ImageGallery({ images, isLoading }) {
     const [selectedImage, setSelectedImage] = useState(null);
     const { deleteImage } = useImages();
 
-    console.log(images)
+    // console.log(images)
     if (isLoading) {
         return <div><Loader /></div>;
     }
@@ -25,7 +25,7 @@ export default function ImageGallery({ images, isLoading }) {
         const parts = selectedImage.public_id.split('/');
         const id = (parts[parts.length - 1])
 
-        await deleteImage.mutateAsync(id);
+        await deleteImage.mutateAsync({ publicId: selectedImage.public_id });
         setIsDialogOpen(false);
         setSelectedImage(null);
     }

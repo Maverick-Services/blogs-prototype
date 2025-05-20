@@ -65,7 +65,7 @@ export default function PreviewDialog({ open, onOpenChange, image, onDelete, del
                             {deleteError && (
                                 <div className="p-3 bg-red-50 rounded-lg flex items-center gap-2 text-red-600">
                                     <FiAlertTriangle />
-                                    <p>Error deleting: {deleteError}</p>
+                                    <p>Error: {deleteError}</p>
                                 </div>
                             )}
                         </div>

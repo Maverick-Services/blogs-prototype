@@ -63,18 +63,12 @@ export default function UploaderDialog({ open, onOpenChange }) {
             // convert file to base64
             const base64 = await convertToBase64(file);
 
-            // call your mutation
-            uploadImageAsync(
-                { image: base64 },
-                {
-                    onSuccess: () => {
-                        setFile(null);
-                        setPreviewUrl(null);
-                        setMetadata({ name: '', size: 0, width: 0, height: 0 });
-                        onOpenChange(false);
-                    }
-                }
-            );
+            await uploadImageAsync({ image: base64 });
+            setFile(null);
+            setPreviewUrl(null);
+            setMetadata({ name: '', size: 0, width: 0, height: 0 });
+            onOpenChange(false);
+
         } catch (err) {
             console.error(err);
             alert('Failed to read file.');

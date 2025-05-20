@@ -24,7 +24,10 @@ export const useImages = () => {
     });
 
     const deleteImage = useMutation({
-        mutationFn: publicId => api.delete(`/images/${publicId}`),
+        mutationFn: ({ publicId }) =>
+            api.delete(`/images`, {
+                data: { publicId },
+            }),
         onSuccess: () => {
             queryClient.invalidateQueries(['images']);
             toast.success('Image deleted');

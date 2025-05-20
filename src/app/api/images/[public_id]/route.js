@@ -2,9 +2,9 @@
 import { NextResponse } from 'next/server';
 import cloudinary from '@/lib/cloudinary';
 
-export async function DELETE(req, { params }) {
+export async function DELETE(req) {
     try {
-        let { public_id } = params;
+        let { public_id } = await req.json();;
 
         if (!public_id) {
             return NextResponse.json(
