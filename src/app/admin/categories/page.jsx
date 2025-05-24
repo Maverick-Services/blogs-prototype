@@ -90,9 +90,9 @@ export default function Page() {
                 <CategoriesListView
                     categories={categoriesQuery.data}
                     onEdit={handleEditClick}
-                    onDelete={deleteCategoryAsync}
                     isLoading={categoriesQuery.isLoading}
                     error={categoriesQuery.error}
+                    onDelete={deleteCategoryAsync}
                     isDeleting={isDeleting}
                     deleteError={deleteError}
                 />
