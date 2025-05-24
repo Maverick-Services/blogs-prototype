@@ -17,6 +17,7 @@ install react hook form - npm i react-hook-form
 install axios - npm i axios
 install cloudinary - npm install cloudinary
 install react hook form - npm install react-hook-form
+install zustand - npm install zustand
 
 npm i mongoose
 npm i @tanstack/react-query

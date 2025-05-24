@@ -17,8 +17,7 @@ const steps = [
 ];
 
 const ServiceForm = ({ defaultValues, onSubmit }) => {
-    const { createService } = useServices()
-
+    const { createService, updateService } = useServices()
 
     const methods = useForm({
         mode: 'onChange',
@@ -105,7 +104,7 @@ const ServiceForm = ({ defaultValues, onSubmit }) => {
                             className={`bg-indigo-600 hover:bg-indigo-700`}
                             disabled={createService.isPending}
                         >
-                            {createService.isPending && <Loader2 className='animate-spin' />} Submit
+                            {createService.isPending || updateService.isPending ? <Loader2 className='animate-spin' /> : 'Submit'}
                         </Button>
                     )}
                 </div>

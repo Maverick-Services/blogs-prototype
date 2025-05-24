@@ -10,8 +10,14 @@ import ServicesListView from './components/services list/ServicesList';
 export default function Page() {
     const router = useRouter();
 
-    const { servicesQuery } = useServices();
+    const { servicesQuery, deleteService } = useServices();
 
+    const {
+        mutateAsync: deleteServiceAsync,
+        isPending: isDeleting,
+        error: deleteError,
+        reset: resetDelete,
+    } = deleteService;
 
     return (
         <InnerDashboardLayout>
@@ -44,6 +50,9 @@ export default function Page() {
                     error={servicesQuery.error}
                     isLoading={servicesQuery.isLoading}
                     services={servicesQuery.data}
+                    onDelete={deleteServiceAsync}
+                    isDeleting={isDeleting}
+                    deleteError={deleteError}
                 />
             </div>
         </InnerDashboardLayout>

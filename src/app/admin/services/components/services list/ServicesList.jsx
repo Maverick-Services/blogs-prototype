@@ -4,12 +4,32 @@ import { Loader2, Pencil, Trash } from "lucide-react";
 import { useState } from "react";
 import Loader from '@/components/Loader';
 import Image from 'next/image';
+import ServiceDetailsDialog from './ServiceDetailsDialog';
+import { useRouter } from 'next/navigation';
+import { useServiceStore } from '@/store/serviceStore';
+import DeleteConfirmationDialog from '../DeleteConfirmationDialog ';
 
-export default function ServicesListView({ isLoading, error, services }) {
-    if (isLoading) return <div className="text-center p-4">
-        <Loader />
-    </div>;
+export default function ServicesListView({ isLoading, error, services, onDelete, isDeleting, deleteError }) {
+    const { setSelectedService } = useServiceStore();
+    const router = useRouter();
 
+    const handleEdit = (service) => {
+        setSelectedService(service);
+        router.push(`/admin/services/${service._id}/edit`);
+    };
+
+    const [deletingId, setDeletingId] = useState(null);
+
+    const handleDeleteClick = (id) => {
+        setDeletingId(id);
+    };
+
+    const handleDeleteConfirm = async () => {
+        await onDelete(deletingId);
+        setDeletingId(null);
+    };
+
+    if (isLoading) return <div className="text-center p-4"><Loader /></div>;
     if (error) return <div className="text-red-600 p-4">Error: {error.message}</div>;
     if (!services?.length) return <div className="text-center text-gray-500 p-4">No services Found!</div>;
 
@@ -59,14 +79,17 @@ export default function ServicesListView({ isLoading, error, services }) {
 
                                 <td className="px-6 py-3 border-b align-middle">
                                     <div className="flex items-center justify-center gap-2">
+                                        <ServiceDetailsDialog service={item} />
                                         <Button
                                             size="icon"
                                             variant="outline"
+                                            onClick={() => handleEdit(item)}
                                         >
                                             <Pencil size={16} />
                                         </Button>
                                         <Button
                                             variant="destructive"
+                                            onClick={() => handleDeleteClick(item._id)}
                                         >
                                             <Trash size={16} />
                                         </Button>
@@ -78,6 +101,15 @@ export default function ServicesListView({ isLoading, error, services }) {
                 </table>
             </div>
 
+            <DeleteConfirmationDialog
+                isOpen={!!deletingId}
+                onOpenChange={(open) => !open && setDeletingId(null)}
+                onConfirm={handleDeleteConfirm}
+                isLoading={isDeleting}
+                error={deleteError}
+                title="Delete Service"
+                description="Are you sure you want to delete this Service?"
+            />
         </section>
     );
 }
