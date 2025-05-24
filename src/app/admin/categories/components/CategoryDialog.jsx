@@ -14,9 +14,9 @@ import { Label } from "@/components/ui/label";
 import clsx from "clsx";
 import { Loader2 } from 'lucide-react';
 import ImageSelector from "@/components/ImageSelector";
+import Image from "next/image";
 
-export default function CategoryDialog({ open, onOpenChange, selectedCategory, onCreate, onUpdate, isSubmitting, error, }) {
-
+export default function CategoryDialog({ open, onOpenChange, selectedCategory, onCreate, onUpdate, isSubmitting, error, image, setImage }) {
     const { register, handleSubmit, reset, formState: { errors }, watch, setValue } = useForm()
     const [isDialogOpen, setIsDialogOpen] = useState(false);
 
@@ -26,13 +26,11 @@ export default function CategoryDialog({ open, onOpenChange, selectedCategory, o
                 reset({
                     name: selectedCategory.name,
                     slug: selectedCategory.slug,
-                    imageURL: selectedCategory.imageURL
                 });
             } else {
                 reset({
                     name: '',
                     slug: '',
-                    imageURL: ''
                 });
             }
         }
@@ -54,11 +52,24 @@ export default function CategoryDialog({ open, onOpenChange, selectedCategory, o
     const onSubmit = async (data) => {
         try {
             if (selectedCategory?._id) {
-                await onUpdate({ id: selectedCategory._id, data });
+                await onUpdate({
+                    id: selectedCategory._id,
+                    data: {
+                        ...data,
+                        imageURL: image
+                    }
+                });
                 onOpenChange(false);
+                setImage(null)
             } else {
-                await onCreate(data);
+                await onCreate({
+                    data: {
+                        ...data,
+                        imageURL: image
+                    }
+                });
                 onOpenChange(false);
+                setImage(null)
             }
         } catch (error) {
         }
@@ -80,13 +91,46 @@ export default function CategoryDialog({ open, onOpenChange, selectedCategory, o
                     <div className="grid gap-4 py-4">
 
                         {/* Image URL */}
-                        <div
-                            className="flex-1 border-2 border-dashed border-gray-300 rounded-xl flex items-center justify-center cursor-pointer h-48 mb-4 sm:mb-0"
-                            // onClick={triggerFileSelect}
-                            onClick={() => setIsDialogOpen(true)}
-                        >
-                            <span className="text-gray-500">Click to select image</span>
-                        </div>
+                        {!image
+                            && <div
+                                className="flex-1 border-2 border-dashed border-gray-300 rounded-xl flex items-center justify-center cursor-pointer h-48 mb-4 sm:mb-0"
+                                onClick={() => { setIsDialogOpen(true) }}
+                            >
+                                <span className="text-gray-500">Click to select image</span>
+                            </div>
+                        }
+                        {image
+                            && <div className="h-full w-full border rounded-xl">
+                                <Image
+                                    height={100}
+                                    width={100}
+                                    quality={100}
+                                    src={image}
+                                    alt={image}
+                                    className="w-full h-44 object-contain"
+                                />
+                            </div>
+                        }
+                        {image &&
+                            <Button
+                                type='button'
+                                onClick={() => { setIsDialogOpen(true) }}
+                            >
+                                Change Image
+                            </Button>
+                        }
+
+
+                        {/* {selectedCategory?.imageURL &&
+                            <Image
+                                height={100}
+                                width={100}
+                                quality={100}
+                                src={selectedCategory?.imageURL}
+                                alt={selectedCategory?.imageURL}
+                                className="w-full h-44 object-contain"
+                            />
+                        } */}
 
                         {/* name */}
                         <div className="grid grid-cols-4 items-start gap-4">
@@ -154,6 +198,7 @@ export default function CategoryDialog({ open, onOpenChange, selectedCategory, o
             <ImageSelector
                 open={isDialogOpen}
                 onOpenChange={setIsDialogOpen}
+                setImage={setImage}
             />
         </Dialog>
     )

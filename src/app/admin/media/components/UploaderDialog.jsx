@@ -19,7 +19,7 @@ export default function UploaderDialog({ open, onOpenChange }) {
     const inputRef = useRef();
 
     // pull in your mutation
-    const { uploadImage } = useImages();
+    const { uploadImage, imagesQuery } = useImages();
 
     const {
         mutateAsync: uploadImageAsync,
@@ -31,7 +31,7 @@ export default function UploaderDialog({ open, onOpenChange }) {
         const selected = e.target.files[0];
         if (!selected) return;
         if (selected.size > 300 * 1024) {
-            alert('File size exceeds 200KB');
+            alert('File size exceeds 300KB');
             return;
         }
         const url = URL.createObjectURL(selected);
@@ -66,6 +66,7 @@ export default function UploaderDialog({ open, onOpenChange }) {
             await uploadImageAsync({ image: base64 });
             setFile(null);
             setPreviewUrl(null);
+            imagesQuery.refetch();
             setMetadata({ name: '', size: 0, width: 0, height: 0 });
             onOpenChange(false);
 

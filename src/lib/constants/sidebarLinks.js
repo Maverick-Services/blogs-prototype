@@ -8,6 +8,7 @@ import {
     Tag,
     Users as UsersIcon,
     Images,
+    ServerCog,
 } from 'lucide-react';
 
 export const ADMIN_SIDEBAR_LINKS = [
@@ -30,10 +31,10 @@ export const ADMIN_SIDEBAR_LINKS = [
     //     icon: <Briefcase />,
     // },
     {
-        key: 'blogs',
-        label: 'Blogs',
-        href: '/admin/blogs',
-        icon: <FileText />,
+        key: 'services',
+        label: 'Services',
+        href: '/admin/services',
+        icon: <ServerCog />,
     },
     {
         key: 'categories',

@@ -134,8 +134,8 @@ img,
 section,
 button,
 a {
-  transition: all;
-  transition-duration: 300ms;
+  transition: all ease-in-out cubic-bezier(0.165, 0.84, 0.44, 1);
+  transition-duration: auto;
 }
 
 button {

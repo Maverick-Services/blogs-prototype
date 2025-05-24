@@ -18,7 +18,7 @@ export const useImages = () => {
         mutationFn: (data) => api.post('/images', data),
         onSuccess: () => {
             queryClient.invalidateQueries(['images']);
-            imagesQuery.refetch();
+            // imagesQuery.refetch();
             toast.success('Image uploaded');
         },
         onError: (err) => toast.error(err.message || 'Upload failed'),

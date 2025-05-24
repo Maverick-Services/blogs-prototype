@@ -1,47 +1,37 @@
 "use client"
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
-import {
-    Dialog,
-    DialogContent,
-    DialogFooter,
-    DialogHeader,
-    DialogTitle,
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, } from "@/components/ui/dialog";
 import { useImages } from '@/hooks/useImages';
-import { Image, Loader2 } from 'lucide-react';
+import Image from 'next/image';
+import { ImagesIcon, Loader2 } from 'lucide-react';
 
-function ImageSelector({ open, onOpenChange, onSelect }) {
+function ImageSelector({ open, onOpenChange, setImage }) {
     const { imagesQuery } = useImages();
     const images = imagesQuery.data || [];
     const [selectedId, setSelectedId] = useState(null);
 
-    if (imagesQuery.isLoading) {
-        return (
-            <div className='h-30 bg-blue-50 rounded-xl flex items-center justify-center p-4'>
-                <Loader2 className='animate-spin' size={20} />
-            </div>
-        );
-    }
-
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
-            <DialogContent className="sm:max-w-[800px]">
+            <DialogContent className="sm:max-w-[800px] overflow-y-auto">
                 <DialogHeader>
                     <DialogTitle>Select an Image</DialogTitle>
                 </DialogHeader>
 
-                <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 max-h-[50vh] overflow-y-auto pt-5'>
+                <div className='flex flex-wrap gap-3 max-h-[50vh] overflow-y-auto pt-5'>
                     {images.map(img => (
                         <div
                             key={img.public_id}
                             className={`border-2 rounded-lg overflow-hidden shadow-sm cursor-pointer relative ${selectedId === img.public_id
-                                    ? 'border-purple-600'
-                                    : 'border-transparent hover:border-purple-400'
+                                ? 'border-purple-600'
+                                : 'border-transparent hover:border-purple-400'
                                 }`}
                             onClick={() => setSelectedId(img.public_id)}
                         >
-                            <img
+                            <Image
+                                height={100}
+                                width={100}
+                                quality={100}
                                 src={img.url}
                                 alt={img.public_id}
                                 className="w-full h-44 object-contain"
@@ -55,13 +45,13 @@ function ImageSelector({ open, onOpenChange, onSelect }) {
                         onClick={() => {
                             const selectedImage = images.find(img => img.public_id === selectedId);
                             if (selectedImage) {
-                                onSelect?.(selectedImage); // call parent callback
-                                onOpenChange(false); // close dialog
+                                setImage(selectedImage.url)
+                                onOpenChange(false);
                             }
                         }}
                         disabled={!selectedId}
                     >
-                        <Image className="mr-2" size={18} />Select Image
+                        <ImagesIcon className="mr-2" size={18} />Select Image
                     </Button>
                 </DialogFooter>
             </DialogContent>
@@ -89,3 +79,13 @@ export default ImageSelector;
                                                             </>
                                                         )}
                                                     </Button> */}
+
+
+
+// if (imagesQuery.isLoading) {
+//     return (
+//         <div className='h-30 bg-blue-50 rounded-xl flex items-center justify-center p-4'>
+//             <Loader2 className='animate-spin' size={20} />
+//         </div>
+//     );
+// }

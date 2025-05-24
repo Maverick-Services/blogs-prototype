@@ -38,12 +38,14 @@ export default function Page() {
 
     const [isDialogOpen, setIsDialogOpen] = useState(false);
     const [selectedCategory, setSelectedCategory] = useState();
+    const [image, setImage] = useState(null)
 
     // open dialog to add new tag
     const handleAddClick = () => {
         resetCreate();
         resetUpdate();
         resetDelete();
+        setImage(null)
         setSelectedCategory(undefined);
         setIsDialogOpen(true);
     };
@@ -54,6 +56,7 @@ export default function Page() {
         resetUpdate();
         resetDelete();
         setSelectedCategory(category);
+        setImage(category?.imageURL)
         setIsDialogOpen(true);
     };
 
@@ -102,6 +105,8 @@ export default function Page() {
                     onUpdate={updateCategoryAsync}
                     isSubmitting={isCreating || isUpdating}
                     error={createError?.message || updateError?.message}
+                    image={image}
+                    setImage={setImage}
                 />
             </div>
         </InnerDashboardLayout>

@@ -1,7 +1,6 @@
 // app/layout.jsx
+import "./globals.css";;
 import { Poppins, Montserrat } from "next/font/google";
-import "./globals.css";
-import { TooltipProvider } from "@/components/ui/tooltip";
 
 const poppins = Poppins({
   variable: "--font-poppins",

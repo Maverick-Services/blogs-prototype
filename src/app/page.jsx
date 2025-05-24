@@ -3,7 +3,6 @@ import Link from "next/link";
 export default function Home() {
   return (
     <div className="min-h-screen flex flex-col">
-      {/* Navbar */}
       <nav className="bg-gray-800 text-white p-4">
         <div className="container mx-auto flex justify-between items-center">
           <div className="text-xl font-bold">Logo</div>
@@ -15,7 +14,6 @@ export default function Home() {
         </div>
       </nav>
 
-      {/* Hero Section */}
       <main className="flex-grow">
         <section className="bg-gray-100 py-20">
           <div className="container mx-auto text-center">
@@ -28,7 +26,6 @@ export default function Home() {
         </section>
       </main>
 
-      {/* Footer */}
       <footer className="bg-gray-800 text-white py-8">
         <div className="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
           <div>

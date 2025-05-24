@@ -5,7 +5,7 @@ import { toast } from 'react-hot-toast';
 export const useCategories = () => {
     const queryClient = useQueryClient();
 
-    // Get all tags
+    // Get all Categories
     const categoriesQuery = useQuery({
         queryKey: ['categories'],
         queryFn: () => api.get('/categories').then(res => res.data),
@@ -15,9 +15,9 @@ export const useCategories = () => {
         }
     });
 
-    // Create tag mutation
+    // Create Category mutation
     const createCategory = useMutation({
-        mutationFn: (data) => api.post('/categories', data),
+        mutationFn: ({ data }) => api.post('/categories', data),
         onSuccess: () => {
             queryClient.invalidateQueries(['categories']);
             toast.success('Category created successfully');
@@ -27,7 +27,7 @@ export const useCategories = () => {
         }
     });
 
-    // Update tag mutation
+    // Update Category mutation
     const updateCategory = useMutation({
         mutationFn: ({ id, data }) => api.put(`/categories/${id}`, data),
         onSuccess: () => {
@@ -39,7 +39,7 @@ export const useCategories = () => {
         }
     });
 
-    // Delete tag mutation
+    // Delete Category mutation
     const deleteCategory = useMutation({
         mutationFn: (id) => api.delete(`/categories/${id}`),
         onSuccess: () => {
