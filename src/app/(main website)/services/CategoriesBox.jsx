@@ -3,7 +3,7 @@ import React from 'react';
 
 function CategoriesBox({ categories, selectedCategory, onSelectCategory }) {
     return (
-        <div className="w-full lg:w-1/4 p-6">
+        <div className="w-full lg:w-1/4">
             <div className="sticky top-24 bg-white rounded-xl shadow-lg p-4">
                 <h2 className="text-2xl font-bold text-[#0A3460] mb-4">Categories</h2>
                 <ul className="space-y-2">
@@ -11,8 +11,8 @@ function CategoriesBox({ categories, selectedCategory, onSelectCategory }) {
                         <button
                             onClick={() => onSelectCategory('all')}
                             className={`w-full text-left px-4 py-2 rounded-lg transition-colors ${selectedCategory === 'all'
-                                    ? 'bg-[#0A3460] text-white'
-                                    : 'text-gray-600 hover:bg-gray-100'
+                                ? 'bg-[#0A3460] text-white'
+                                : 'text-gray-600 hover:bg-gray-100'
                                 }`}
                         >
                             All Categories
@@ -24,8 +24,8 @@ function CategoriesBox({ categories, selectedCategory, onSelectCategory }) {
                             <button
                                 onClick={() => onSelectCategory(cat._id)}
                                 className={`w-full text-left px-4 py-2 rounded-lg transition-colors ${selectedCategory === cat._id
-                                        ? 'bg-[#0A3460] text-white'
-                                        : 'text-gray-600 hover:bg-gray-100'
+                                    ? 'bg-[#0A3460] text-white'
+                                    : 'text-gray-600 hover:bg-gray-100'
                                     }`}
                             >
                                 {cat.name}

@@ -15,11 +15,11 @@ export default function ServicesClient({ services, categories }) {
 
     return (
         <WebsiteLayout>
-            <div className='bg-[#0a3460] max-w-7xl mx-auto rounded-2xl text-white h-28 flex items-center justify-center mt-3'>
+            <div className='bg-[#0a3460] max-w-7xl mx-auto rounded-2xl text-white h-28 flex items-center justify-center mt-5 mb-5'>
                 <h1 className='font-bold text-3xl md:text-4xl'>Our Services</h1>
             </div>
 
-            <div className='flex flex-col lg:flex-row max-w-7xl mx-auto'>
+            <div className='flex flex-col lg:flex-row max-w-7xl mx-auto items-start gap-5'>
                 <CategoriesBox
                     categories={categories}
                     selectedCategory={selectedCategory}

@@ -84,6 +84,9 @@ serviceSchema.index({ name: 1 }, { unique: true });
 serviceSchema.index({ status: 1 });
 serviceSchema.index({ featured: 1 });
 serviceSchema.index({ categories: 1, status: 1 });
+serviceSchema.index({ slug: 1, status: 1 });
+serviceSchema.index({ featured: 1, status: 1 });
+serviceSchema.index({ tags: 1, status: 1 });
 
 const Service = mongoose.models.Service || mongoose.model('Service', serviceSchema);
 export default Service;
