@@ -1,13 +1,10 @@
-import Footer from '@/components/common/Footer';
-import NavBar from '@/components/common/Navbar';
+import WebsiteLayout from '@/components/website/WebsiteLayout';
 import Image from 'next/image';
 import React from 'react';
 
 function page() {
     return (
-        <div className='bg-gray-100'>
-            <NavBar />
-
+        <WebsiteLayout>
             <div className="relative w-full min-h-[60vh] md:min-h-[40vh] lg:min-h-[70vh] z-0 lg:px-20 py-20">
                 <Image src={"/hero-bg.png"} alt="Indian law"
                     // width={1000} height={1000}
@@ -58,8 +55,7 @@ function page() {
                 </div>
             </div>
 
-            <Footer />
-        </div>
+        </WebsiteLayout>
     )
 }
 
