@@ -47,37 +47,3 @@ api.interceptors.response.use(
 
 export default api;
 
-// Helper function for permission-based API calls
-export const apiWithPermission = {
-    get: (url, resource, action) => {
-        return api.get(url, {
-            headers: {
-                'X-Required-Permission': `${resource}:${action}`
-            }
-        })
-    },
-
-    post: (url, data, resource, action) => {
-        return api.post(url, data, {
-            headers: {
-                'X-Required-Permission': `${resource}:${action}`
-            }
-        })
-    },
-
-    put: (url, data, resource, action) => {
-        return api.put(url, data, {
-            headers: {
-                'X-Required-Permission': `${resource}:${action}`
-            }
-        })
-    },
-
-    delete: (url, resource, action) => {
-        return api.delete(url, {
-            headers: {
-                'X-Required-Permission': `${resource}:${action}`
-            }
-        })
-    }
-}

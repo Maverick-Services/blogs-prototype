@@ -1,6 +1,10 @@
 // lib/permissions.js
 
-// Define your resources
+// import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+// import { getServerSession } from "next-auth";
+// import { cookies, headers } from "next/headers";
+
+// Define resources
 export const Resources = {
     MEDIA: 'media',
     SERVICES: 'services',
@@ -8,7 +12,6 @@ export const Resources = {
     TAGS: 'tags',
     USERS: 'users',
     SETTINGS: 'settings',
-    // add more resources as needed
 };
 
 // Define possible actions
@@ -27,45 +30,39 @@ export function checkPermission(user, resource, action) {
         const perms = user.permissions?.[resource];
         return !!perms?.[action];
     }
-    // regular 'user' role has no admin/sub-admin permissions
     return false;
 }
 
-// Server-side wrapper for App Router pages
-import { getServerSession } from 'next-auth/next';
-import { redirect } from 'next/navigation';
-import { authOptions } from './nextAuthOptions';
-
-export function requirePermissionPage(resource, action) {
-    return async function PageWrapper({ children }) {
-        const session = await getServerSession(authOptions);
-        if (
-            !session ||
-            session.user.role === 'user'
-            // !session.user.permissions?.[resource]?.[action]
-        ) {
-            return redirect('/');
-        }
-        return children;
-    };
+// Add this permission check function
+function hasPermission(permissions, resource, action) {
+    if (!permissions) return false;
+    const resourcePerms = permissions[resource];
+    return resourcePerms?.[action];
 }
 
-// Server-side wrapper for API route handlers
-export function requirePermissionApi(handler, { resource, action, roles = ['admin', 'sub-admin'] }) {
-    return async (req, { params }) => {
-        const session = await getServerSession(authOptions);
-        if (!session) {
-            return new Response(JSON.stringify({ error: 'Not authenticated' }), { status: 401 });
-        }
-        if (!roles.includes(session.user.role)) {
-            return new Response(JSON.stringify({ error: 'Forbidden' }), { status: 403 });
-        }
-        if (
-            session.user.role !== 'admin' &&
-            !session.user.permissions?.[resource]?.[action]
-        ) {
-            return new Response(JSON.stringify({ error: 'Permission denied' }), { status: 403 });
-        }
-        return handler(req, { params });
-    };
-}
+// export async function requirePermissionApi(req, resource, action) {
+//     try {
+//         // ⚠️ Fix: Use headers() and cookies() when calling getServerSession
+//         const session = await getServerSession({ headers: headers(), cookies: cookies() }, authOptions);
+
+//         if (!session?.user) {
+//             return Response.json({ error: "Unauthorized" }, { status: 401 });
+//         }
+
+//         if (session.user.role === 'admin') return null;
+
+//         if (session.user.role === 'sub-admin') {
+//             if (hasPermission(session.user.permissions, resource, action)) {
+//                 return null;
+//             }
+//         }
+
+//         return Response.json({ error: "Forbidden" }, { status: 403 });
+//     } catch (error) {
+//         console.error('Permission Error:', error);
+//         return Response.json(
+//             { error: "Internal Server Error" },
+//             { status: 500 }
+//         );
+//     }
+// }

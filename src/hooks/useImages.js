@@ -36,12 +36,8 @@ export const useImages = () => {
     });
 
     const deleteImage = useMutation({
-        mutationFn: ({ publicId }) => {
-            if (!canDelete) {
-                throw new Error('You don\'t have permission to delete images')
-            }
-            return api.delete('/images', { data: { publicId } })
-        },
+        mutationFn: ({ publicId }) => api.delete('/images', { data: { publicId } }),
+        enabled: canDelete,
         onSuccess: () => {
             queryClient.invalidateQueries(['images']);
             toast.success('Image deleted');

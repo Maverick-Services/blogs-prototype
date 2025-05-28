@@ -1,8 +1,13 @@
 // api/images/route.js
 import cloudinary from "@/lib/cloudinary";
+import { Actions, Resources } from "@/lib/permissions";
+import { requirePermissionApi } from "@/lib/serverPermissions";
 import { NextResponse } from "next/server";
 
 export async function POST(req) {
+    const errorResponse = await requirePermissionApi(req, Resources.MEDIA, Actions.ADD);
+    if (errorResponse) return errorResponse;
+
     try {
         const { image } = await req.json();
 
@@ -23,7 +28,9 @@ export async function POST(req) {
     }
 }
 
-export async function GET() {
+export async function GET(req) {
+    const errorResponse = await requirePermissionApi(req, Resources.MEDIA, Actions.VIEW);
+    if (errorResponse) return errorResponse;
     try {
         const result = await cloudinary.search
             .expression('folder:test')
@@ -44,11 +51,14 @@ export async function GET() {
 
         return NextResponse.json(images, { status: 200 });
     } catch (error) {
+        console.log(error);
         return NextResponse.json({ error: error.message }, { status: 500 });
     }
 }
 
 export async function DELETE(req) {
+    const errorResponse = await requirePermissionApi(req, Resources.MEDIA, Actions.DELETE);
+    if (errorResponse) return errorResponse;
     try {
         let { publicId } = await req.json();
 
