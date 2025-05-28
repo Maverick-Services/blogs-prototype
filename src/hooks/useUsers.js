@@ -2,13 +2,14 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import api from '@/lib/api';
 import { toast } from 'react-hot-toast';
 
-export const useUsers = () => {
+export const useUsers = ({ role, page = 1, pageSize = 10 }) => {
     const queryClient = useQueryClient();
 
     // Get all users
     const usersQuery = useQuery({
-        queryKey: ['users'],
-        queryFn: () => api.get('/users').then(res => res.data),
+        queryKey: ['users', role, page, pageSize],
+        queryFn: () => api.get(`/users?role=${role}&page=${page}&limit=${pageSize}`),
+        keepPreviousData: true,
         staleTime: 1000 * 60 * 5, // 5 minutes cache
         onError: (err) => {
             toast.error(err.message || 'Failed to fetch users');
@@ -54,10 +55,23 @@ export const useUsers = () => {
         }
     });
 
+    // change password
+    const changePassword = useMutation({
+        mutationFn: ({ id, currentPassword, newPassword, confirmNewPassword }) =>
+            api.patch(`/users/${id}/password`, { currentPassword, newPassword, confirmNewPassword }),
+        onSuccess: () => {
+            toast.success('Password changed successfully');
+        },
+        onError: err => {
+            toast.error(err.response?.data?.message || 'Failed to change password');
+        }
+    });
+
     return {
         usersQuery,
         createUser,
         updateUser,
         deleteUser,
+        changePassword
     };
 };

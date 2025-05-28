@@ -9,6 +9,7 @@ shadcn label -npx shadcn@latest add label
 shadcn checkbox - npx shadcn@latest add checkbox
 shadcn dropdown - npx shadcn@latest add dropdown-menu
 tooltip - npx shadcn@latest add tooltip
+npm install @tanstack/react-table
 
 install this -
 npm install @tanstack/react-table

@@ -1,3 +1,4 @@
+// app/admin/users/components/UserDialog.jsx
 import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import { useEffect } from "react";
@@ -9,6 +10,7 @@ import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import clsx from "clsx";
 import { Loader2 } from "lucide-react";
+import PasswordDialog from "./PasswordDialog";
 
 const permissionSections = [
     { id: 'dashboard', name: 'Dashboard' },
@@ -27,25 +29,22 @@ const permissionTypes = [
     { id: 'delete', label: 'Delete' }
 ];
 
-export default function UserDialog({ open, onOpenChange, selectedUser, onCreate, onUpdate, isSubmitting, error, }) {
-    console.log(selectedUser);
+export default function UserDialog({ open, onOpenChange, selectedUser, onCreate, onUpdate, isSubmitting, error, changePassword }) {
     const { register, handleSubmit, reset, formState: { errors }, watch, setValue, } = useForm();
     const watchRole = watch("role", "user");
     const watchPermissions = watch("permissions", {});
 
     const [showPassword, setShowPassword] = useState(false);
 
+    const [pwdDialogOpen, setPwdDialogOpen] = useState(false);
+
+    const openPwdDialog = id => {
+        setPwdDialogOpen(true);
+    };
+
     useEffect(() => {
         if (open) {
             if (selectedUser) {
-
-                // const permissionsObj = {};
-                // if (selectedUser.permissions instanceof Map) {
-                //     selectedUser.permissions.forEach((value, key) => {
-                //         permissionsObj[key] = Object.fromEntries(value.entries());
-                //     });
-                // }
-
                 reset({
                     name: selectedUser.name || "",
                     email: selectedUser.email || "",
@@ -74,13 +73,13 @@ export default function UserDialog({ open, onOpenChange, selectedUser, onCreate,
 
     const onSubmit = async (data) => {
         try {
-            // Convert permissions to plain object (no Maps)
-            const permissions = data.permissions;
+            // const permissions = data.permissions;
 
-            const userData = {
-                ...data,
-                permissions
-            };
+            const { password, ...rest } = data;
+
+            const userData = selectedUser
+                ? rest
+                : { ...rest, password };
 
             if (selectedUser?._id) {
                 await onUpdate({ id: selectedUser._id, data: userData });
@@ -95,7 +94,7 @@ export default function UserDialog({ open, onOpenChange, selectedUser, onCreate,
         <Dialog open={open} onOpenChange={onOpenChange}>
             <DialogContent className="sm:max-w-[600px] max-h-[80vh] overflow-y-auto">
                 <DialogHeader>
-                    <DialogTitle>{selectedUser ? "Edit User" : "Add User"}</DialogTitle>
+                    <DialogTitle>{selectedUser ? "Update User Details" : "Add New User"}</DialogTitle>
                     <DialogDescription>
                         Create or update user and assign roles and permissions.
                     </DialogDescription>
@@ -151,32 +150,34 @@ export default function UserDialog({ open, onOpenChange, selectedUser, onCreate,
                         </div>
 
                         {/* Password */}
-                        <div className="grid grid-cols-4 items-start gap-4">
-                            <Label htmlFor="password" className="text-right mt-2">
-                                Password<span className="text-red-500"> *</span>
-                            </Label>
-                            <div className="col-span-3 relative">
-                                <Input
-                                    id="password"
-                                    type={showPassword ? "text" : "password"}
-                                    {...register("password")}
-                                    placeholder="Password"
-                                    className={clsx({ "border-red-500": errors.password })}
-                                />
-                                <button
-                                    type="button"
-                                    onClick={() => setShowPassword(!showPassword)}
-                                    className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-600"
-                                >
-                                    {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
-                                </button>
-                                {errors.password && (
-                                    <p className="text-sm text-red-500 mt-1">
-                                        {errors.password.message}
-                                    </p>
-                                )}
+                        {!selectedUser &&
+                            <div className="grid grid-cols-4 items-start gap-4">
+                                <Label htmlFor="password" className="text-right mt-2">
+                                    Password<span className="text-red-500"> *</span>
+                                </Label>
+                                <div className="col-span-3 relative">
+                                    <Input
+                                        id="password"
+                                        type={showPassword ? "text" : "password"}
+                                        {...register("password")}
+                                        placeholder="Password"
+                                        className={clsx({ "border-red-500": errors.password })}
+                                    />
+                                    <button
+                                        type="button"
+                                        onClick={() => setShowPassword(!showPassword)}
+                                        className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-600"
+                                    >
+                                        {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                                    </button>
+                                    {errors.password && (
+                                        <p className="text-sm text-red-500 mt-1">
+                                            {errors.password.message}
+                                        </p>
+                                    )}
+                                </div>
                             </div>
-                        </div>
+                        }
 
                         {/* Role */}
                         <div className="grid grid-cols-4 items-start gap-4">
@@ -236,12 +237,25 @@ export default function UserDialog({ open, onOpenChange, selectedUser, onCreate,
                     {error && <p className="text-red-600 mb-5 text-sm">Error: {error}</p>}
 
                     <DialogFooter>
+                        {selectedUser &&
+                            <Button variant={"outline"} type="button" disabled={isSubmitting} onClick={() => setPwdDialogOpen(true)}>
+                                Update Password
+                            </Button>
+                        }
                         <Button type="submit" disabled={isSubmitting}>
                             {isSubmitting && <Loader2 className="animate-spin mr-1" />}
                             {selectedUser ? "Update" : "Create"}
                         </Button>
                     </DialogFooter>
                 </form>
+
+                <PasswordDialog
+                    open={pwdDialogOpen}
+                    onOpenChange={setPwdDialogOpen}
+                    userId={selectedUser?._id}
+                    changePassword={changePassword}
+                />
+
             </DialogContent>
         </Dialog>
     );

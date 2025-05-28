@@ -6,10 +6,21 @@ import { CirclePlus } from 'lucide-react';
 import React, { useState } from 'react'
 import UsersListView from './components/UsersListView';
 import UserDialog from './components/UserDialog';
+import {
+    Select,
+    SelectTrigger,
+    SelectValue,
+    SelectContent,
+    SelectItem
+} from "@/components/ui/select"
 
 function page() {
+    const [roleFilter, setRoleFilter] = useState('sub-admin')
+    const [page, setPage] = useState(1)
+    const [pageSize, setPageSize] = useState(1)
+
     // fetch users query
-    const { usersQuery, createUser, updateUser, deleteUser } = useUsers();
+    const { usersQuery, createUser, updateUser, deleteUser, changePassword } = useUsers({ role: roleFilter, page, pageSize });
 
     // destructure createUser mutation
     const {
@@ -64,22 +75,44 @@ function page() {
                 </div>
 
                 <div className="flex justify-between items-center mb-4 mt-4">
-                    <Button variant="outline">
-                        Users: 14
-                    </Button>
+                    <Select value={roleFilter} onValueChange={setRoleFilter}>
+                        <SelectTrigger className="w-[150px]">
+                            <SelectValue placeholder="Select role" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectItem value="admin">Admin</SelectItem>
+                            <SelectItem value="sub-admin">Sub-Admin</SelectItem>
+                            <SelectItem value="user">User</SelectItem>
+                        </SelectContent>
+                    </Select>
+
+                    <Select value={pageSize.toString()} onValueChange={v => { setPageSize(+v); setPage(1) }}>
+                        <SelectTrigger className="w-[100px]">
+                            <SelectValue placeholder="Rows" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            {[1, 2, 5, 10, 25, 50, 100].map(n => (
+                                <SelectItem key={n} value={n.toString()}>{n} / page</SelectItem>
+                            ))}
+                        </SelectContent>
+                    </Select>
+
                     <Button onClick={handleAddClick}>
                         <CirclePlus className="mr-2 h-4 w-4" /> Add New
                     </Button>
                 </div>
 
                 <UsersListView
-                    users={usersQuery.data}
-                    onEdit={handleEditClick}
-                    onDelete={deleteUserAsync}
                     isLoading={usersQuery.isLoading}
                     error={usersQuery.error}
-                    isDeleting={isDeleting}
-                    deleteError={deleteError}
+                    users={usersQuery.data?.data || []}
+                    page={page}
+                    pageCount={Math.ceil((usersQuery.data?.totalCount || 0) / pageSize)}
+                    onPageChange={setPage}
+                    onEdit={handleEditClick}
+                    onDelete={deleteUser.mutateAsync}
+                    isDeleting={deleteUser.isLoading}
+                    deleteError={deleteUser.error}
                 />
 
                 <UserDialog
@@ -90,6 +123,7 @@ function page() {
                     onUpdate={updateUserAsync}
                     isSubmitting={isCreating || isUpdating}
                     error={createError?.message || updateError?.message}
+                    changePassword={changePassword}
                 />
 
             </InnerDashboardLayout>

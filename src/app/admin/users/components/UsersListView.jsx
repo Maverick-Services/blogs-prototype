@@ -1,72 +1,130 @@
-"use client";
-import { Button } from '@/components/ui/button';
-import { Loader2, Pencil, Trash } from "lucide-react";
-import { useState } from "react";
-import DeleteConfirmationDialog from "./DeleteConfirmationDialog ";
-import Loader from '@/components/Loader';
+'use client'
 
-export default function UsersListView({ isLoading, error, users, onEdit, onDelete, isDeleting, deleteError }) {
-    const [deletingUserId, setDeletingUserId] = useState(null);
+import React, { useState } from 'react'
+import {
+    Table,
+    TableHeader,
+    TableHead,
+    TableBody,
+    TableRow,
+    TableCell,
+} from '@/components/ui/table'
+import { Button } from '@/components/ui/button'
+import { Pencil, Trash } from 'lucide-react'
+import Loader from '@/components/Loader'
+import DeleteConfirmationDialog from './DeleteConfirmationDialog '
+
+export default function UsersListView({
+    isLoading,
+    error,
+    users = [],
+    page,
+    pageCount,
+    onPageChange,
+    onEdit,
+    onDelete,
+    isDeleting,
+    deleteError,
+}) {
+    const [deletingUserId, setDeletingUserId] = useState(null)
 
     const handleDeleteClick = (userId) => {
-        setDeletingUserId(userId);
-    };
-
+        setDeletingUserId(userId)
+    }
     const handleDeleteConfirm = async () => {
-        await onDelete(deletingUserId);
-        setDeletingUserId(null);
-    };
+        await onDelete(deletingUserId)
+        setDeletingUserId(null)
+    }
 
-    if (isLoading) return <div className="text-center p-4">
-        <Loader />
-    </div>;
+    if (isLoading)
+        return (
+            <div className="text-center p-4">
+                <Loader />
+            </div>
+        )
 
-    if (error) return <div className="text-red-600 p-4">Error: {error.message}</div>;
-    if (!users?.length) return <div className="text-center text-gray-500 p-4">No User Found!</div>;
+    if (error)
+        return (
+            <div className="text-red-600 p-4">
+                Error: {error.message || error}
+            </div>
+        )
+
+    if (users.length === 0)
+        return (
+            <div className="text-center text-gray-500 p-4">
+                No users found!
+            </div>
+        )
 
     return (
-        <section className="w-full">
+        <section className="space-y-4">
+            {/* Data Table */}
             <div className="overflow-hidden rounded-md border border-gray-200">
-                <table className="w-full border-collapse">
-
-                    <thead>
-                        <tr className="bg-gray-50 text-xl border-b text-primary">
-                            <th className="px-6 py-3 text-center font-semibold">S. No.</th>
-                            <th className="px-6 py-3 text-center font-semibold">Name</th>
-                            {/* <th className="px-6 py-3 text-center font-semibold">Slug</th> */}
-                            <th className="px-6 py-3 text-center font-semibold">Action</th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                        {users?.map((item, key) => (
-                            <tr key={key} className="even:bg-gray-50 hover:bg-gray-100 transition text-center">
-                                <td className="px-6 py-3 border-b">{key + 1}</td>
-                                <td className="px-6 py-3 border-b">{item?.name}</td>
-                                {/* <td className="px-6 py-3 border-b">{item?.slug}</td> */}
-                                <td className="px-6 py-3 border-b text-center flex gap-2 items-center justify-center">
-
+                <Table>
+                    <TableHeader>
+                        <TableRow>
+                            <TableHead>S. No.</TableHead>
+                            <TableHead>Name</TableHead>
+                            <TableHead>Joined Date</TableHead>
+                            <TableHead>Actions</TableHead>
+                        </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                        {users.map((user, idx) => (
+                            <TableRow key={user._id}>
+                                <TableCell>{(page - 1) * users.length + idx + 1}</TableCell>
+                                <TableCell>{user.name}</TableCell>
+                                <TableCell>
+                                    {new Date(user.createdAt).toLocaleDateString()}
+                                </TableCell>
+                                <TableCell className="flex justify-center gap-2">
                                     <Button
                                         size="icon"
                                         variant="outline"
-                                        className='cursor-pointer'
-                                        onClick={() => { onEdit(item) }}
+                                        onClick={() => onEdit(user)}
                                     >
                                         <Pencil size={16} />
                                     </Button>
                                     <Button
+                                        size="icon"
                                         variant="destructive"
-                                        onClick={() => handleDeleteClick(item._id)}
+                                        onClick={() => handleDeleteClick(user._id)}
+                                        disabled={isDeleting}
                                     >
                                         <Trash size={16} />
                                     </Button>
-                                </td>
-                            </tr>
+                                </TableCell>
+                            </TableRow>
                         ))}
-                    </tbody>
-                </table>
+                    </TableBody>
+                </Table>
             </div>
 
+            {/* Pagination Controls */}
+            <div className="flex items-center justify-between px-2">
+                <p className="text-sm text-muted-foreground">
+                    Page {page} of {pageCount}
+                </p>
+                <div className="space-x-2">
+                    <Button
+                        size="sm"
+                        disabled={page <= 1}
+                        onClick={() => onPageChange(page - 1)}
+                    >
+                        Previous
+                    </Button>
+                    <Button
+                        size="sm"
+                        disabled={page >= pageCount}
+                        onClick={() => onPageChange(page + 1)}
+                    >
+                        Next
+                    </Button>
+                </div>
+            </div>
+
+            {/* Delete Confirmation */}
             <DeleteConfirmationDialog
                 isOpen={!!deletingUserId}
                 onOpenChange={(open) => !open && setDeletingUserId(null)}
@@ -77,5 +135,5 @@ export default function UsersListView({ isLoading, error, users, onEdit, onDelet
                 description="Are you sure you want to delete this user?"
             />
         </section>
-    );
+    )
 }

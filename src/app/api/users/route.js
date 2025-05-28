@@ -4,10 +4,22 @@ import User from "@/models/userModel";
 import { NextResponse } from "next/server";
 import bcrypt from 'bcryptjs';
 
-export async function GET() {
+export async function GET(req) {
     await connectDB();
     try {
-        const users = await User.find().select('-password');
+        const { searchParams } = new URL(req.url);
+        const role = searchParams.get('role') || undefined
+        const page = parseInt(searchParams.get('page') || '1')
+        const limit = parseInt(searchParams.get('limit') || '10')
+
+        const filter = role ? { role } : {}
+        const skip = (page - 1) * limit
+
+        const [users, totalCount] = await Promise.all([
+            User.find(filter).skip(skip).limit(limit).select('-password'),
+            User.countDocuments(filter)
+        ])
+
         if (!users || users.length === 0) {
             return NextResponse.json({
                 success: true,
@@ -17,8 +29,9 @@ export async function GET() {
         }
         return NextResponse.json({
             success: true,
-            data: users
-        });
+            data: users,
+            totalCount: totalCount
+        })
     } catch (error) {
         return NextResponse.json({
             success: false,
