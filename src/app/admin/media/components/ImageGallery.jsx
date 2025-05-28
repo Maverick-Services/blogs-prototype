@@ -8,7 +8,7 @@ import { useImages } from '@/hooks/useImages';
 export default function ImageGallery({ images, isLoading }) {
     const [isDialogOpen, setIsDialogOpen] = useState(false);
     const [selectedImage, setSelectedImage] = useState(null);
-    const { deleteImage } = useImages();
+    const { deleteImage, permissions: { canDelete } } = useImages();
 
     // console.log(images)
     if (isLoading) {
@@ -36,7 +36,7 @@ export default function ImageGallery({ images, isLoading }) {
                 {images.map(img => (
                     <div
                         key={img.public_id}
-                        className="border-2 rounded-lg overflow-hidden shadow-sm cursor-pointer hover:bottom-2 hover:border-purple-400 hover:border-2 bottom-0 relative"
+                        className="border-2 rounded-lg overflow-hidden shadow-sm cursor-pointer bottom-0 relative duration-200 hover:bottom-2 hover:border-purple-400 hover:border-2 "
                         onClick={() => {
                             setSelectedImage(img);
                             setIsDialogOpen(true);
@@ -61,6 +61,7 @@ export default function ImageGallery({ images, isLoading }) {
                     }}
                     image={selectedImage}
                     onDelete={handleDelete}
+                    canDelete={canDelete}
                     deleting={deleteImage.isPending}
                     deleteError={deleteImage.isError ? deleteImage.error.message : null}
                 />

@@ -1,3 +1,5 @@
+import { useState } from "react";
+import { Eye, EyeOff } from "lucide-react";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
@@ -13,7 +15,9 @@ const permissionSections = [
     { id: 'services', name: 'Services' },
     { id: 'categories', name: 'Categories' },
     { id: 'tags', name: 'Tags' },
-    { id: 'media', name: 'Media' }
+    { id: 'media', name: 'Media' },
+    { id: 'settings', name: 'Settings' },
+    { id: 'users', name: 'Users' },
 ];
 
 const permissionTypes = [
@@ -24,43 +28,38 @@ const permissionTypes = [
 ];
 
 export default function UserDialog({ open, onOpenChange, selectedUser, onCreate, onUpdate, isSubmitting, error, }) {
+    console.log(selectedUser);
     const { register, handleSubmit, reset, formState: { errors }, watch, setValue, } = useForm();
-
     const watchRole = watch("role", "user");
     const watchPermissions = watch("permissions", {});
 
+    const [showPassword, setShowPassword] = useState(false);
+
     useEffect(() => {
         if (open) {
-            const defaultPermissions = {
-                dashboard: { view: true },
-                services: { view: true },
-                categories: { view: true },
-                tags: { view: true },
-                media: { view: true }
-            };
-
             if (selectedUser) {
-                // Convert Map to object
-                const permissionsObj = {};
-                if (selectedUser.permissions instanceof Map) {
-                    selectedUser.permissions.forEach((value, key) => {
-                        permissionsObj[key] = Object.fromEntries(value.entries());
-                    });
-                }
+
+                // const permissionsObj = {};
+                // if (selectedUser.permissions instanceof Map) {
+                //     selectedUser.permissions.forEach((value, key) => {
+                //         permissionsObj[key] = Object.fromEntries(value.entries());
+                //     });
+                // }
 
                 reset({
                     name: selectedUser.name || "",
                     email: selectedUser.email || "",
                     password: selectedUser.password || "",
                     role: selectedUser.role || "user",
-                    permissions: permissionsObj || defaultPermissions
+                    permissions: selectedUser.permissions
                 });
             } else {
                 reset({
                     name: "",
                     email: "",
+                    password: "",
                     role: "user",
-                    permissions: defaultPermissions
+                    permissions: {}
                 });
             }
         }
@@ -94,7 +93,7 @@ export default function UserDialog({ open, onOpenChange, selectedUser, onCreate,
 
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
-            <DialogContent className="sm:max-w-[600px]">
+            <DialogContent className="sm:max-w-[600px] max-h-[80vh] overflow-y-auto">
                 <DialogHeader>
                     <DialogTitle>{selectedUser ? "Edit User" : "Add User"}</DialogTitle>
                     <DialogDescription>
@@ -156,16 +155,22 @@ export default function UserDialog({ open, onOpenChange, selectedUser, onCreate,
                             <Label htmlFor="password" className="text-right mt-2">
                                 Password<span className="text-red-500"> *</span>
                             </Label>
-                            <div className="col-span-3">
+                            <div className="col-span-3 relative">
                                 <Input
                                     id="password"
-                                    type="password"
-                                    {...register("password", {
-                                        required: "Password is required",
-                                    })}
+                                    type={showPassword ? "text" : "password"}
+                                    {...register("password")}
+                                    placeholder="Password"
                                     className={clsx({ "border-red-500": errors.password })}
                                 />
-                                {errors.email && (
+                                <button
+                                    type="button"
+                                    onClick={() => setShowPassword(!showPassword)}
+                                    className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-600"
+                                >
+                                    {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                                </button>
+                                {errors.password && (
                                     <p className="text-sm text-red-500 mt-1">
                                         {errors.password.message}
                                     </p>

@@ -11,8 +11,9 @@ import { useImages } from '@/hooks/useImages';
 
 export default function MediaPage() {
     const [isDialogOpen, setIsDialogOpen] = useState(false);
-    const { imagesQuery } = useImages();
+    const { imagesQuery, permissions: { canAdd } } = useImages();
     const images = imagesQuery.data || [];
+
     return (
         <InnerDashboardLayout>
             <div className="w-full flex items-center justify-between">
@@ -37,9 +38,12 @@ export default function MediaPage() {
                     <Button variant="outline">
                         Total Media: {images.length}
                     </Button>
-                    <Button onClick={() => setIsDialogOpen(true)}>
-                        <CirclePlus className="mr-2 h-4 w-4" /> Add New
-                    </Button>
+
+                    {canAdd && (
+                        <Button onClick={() => setIsDialogOpen(true)}>
+                            <CirclePlus className="mr-2 h-4 w-4" /> Add New
+                        </Button>
+                    )}
                 </div>
 
                 <UploaderDialog

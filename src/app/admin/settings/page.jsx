@@ -4,7 +4,6 @@ import React from 'react';
 import InnerDashboardLayout from '@/components/dashboard/InnerDashboardLayout';
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator, } from '@/components/ui/breadcrumb';
 import UserInfo from './UserInfo';
-import { SessionProvider } from 'next-auth/react';
 
 
 export default function MediaPage() {
@@ -26,9 +25,7 @@ export default function MediaPage() {
                     </BreadcrumbList>
                 </Breadcrumb>
             </div>
-            <SessionProvider>
-                <UserInfo />
-            </SessionProvider>
+            <UserInfo />
         </InnerDashboardLayout>
     )
 }

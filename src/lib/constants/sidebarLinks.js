@@ -12,61 +12,66 @@ import {
     User,
     Settings,
 } from 'lucide-react';
+import { Resources } from '../permissions';
 
 export const ADMIN_SIDEBAR_LINKS = [
-    // {
-    //     key: 'dashboard',
-    //     label: 'Dashboard',
-    //     href: '/admin',
-    //     icon: <Home />,
-    // },
-    // {
-    //     key: 'enquiries',
-    //     label: 'Enquiries',
-    //     href: '/admin/enquiries',
-    //     icon: <MessageSquare />,
-    // },
-    // {
-    //     key: 'services',
-    //     label: 'Services',
-    //     href: '/admin/services',
-    //     icon: <Briefcase />,
-    // },
     {
-        key: 'services',
+        key: Resources.SERVICES,
         label: 'Services',
         href: '/admin/services',
         icon: <ServerCog />,
     },
     {
-        key: 'categories',
+        key: Resources.CATEGORIES,
         label: 'Categories',
         href: '/admin/categories',
         icon: <Grid />,
     },
     {
-        key: 'tags',
+        key: Resources.TAGS,
         label: 'Tags',
         href: '/admin/tags',
         icon: <Tag />,
     },
     {
-        key: 'media',
+        key: Resources.MEDIA,
         label: 'Media',
         href: '/admin/media',
         icon: <Images />,
     },
     {
-        key: "users",
+        key: Resources.USERS,
         label: "Users",
         href: "/admin/users",
         icon: <User />
     },
     {
-        key: "settings",
+        key: Resources.SETTINGS,
         label: "Settings",
         href: "/admin/settings",
         icon: <Settings />
     },
 ];
 
+
+
+
+
+// {
+//     key: 'dashboard',
+//     label: 'Dashboard',
+//     href: '/admin',
+//     icon: <Home />,
+// },
+// {
+//     key: 'enquiries',
+//     label: 'Enquiries',
+//     href: '/admin/enquiries',
+//     icon: <MessageSquare />,
+// },
+// {
+//     key: 'services',
+//     label: 'Services',
+//     href: '/admin/services',
+//     icon: <Briefcase />,
+// },

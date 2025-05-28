@@ -6,7 +6,7 @@ import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "
 import { FiTrash2, FiImage, FiInfo, FiCalendar, FiAlertTriangle, FiDownload } from 'react-icons/fi';
 import { Loader2 } from 'lucide-react';
 
-export default function PreviewDialog({ open, onOpenChange, image, onDelete, deleting, deleteError, }) {
+export default function PreviewDialog({ open, onOpenChange, image, onDelete, deleting, deleteError, canDelete }) {
     const [downloading, setDownloading] = useState(false);
     const [downloadError, setDownloadError] = useState(null);
 
@@ -156,24 +156,26 @@ export default function PreviewDialog({ open, onOpenChange, image, onDelete, del
                                 )}
                             </Button>
 
-                            <Button
-                                variant="destructive"
-                                onClick={onDelete}
-                                disabled={deleting || downloading}
-                                className="gap-2 px-6 py-3 transition-all flex-1"
-                            >
-                                {deleting ? (
-                                    <>
-                                        <Loader2 size={20} className='animate-spin' />
-                                        Deleting...
-                                    </>
-                                ) : (
-                                    <>
-                                        <FiTrash2 className="text-lg" />
-                                        Delete
-                                    </>
-                                )}
-                            </Button>
+                            {canDelete &&
+                                <Button
+                                    variant="destructive"
+                                    onClick={onDelete}
+                                    disabled={deleting || downloading}
+                                    className="gap-2 px-6 py-3 transition-all flex-1"
+                                >
+                                    {deleting ? (
+                                        <>
+                                            <Loader2 size={20} className='animate-spin' />
+                                            Deleting...
+                                        </>
+                                    ) : (
+                                        <>
+                                            <FiTrash2 className="text-lg" />
+                                            Delete
+                                        </>
+                                    )}
+                                </Button>
+                            }
                         </div>
                     </DialogFooter>
                 </DialogContent>

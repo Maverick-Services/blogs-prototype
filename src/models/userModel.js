@@ -23,9 +23,9 @@ const userSchema = new mongoose.Schema({
     password: {
         type: String,
         select: false,
-        required: function () {
-            return this.provider === 'credentials';
-        }
+        // required: function () {
+        //     return this.provider === 'credentials';
+        // }
     },
     role: {
         type: String,

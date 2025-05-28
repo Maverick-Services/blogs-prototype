@@ -32,7 +32,7 @@ export const useUsers = () => {
 
     // Update User mutation
     const updateUser = useMutation({
-        mutationFn: ({ id, data }) => api.put(`/users/${id}`, data),
+        mutationFn: ({ id, data }) => api.patch(`/users/${id}`, data),
         onSuccess: () => {
             queryClient.invalidateQueries(['users']);
             toast.success('User updated successfully');

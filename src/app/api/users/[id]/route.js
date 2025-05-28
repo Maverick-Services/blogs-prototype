@@ -1,6 +1,7 @@
 import { connectDB } from "@/lib/mongodb";
 import User from "@/models/userModel";
 import { NextResponse } from "next/server";
+import bcrypt from 'bcryptjs';
 
 
 export async function GET(_, { params }) {
@@ -23,7 +24,8 @@ export async function PATCH(req, { params }) {
     await connectDB();
     try {
         const updates = await req.json();
-        const user = await User.findByIdAndUpdate(params.id, updates, { new: true });
+        const hashedPassword = await bcrypt.hash(updates.password, 10);
+        const user = await User.findByIdAndUpdate(params.id, { ...updates, password: hashedPassword }, { new: true });
         if (!user) {
             return Response.json({ success: false, message: 'User not found' }, { status: 404 });
         }

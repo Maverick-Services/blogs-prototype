@@ -2,15 +2,22 @@
 
 import React from "react";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import Image from "next/image";
-import { Loader2, LogOut } from "lucide-react";
+import { LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { IMAGES } from "@/lib/constants/assets";
+import { signOut, useSession } from "next-auth/react";
+import { checkPermission } from "@/lib/permissions";
 
 export default function Sidebar({ isOpen, setIsSidebarOpen, sidebarLinks }) {
+    const { data: session } = useSession()
+    const user = session?.user
+
+    const allowedLinks = sidebarLinks.filter(link =>
+        checkPermission(user, link.key, 'view')
+    )
     const pathname = usePathname();
-    const router = useRouter();
 
     function onLinkClick() {
         setIsSidebarOpen(false);
@@ -41,7 +48,7 @@ export default function Sidebar({ isOpen, setIsSidebarOpen, sidebarLinks }) {
 
             {/* Navigation Links */}
             <div className="w-full flex flex-col gap-3 transition-all duration-300 ease-in-out">
-                {sidebarLinks?.map(({ href, label, icon }) => {
+                {allowedLinks?.map(({ href, label, icon }) => {
                     const abc = href.split('/')[1];
                     const isActive = href === `/${abc}` ? pathname === `/${abc}` : pathname.startsWith(href);
                     return (
@@ -88,8 +95,10 @@ export default function Sidebar({ isOpen, setIsSidebarOpen, sidebarLinks }) {
                         <p className="text-xs text-gray-400 sm:hidden lg:block">admin@admin.com</p>
                     </div>
                 </div>
+
                 <Button
                     className="w-full mt-2 bg-gray-800 hover:bg-gray-700 text-gray-100 transition-colors"
+                    onClick={() => signOut({ callbackUrl: '/' })}
                 >
                     <LogOut className="mr-2 h-4 w-4 text-red-400" />
                     <span className="sm:hidden lg:block">Logout</span>
