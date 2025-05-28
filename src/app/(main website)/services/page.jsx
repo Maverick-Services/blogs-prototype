@@ -10,8 +10,6 @@ export default async function Page() {
     const categories = await categoriesRes.json()
 
     console.log(services)
-
-
     console.log(categories)
 
     return <ServicesClient services={services?.data} categories={categories?.data} />

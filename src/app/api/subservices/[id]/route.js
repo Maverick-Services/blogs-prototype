@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
-import connectDB from '@/lib/mongodb';
 import SubService from '@/models/subServiceModel';
+import { connectDB } from '@/lib/mongodb';
 
 // GET a single sub-service by ID
 export async function GET(req) {

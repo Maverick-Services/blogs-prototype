@@ -1,0 +1,63 @@
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import api from '@/lib/api';
+import { toast } from 'react-hot-toast';
+
+export const useUsers = () => {
+    const queryClient = useQueryClient();
+
+    // Get all users
+    const usersQuery = useQuery({
+        queryKey: ['users'],
+        queryFn: () => api.get('/users').then(res => res.data),
+        staleTime: 1000 * 60 * 5, // 5 minutes cache
+        onError: (err) => {
+            toast.error(err.message || 'Failed to fetch users');
+        },
+        onSettled: () => {
+            queryClient.invalidateQueries(['users']);
+        }
+    });
+
+    // Create User mutation
+    const createUser = useMutation({
+        mutationFn: (data) => api.post('/users', data),
+        onSuccess: () => {
+            queryClient.invalidateQueries(['users']);
+            toast.success('User created successfully');
+        },
+        onError: (err) => {
+            toast.error(err.message || 'Failed to create User');
+        }
+    });
+
+    // Update User mutation
+    const updateUser = useMutation({
+        mutationFn: ({ id, data }) => api.put(`/users/${id}`, data),
+        onSuccess: () => {
+            queryClient.invalidateQueries(['users']);
+            toast.success('User updated successfully');
+        },
+        onError: (err) => {
+            toast.error(err.message || 'Failed to update User');
+        }
+    });
+
+    // Delete User mutation
+    const deleteUser = useMutation({
+        mutationFn: (id) => api.delete(`/users/${id}`),
+        onSuccess: () => {
+            queryClient.invalidateQueries(['users']);
+            toast.success('User deleted successfully');
+        },
+        onError: (err) => {
+            toast.error(err.message || 'Failed to delete User');
+        }
+    });
+
+    return {
+        usersQuery,
+        createUser,
+        updateUser,
+        deleteUser,
+    };
+};

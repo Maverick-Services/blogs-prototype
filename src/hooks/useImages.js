@@ -1,4 +1,4 @@
-// use images hook
+// hooks/useImages.js
 
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import api from '@/lib/api';
@@ -25,10 +25,7 @@ export const useImages = () => {
     });
 
     const deleteImage = useMutation({
-        mutationFn: ({ publicId }) =>
-            api.delete(`/images`, {
-                data: { publicId },
-            }),
+        mutationFn: ({ publicId }) => api.delete(`/images`, { data: { publicId }, }),
         onSuccess: () => {
             queryClient.invalidateQueries(['images']);
             toast.success('Image deleted');

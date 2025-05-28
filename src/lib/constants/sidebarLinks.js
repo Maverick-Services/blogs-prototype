@@ -9,6 +9,8 @@ import {
     Users as UsersIcon,
     Images,
     ServerCog,
+    User,
+    Settings,
 } from 'lucide-react';
 
 export const ADMIN_SIDEBAR_LINKS = [
@@ -53,6 +55,18 @@ export const ADMIN_SIDEBAR_LINKS = [
         label: 'Media',
         href: '/admin/media',
         icon: <Images />,
+    },
+    {
+        key: "users",
+        label: "Users",
+        href: "/admin/users",
+        icon: <User />
+    },
+    {
+        key: "settings",
+        label: "Settings",
+        href: "/admin/settings",
+        icon: <Settings />
     },
 ];
 

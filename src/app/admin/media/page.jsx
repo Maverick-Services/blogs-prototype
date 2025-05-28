@@ -1,3 +1,4 @@
+// app/admin/media/page.jsx
 'use client';
 import React, { useState } from 'react';
 import InnerDashboardLayout from '@/components/dashboard/InnerDashboardLayout';

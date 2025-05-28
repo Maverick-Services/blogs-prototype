@@ -7,10 +7,10 @@ export const HeroSection = () => {
     return (
         <div className="relative w-full min-h-[60vh] md:min-h-[40vh] lg:min-h-[70vh] z-0 lg:px-20 py-20">
             <Image src={"/hero-bg-blue.png"} alt="Indian law"
-                // width={1000} height={1000}
-                layout='fill'
+                width={1000} height={1000}
                 objectFit='fill'
-                className="absolute top-0 right-0 left-0 -z-10 w-full h-full" />
+                className="absolute top-0 right-0 left-0 -z-10 w-full h-full"
+            />
 
             <div className='w-11/12 md:max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-10'>
                 {/* Left Content */}

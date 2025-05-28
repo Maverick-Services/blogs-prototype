@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { FiMenu, FiX } from 'react-icons/fi'
+import LoginButton from '@/components/auth/LoginButton'
 
 export default function NavBar() {
     const [mobileOpen, setMobileOpen] = useState(false)
@@ -38,12 +39,13 @@ export default function NavBar() {
                             </Link>
                         ))}
 
-                        <Link
+                        {/* <Link
                             href="/login"
                             className="lg:ml-4 bg-accent text-white px-4 py-1 rounded-full hover:opacity-80 transition"
                         >
                             Login
-                        </Link>
+                        </Link> */}
+                        <LoginButton />
                     </div>
 
                     {/* Mobile Hamburger */}
@@ -73,13 +75,14 @@ export default function NavBar() {
                             </Link>
                         ))}
 
-                        <Link
+                        {/* <Link
                             href="/login"
                             className="block mt-2 px-4 py-2 text-center bg-accent text-white rounded-md hover:bg-red-700 transition"
                             onClick={() => setMobileOpen(false)}
                         >
                             Login
-                        </Link>
+                        </Link> */}
+                        <LoginButton />
                     </div>
                 </div>
             )}

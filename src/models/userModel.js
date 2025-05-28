@@ -5,7 +5,7 @@ const permissionSchema = new mongoose.Schema({
     add: { type: Boolean, default: false },
     edit: { type: Boolean, default: false },
     delete: { type: Boolean, default: false }
-}, { _id: false });
+}, 2);
 
 const userSchema = new mongoose.Schema({
     name: {
@@ -13,34 +13,35 @@ const userSchema = new mongoose.Schema({
         required: true,
         trim: true
     },
-
     email: {
         type: String,
         required: true,
         unique: true,
-        lowercase: true
+        lowercase: true,
+        match: [/\S+@\S+\.\S+/, 'Please provide a valid email']
     },
-
     password: {
         type: String,
-        required: true,
-        minlength: 6
+        select: false,
+        required: function () {
+            return this.provider === 'credentials';
+        }
     },
-
     role: {
         type: String,
         enum: ['admin', 'sub-admin', 'user'],
         default: 'user'
     },
-
-    permissions: {
-        dashboard: { type: permissionSchema, default: () => ({ view: true }) },
-        services: { type: permissionSchema, default: () => ({}) },
-        categories: { type: permissionSchema, default: () => ({}) },
-        tags: { type: permissionSchema, default: () => ({}) },
-        media: { type: permissionSchema, default: () => ({}) }
+    provider: {
+        type: String,
+        enum: ['google', 'credentials'],
+        default: 'credentials'
     },
-
+    permissions: {
+        type: Map,
+        of: permissionSchema,
+        default: () => new Map()
+    },
     createdBy: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
@@ -48,5 +49,6 @@ const userSchema = new mongoose.Schema({
 
 }, { timestamps: true });
 
+const User = mongoose.models.User || mongoose.model('User', userSchema);
 
-export default mongoose.models.User || mongoose.model('User', userSchema);
+export default User

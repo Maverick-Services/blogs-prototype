@@ -1,3 +1,4 @@
+// app/admin/media/components/PreviewDialog.jsx
 'use client';
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
