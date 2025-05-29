@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/select"
 
 function page() {
-    const [roleFilter, setRoleFilter] = useState('sub-admin')
+    const [roleFilter, setRoleFilter] = useState('user')
     const [page, setPage] = useState(1)
     const [pageSize, setPageSize] = useState(1)
 
