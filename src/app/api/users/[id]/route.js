@@ -1,10 +1,14 @@
 import { connectDB } from "@/lib/mongodb";
 import User from "@/models/userModel";
 import { NextResponse } from "next/server";
-import bcrypt from 'bcryptjs';
+import { Actions, Resources } from "@/lib/permissions";
+import { requirePermissionApi } from "@/lib/serverPermissions";
 
 
 export async function GET(_, { params }) {
+    const errorResponse = await requirePermissionApi(req, Resources.USERS, Actions.VIEW);
+    if (errorResponse) return errorResponse;
+
     await connectDB();
 
     try {
@@ -21,6 +25,9 @@ export async function GET(_, { params }) {
 }
 
 export async function PATCH(req, { params }) {
+    const errorResponse = await requirePermissionApi(req, Resources.USERS, Actions.EDIT);
+    if (errorResponse) return errorResponse;
+
     await connectDB();
     try {
         const updates = await req.json();
@@ -36,6 +43,9 @@ export async function PATCH(req, { params }) {
 }
 
 export async function DELETE(_, { params }) {
+    const errorResponse = await requirePermissionApi(req, Resources.USERS, Actions.DELETE);
+    if (errorResponse) return errorResponse;
+
     await connectDB();
     try {
         const user = await User.findByIdAndDelete(params.id);

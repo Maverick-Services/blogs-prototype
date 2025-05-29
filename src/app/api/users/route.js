@@ -3,8 +3,13 @@ import { connectDB } from "@/lib/mongodb";
 import User from "@/models/userModel";
 import { NextResponse } from "next/server";
 import bcrypt from 'bcryptjs';
+import { requirePermissionApi } from "@/lib/serverPermissions";
+import { Actions, Resources } from "@/lib/permissions";
 
 export async function GET(req) {
+    const errorResponse = await requirePermissionApi(req, Resources.USERS, Actions.VIEW);
+    if (errorResponse) return errorResponse;
+
     await connectDB();
     try {
         const { searchParams } = new URL(req.url);
@@ -42,6 +47,9 @@ export async function GET(req) {
 }
 
 export async function POST(req) {
+    const errorResponse = await requirePermissionApi(req, Resources.USERS, Actions.ADD);
+    if (errorResponse) return errorResponse;
+
     await connectDB();
 
     try {
