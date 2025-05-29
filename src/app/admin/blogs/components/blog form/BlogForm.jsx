@@ -1,5 +1,16 @@
 'use client';
 
+import dynamic from 'next/dynamic';
+
+// Replace static import with dynamic import
+const RTEField = dynamic(
+    () => import('./RTEField'),
+    {
+        ssr: false,
+        loading: () => <p className="py-10 text-center">Loading editor...</p>
+    }
+);
+
 import React from 'react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -10,7 +21,6 @@ import { Command, CommandInput, CommandList, CommandEmpty, CommandItem, } from '
 import { useCategories } from '@/hooks/useCategories';
 import { useTags } from '@/hooks/useTags';
 import { X } from 'lucide-react';
-import RTEField from './RTEField';
 import { useBlogs } from '@/hooks/useBlogs';
 import LoaderButton from '@/components/custom/LoaderButton';
 

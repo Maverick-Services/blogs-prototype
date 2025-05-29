@@ -1,3 +1,4 @@
+"use client"
 import React from 'react'
 import InnerDashboardLayout from '@/components/dashboard/InnerDashboardLayout';
 import BlogForm from '../components/blog form/BlogForm';
