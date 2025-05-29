@@ -13,6 +13,7 @@ import {
     Settings,
 } from 'lucide-react';
 import { Resources } from '../permissions';
+import { FaBlog } from 'react-icons/fa';
 
 export const ADMIN_SIDEBAR_LINKS = [
     {
@@ -20,6 +21,12 @@ export const ADMIN_SIDEBAR_LINKS = [
         label: 'Services',
         href: '/admin/services',
         icon: <ServerCog />,
+    },
+    {
+        key: Resources.BLOGS,
+        label: 'Blogs',
+        href: '/admin/blogs',
+        icon: <FaBlog />,
     },
     {
         key: Resources.CATEGORIES,

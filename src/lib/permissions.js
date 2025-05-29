@@ -4,6 +4,7 @@
 export const Resources = {
     MEDIA: 'media',
     SERVICES: 'services',
+    BLOGS: 'blogs',
     CATEGORIES: 'categories',
     TAGS: 'tags',
     USERS: 'users',

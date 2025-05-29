@@ -14,7 +14,6 @@ function page() {
     } = createService
 
     const handleSubmit = async (data) => {
-        // Yahan TanStack Query ka mutation ya fetch call se "create service" logic
         console.log('Add service:', data);
         await createServiceAsync(data)
     };
