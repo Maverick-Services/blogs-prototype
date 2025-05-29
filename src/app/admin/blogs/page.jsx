@@ -3,7 +3,6 @@
 import React, { useState } from 'react'
 import InnerDashboardLayout from '@/components/dashboard/InnerDashboardLayout'
 import { Button } from '@/components/ui/button'
-import { Switch } from '@/components/ui/switch'
 import { useBlogs } from '@/hooks/useBlogs'
 import { CirclePlus } from 'lucide-react'
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '@/components/ui/select'
@@ -25,6 +24,8 @@ function Page() {
         deleteBlog,
         permissions: { canView, canAdd, canEdit, canDelete, onlyAdmin }
     } = useBlogs({ status, featured, page, pageSize })
+
+    console.log(blogsQuery)
 
     return (
         <InnerDashboardLayout>
@@ -102,8 +103,8 @@ function Page() {
                     onPageChange={setPage}
                     onlyAdmin={onlyAdmin}
                     page={page}
+                    blogs={blogsQuery.data?.data || []}
                     pageCount={Math.ceil((blogsQuery.data?.totalCount || 0) / pageSize)}
-                    blogs={blogsQuery.data}
                 />
             }
         </InnerDashboardLayout>

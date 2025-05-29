@@ -32,30 +32,26 @@ export async function GET(req) {
         const page = parseInt(searchParams.get('page') || '1');
         const limit = parseInt(searchParams.get('limit') || '10');
 
-        // Build filter object dynamically
         const filter = {};
         if (status) {
             filter.status = status;
         }
         if (featuredParam !== null) {
-            // Convert featured query param to boolean
             filter.featured = featuredParam === 'true';
         }
 
-        const skip = (page - 1) * limit
+        const skip = (page - 1) * limit;
 
         const [blogs, totalCount] = await Promise.all([
             Blog.find(filter).skip(skip).limit(limit),
             Blog.countDocuments(filter)
-        ])
+        ]);
 
-        return NextResponse.json(
-            {
-                success: true,
-                data: blogs,
-                totalCount: totalCount
-            }
-        );
+        return NextResponse.json({
+            success: true,
+            data: blogs,
+            totalCount: totalCount,
+        });
     } catch (error) {
         console.error('GET /api/blogs error:', error);
         return NextResponse.json(

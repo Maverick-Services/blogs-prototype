@@ -23,6 +23,7 @@ import { useTags } from '@/hooks/useTags';
 import { X } from 'lucide-react';
 import { useBlogs } from '@/hooks/useBlogs';
 import LoaderButton from '@/components/custom/LoaderButton';
+import { useRouter } from 'next/navigation';
 
 export default function BlogForm({ defaultValues }) {
     const { createBlog, updateBlog } = useBlogs({ status: true, featured: false, page: 1, pageSize: 10 })
@@ -241,6 +242,12 @@ export default function BlogForm({ defaultValues }) {
             </div>
 
             <RTEField setValue={setValue} content={defaultValues?.content} />
+
+            {createError &&
+                <div className='py-3 rounded-md my-1 px-3 bg-red-100'>
+                    <p className='text-red-700'>Error: {createError.message}</p>
+                </div>
+            }
 
             <LoaderButton
                 type='submit'

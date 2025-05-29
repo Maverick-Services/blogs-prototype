@@ -3,8 +3,10 @@ import api from '@/lib/api';
 import { toast } from 'react-hot-toast';
 import { useSession } from 'next-auth/react';
 import { Actions, checkPermission, onlyAdminPermission, Resources } from '@/lib/permissions';
+import { useRouter } from 'next/navigation';
 
 export const useBlogs = ({ featured = 'all', status = 'active', page = 1, pageSize = 10 }) => {
+    const router = useRouter()
     const { data: session } = useSession();
     const user = session?.user;
     const queryClient = useQueryClient();
@@ -27,7 +29,7 @@ export const useBlogs = ({ featured = 'all', status = 'active', page = 1, pageSi
     // Fetch blogs with filters
     const blogsQuery = useQuery({
         queryKey: ['blogs', status, featured, page, pageSize],
-        queryFn: () => api.get(`/blogs${queryString}`).then(res => res.data),
+        queryFn: () => api.get(`/blogs${queryString}`),
         keepPreviousData: true,
         enabled: canView,
         staleTime: 1000 * 60 * 5,
@@ -46,6 +48,7 @@ export const useBlogs = ({ featured = 'all', status = 'active', page = 1, pageSi
         onSuccess: () => {
             queryClient.invalidateQueries(['blogs']);
             toast.success('Blog created successfully');
+            router.push('/admin/blogs')
         },
         onError: (err) => {
             toast.error(err.message || 'Failed to create blog');
@@ -59,6 +62,7 @@ export const useBlogs = ({ featured = 'all', status = 'active', page = 1, pageSi
         onSuccess: () => {
             queryClient.invalidateQueries(['blogs']);
             toast.success('Blog updated successfully');
+            router.push('/admin/blogs')
         },
         onError: (err) => {
             toast.error(err.message || 'Failed to update blog');

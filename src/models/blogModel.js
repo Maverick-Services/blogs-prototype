@@ -58,7 +58,7 @@ const blogSchema = new mongoose.Schema({
 });
 
 
-blogSchema.index({ name: 1 }, { unique: true });
+blogSchema.index({ title: 1 }, { unique: true });
 blogSchema.index({ status: 1 });
 blogSchema.index({ featured: 1 });
 blogSchema.index({ categories: 1, status: 1 });
