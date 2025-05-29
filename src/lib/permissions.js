@@ -1,9 +1,5 @@
 // lib/permissions.js
 
-// import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-// import { getServerSession } from "next-auth";
-// import { cookies, headers } from "next/headers";
-
 // Define resources
 export const Resources = {
     MEDIA: 'media',
@@ -66,3 +62,8 @@ function hasPermission(permissions, resource, action) {
 //         );
 //     }
 // }
+
+export function onlyAdminPermission(user) {
+    if (user?.role === 'admin') return true;
+    return false;
+}

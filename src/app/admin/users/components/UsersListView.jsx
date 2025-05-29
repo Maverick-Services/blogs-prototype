@@ -25,6 +25,9 @@ export default function UsersListView({
     onDelete,
     isDeleting,
     deleteError,
+    canDelete,
+    canEdit,
+    onlyAdmin
 }) {
     const [deletingUserId, setDeletingUserId] = useState(null)
 
@@ -79,21 +82,25 @@ export default function UsersListView({
                                     {new Date(user.createdAt).toLocaleDateString()}
                                 </TableCell>
                                 <TableCell className="flex justify-center gap-2">
-                                    <Button
-                                        size="icon"
-                                        variant="outline"
-                                        onClick={() => onEdit(user)}
-                                    >
-                                        <Pencil size={16} />
-                                    </Button>
-                                    <Button
-                                        size="icon"
-                                        variant="destructive"
-                                        onClick={() => handleDeleteClick(user._id)}
-                                        disabled={isDeleting}
-                                    >
-                                        <Trash size={16} />
-                                    </Button>
+                                    {canEdit &&
+                                        <Button
+                                            size="icon"
+                                            variant="outline"
+                                            onClick={() => onEdit(user)}
+                                        >
+                                            <Pencil size={16} />
+                                        </Button>
+                                    }
+                                    {canDelete &&
+                                        <Button
+                                            size="icon"
+                                            variant="destructive"
+                                            onClick={() => handleDeleteClick(user._id)}
+                                            disabled={isDeleting}
+                                        >
+                                            <Trash size={16} />
+                                        </Button>
+                                    }
                                 </TableCell>
                             </TableRow>
                         ))}

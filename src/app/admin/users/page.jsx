@@ -20,7 +20,19 @@ function page() {
     const [pageSize, setPageSize] = useState(1)
 
     // fetch users query
-    const { usersQuery, createUser, updateUser, deleteUser, changePassword } = useUsers({ role: roleFilter, page, pageSize });
+    const {
+        usersQuery,
+        createUser,
+        updateUser,
+        deleteUser,
+        changePassword,
+        permissions: {
+            canView,
+            canAdd,
+            canDelete,
+            canEdit,
+            onlyAdmin }
+    } = useUsers({ role: roleFilter, page, pageSize });
 
     // destructure createUser mutation
     const {
@@ -70,8 +82,8 @@ function page() {
     return (
         <div>
             <InnerDashboardLayout>
-                <div className='w-full flex items-center justify-between'>
-                    <h1 className='text-primary font-bold sm:text-2xl lg:text-4xl'>Users</h1>
+                <div className='w-full flex items-center text-primary'>
+                    <h1 className='font-bold sm:text-2xl lg:text-4xl w-full'>Users</h1>
                 </div>
 
                 <div className="flex justify-between items-center mb-4 mt-4">
@@ -80,8 +92,12 @@ function page() {
                             <SelectValue placeholder="Select role" />
                         </SelectTrigger>
                         <SelectContent>
-                            <SelectItem value="admin">Admin</SelectItem>
-                            <SelectItem value="sub-admin">Sub-Admin</SelectItem>
+                            {onlyAdmin &&
+                                <>
+                                    <SelectItem value="admin">Admin</SelectItem>
+                                    <SelectItem value="sub-admin">Sub-Admin</SelectItem>
+                                </>
+                            }
                             <SelectItem value="user">User</SelectItem>
                         </SelectContent>
                     </Select>
@@ -97,23 +113,30 @@ function page() {
                         </SelectContent>
                     </Select>
 
-                    <Button onClick={handleAddClick}>
-                        <CirclePlus className="mr-2 h-4 w-4" /> Add New
-                    </Button>
+                    {canAdd &&
+                        <Button onClick={handleAddClick}>
+                            <CirclePlus className="mr-2 h-4 w-4" /> Add New
+                        </Button>
+                    }
+
                 </div>
 
-                <UsersListView
-                    isLoading={usersQuery.isLoading}
-                    error={usersQuery.error}
-                    users={usersQuery.data?.data || []}
-                    page={page}
-                    pageCount={Math.ceil((usersQuery.data?.totalCount || 0) / pageSize)}
-                    onPageChange={setPage}
-                    onEdit={handleEditClick}
-                    onDelete={deleteUser.mutateAsync}
-                    isDeleting={deleteUser.isLoading}
-                    deleteError={deleteUser.error}
-                />
+                {canView &&
+                    <UsersListView
+                        isLoading={usersQuery.isLoading}
+                        error={usersQuery.error}
+                        users={usersQuery.data?.data || []}
+                        page={page}
+                        pageCount={Math.ceil((usersQuery.data?.totalCount || 0) / pageSize)}
+                        onPageChange={setPage}
+                        onEdit={handleEditClick}
+                        canEdit={canEdit}
+                        canDelete={canDelete}
+                        onDelete={deleteUser.mutateAsync}
+                        isDeleting={deleteUser.isLoading}
+                        deleteError={deleteUser.error}
+                    />
+                }
 
                 <UserDialog
                     open={isDialogOpen}
@@ -124,6 +147,8 @@ function page() {
                     isSubmitting={isCreating || isUpdating}
                     error={createError?.message || updateError?.message}
                     changePassword={changePassword}
+                    onlyAdmin={onlyAdmin}
+                    canEdit={canEdit}
                 />
 
             </InnerDashboardLayout>

@@ -29,7 +29,7 @@ const permissionTypes = [
     { id: 'delete', label: 'Delete' }
 ];
 
-export default function UserDialog({ open, onOpenChange, selectedUser, onCreate, onUpdate, isSubmitting, error, changePassword }) {
+export default function UserDialog({ open, onOpenChange, selectedUser, onCreate, onUpdate, isSubmitting, error, changePassword, canEdit, onlyAdmin }) {
     const { register, handleSubmit, reset, formState: { errors }, watch, setValue, } = useForm();
     const watchRole = watch("role", "user");
     const watchPermissions = watch("permissions", {});
@@ -193,7 +193,9 @@ export default function UserDialog({ open, onOpenChange, selectedUser, onCreate,
                                     })}
                                 >
                                     <option value="user">User</option>
-                                    <option value="sub-admin">Sub Admin</option>
+                                    {onlyAdmin &&
+                                        <option value="sub-admin">Sub Admin</option>
+                                    }
                                 </select>
                                 {errors.role && (
                                     <p className="text-sm text-red-500 mt-1">
@@ -237,15 +239,24 @@ export default function UserDialog({ open, onOpenChange, selectedUser, onCreate,
                     {error && <p className="text-red-600 mb-5 text-sm">Error: {error}</p>}
 
                     <DialogFooter>
-                        {selectedUser &&
+                        {onlyAdmin && selectedUser &&
                             <Button variant={"outline"} type="button" disabled={isSubmitting} onClick={() => setPwdDialogOpen(true)}>
                                 Update Password
                             </Button>
+
                         }
-                        <Button type="submit" disabled={isSubmitting}>
-                            {isSubmitting && <Loader2 className="animate-spin mr-1" />}
-                            {selectedUser ? "Update" : "Create"}
-                        </Button>
+
+                        {selectedUser && onlyAdmin ?
+                            <Button type="submit" disabled={isSubmitting}>
+                                {isSubmitting && <Loader2 className="animate-spin mr-1" />}
+                                Update
+                            </Button>
+                            : <Button type="submit" disabled={isSubmitting}>
+                                {isSubmitting && <Loader2 className="animate-spin mr-1" />}
+                                Create
+                            </Button>
+                        }
+
                     </DialogFooter>
                 </form>
 
