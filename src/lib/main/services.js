@@ -1,15 +1,12 @@
 // lib/services.js
-import Service from '@/models/serviceModel';
-import { connectDB } from '../mongodb';
 
 const API_BASE = process.env.NEXT_PUBLIC_SITE_URL;
+
 export async function getServiceBySlug(slug) {
     try {
         const res = await fetch(
             `${API_BASE}/api/services/bySlug/${slug}`,
-            {
-                next: { revalidate: 300 },
-            }
+            { next: { revalidate: 300 }, }
         );
 
         if (!res.ok) {

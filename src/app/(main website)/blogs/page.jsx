@@ -1,4 +1,5 @@
 // app/blogs/page.js
+import { Suspense } from "react";
 import BlogList from "./components/BlogList";
 import CategoryFilter from "./components/CategoryFilter";
 
@@ -48,7 +49,9 @@ export default async function BlogsPage() {
 
             <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
                 <div className="lg:col-span-1">
-                    <CategoryFilter categories={categories} />
+                    <Suspense >
+                        <CategoryFilter categories={categories} />
+                    </Suspense>
                 </div>
 
                 <div className="lg:col-span-3">
