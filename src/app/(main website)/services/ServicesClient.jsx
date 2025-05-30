@@ -6,12 +6,12 @@ import ServicesBox from './ServicesBox'
 
 export default function ServicesClient({ services, categories }) {
     // single source of truth for the UI
-    // const [selectedCategory, setSelectedCategory] = useState('all')
+    const [selectedCategory, setSelectedCategory] = useState('all')
 
-    // // compute filtered list here and pass down
-    // const filteredServices = selectedCategory === 'all'
-    //     ? services
-    //     : services.filter(s => s.categories.includes(selectedCategory))
+    // compute filtered list here and pass down
+    const filteredServices = selectedCategory === 'all'
+        ? services
+        : services.filter(s => s.categories.includes(selectedCategory))
 
     return (
         <WebsiteLayout>
@@ -20,13 +20,13 @@ export default function ServicesClient({ services, categories }) {
             </div>
 
             <div className='flex flex-col lg:flex-row max-w-7xl mx-auto items-start gap-5'>
-                {/* <CategoriesBox
+                <CategoriesBox
                     categories={categories}
                     selectedCategory={selectedCategory}
                     onSelectCategory={setSelectedCategory}
                 />
 
-                <ServicesBox services={filteredServices} /> */}
+                <ServicesBox services={filteredServices} />
             </div>
         </WebsiteLayout>
     )

@@ -3,8 +3,13 @@ import WebsiteLayout from '@/components/website/WebsiteLayout';
 import { getAllServicesSlugs, getServiceBySlug } from '@/lib/main/services';
 import { notFound } from 'next/navigation';
 
+export async function generateStaticParams() {
+    const services = await getAllServicesSlugs();
+    return services.data.map(({ slug }) => ({ slug }))
+}
+
 export async function generateMetadata({ params }) {
-    const service = await getServiceBySlug(params.slug);
+    const service = await (params.slug);
 
     if (!service) return {
         title: "Service Not Found",
@@ -30,14 +35,9 @@ export async function generateMetadata({ params }) {
     };
 }
 
-export async function generateStaticParams() {
-    const services = await getAllServicesSlugs(); // Function to get all slugs
-    return services.map((service) => ({
-        slug: service.slug,
-    }));
-}
-
 async function Page({ params }) {
+
+
     const service = await getServiceBySlug(params.slug);
 
     if (!service) {

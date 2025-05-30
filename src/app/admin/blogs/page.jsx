@@ -25,8 +25,6 @@ function Page() {
         permissions: { canView, canAdd, canEdit, canDelete, onlyAdmin }
     } = useBlogs({ status, featured, page, pageSize })
 
-    console.log(blogsQuery)
-
     return (
         <InnerDashboardLayout>
             <div className="flex items-center justify-between mb-4">
