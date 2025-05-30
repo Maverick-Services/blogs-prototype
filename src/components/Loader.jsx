@@ -5,7 +5,7 @@ export default function Loader({ label = "Loading...", visible = true }) {
     if (!visible) return null;
 
     return (
-        <div className="flex flex-col items-center justify-center bg-white/80 backdrop-blur-sm h-[50vh] dark:bg-gray-900/80">
+        <div className="flex flex-col items-center justify-center bg-transparent backdrop-blur-sm h-[50vh] dark:bg-gray-900/80">
             <div className="relative flex items-center justify-center">
                 {/* Outer gradient ring */}
                 <div className="absolute inset-0 rounded-full border-8 border-transparent border-t-blue-500 border-r-purple-600 animate-spin"></div>

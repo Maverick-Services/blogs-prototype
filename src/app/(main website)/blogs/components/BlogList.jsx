@@ -1,68 +1,51 @@
-'use client';
+import Loader from "@/components/Loader";
+import BlogCard from "./BlogCard";
 
-import { useState, useRef, useCallback } from 'react';
-import useSWRInfinite from 'swr/infinite';
-
-const fetcher = url => fetch(url).then(res => res.json());
-
-export default function BlogList({ initialBlogs, initialTotalCount }) {
-    const PAGE_SIZE = 10;
-
-    const getKey = (pageIndex, previousPage) => {
-        // Stop if reached end
-        if (previousPage && !previousPage.blogs.length) return null;
-
-        const lastId = pageIndex === 0
-            ? null
-            : previousPage.lastId;
-
-        // Build API URL
-        const params = new URLSearchParams();
-        params.set('limit', PAGE_SIZE);
-        if (lastId) params.set('lastId', lastId);
-
-        return `/api/blogs?${params.toString()}`;
-    };
-
-    const { data, size, setSize, isValidating } = useSWRInfinite(
-        getKey,
-        fetcher,
-        {
-            initialData: [{ blogs: initialBlogs, lastId: initialBlogs[initialBlogs.length - 1]?._id, totalCount: initialTotalCount }]
-        }
-    );
-
-    const allBlogs = data.flatMap(page => page.blogs);
-    const totalCount = data[0]?.totalCount;
-
-    const observerRef = useRef();
-    const loadMoreRef = useCallback(node => {
-        if (isValidating) return;
-        if (observerRef.current) observerRef.current.disconnect();
-
-        observerRef.current = new IntersectionObserver(entries => {
-            if (entries[0].isIntersecting && allBlogs.length < totalCount) {
-                setSize(size + 1);
-            }
-        });
-
-        if (node) observerRef.current.observe(node);
-    }, [isValidating, size, allBlogs, totalCount]);
-
+export default function BlogList({ blogs, onLoadMore, hasMore, isLoadingMore }) {
     return (
-        <div className="space-y-6">
-            {allBlogs.map(blog => (
-                <article key={blog._id} className="prose">
-                    <h2>{blog.title}</h2>
-                    <p>{blog.excerpt}</p>
-                </article>
-            ))}
+        <div className="space-y-8">
+            {blogs.length === 0 ? (
+                <p className="text-center py-10">No blogs found in this category</p>
+            ) : (
+                <>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {blogs.map(blog => (
+                            <BlogCard key={`${blog._id}-${blogs.length}`} blog={blog} />
+                        ))}
+                    </div>
 
-            {allBlogs.length < totalCount && (
-                <div ref={loadMoreRef} className="py-10 text-center">
-                    {isValidating ? 'Loading more…' : 'Scroll to load more'}
-                </div>
+                    {hasMore && (
+                        <div className="text-center mt-8">
+                            <button
+                                onClick={onLoadMore}
+                                disabled={isLoadingMore}
+                                className="bg-[#0A3460] text-white px-6 py-3 rounded-lg hover:bg-blue-800 transition-colors disabled:opacity-50"
+                            >
+                                {isLoadingMore ? (
+                                    <Loader className="mr-2" />
+                                ) : 'Load More Blogs'}
+                            </button>
+                        </div>
+                    )}
+                </>
             )}
         </div>
     );
 }
+
+
+// import React from 'react'
+// import BlogCard from './BlogCard'
+
+// export default function BlogList({ blogs }) {
+//     console.log(blogs);
+//     return (
+//         <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5'>
+//             {blogs?.data?.map((item, idx) =>
+//                 <div key={idx}>
+//                     <BlogCard blog={item} />
+//                 </div>
+//             )}
+//         </div>
+//     )
+// }

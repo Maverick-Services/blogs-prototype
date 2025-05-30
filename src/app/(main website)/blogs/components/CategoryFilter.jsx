@@ -1,39 +1,83 @@
-// app/blogs/components/CategoryFilter.jsx
 'use client';
+import React from 'react';
 
-import Link from 'next/link';
-import { useSearchParams } from 'next/navigation';
-
-export default function CategoryFilter({ categories }) {
-    const searchParams = useSearchParams();
-    const currentCategory = searchParams.get('category');
-
+function CategoriesFilter({ categories, selectedCategory, onSelectCategory }) {
     return (
-        <div className="bg-white p-6 rounded-xl shadow-md">
-            <h3 className="font-bold text-lg mb-4">Categories</h3>
-            <ul>
-                <li className="mb-2">
-                    <Link
-                        href="/blogs"
-                        className={`block px-4 py-2 rounded-lg hover:bg-gray-100 ${!currentCategory ? 'bg-primary text-white hover:bg-primary-dark' : ''
-                            }`}
-                    >
-                        All Categories
-                    </Link>
-                </li>
-
-                {categories.map(category => (
-                    <li key={category._id} className="mb-2">
-                        <Link
-                            href={`/blogs?category=${category.slug}`}
-                            className={`block px-4 py-2 rounded-lg hover:bg-gray-100 ${currentCategory === category.slug ? 'bg-primary text-white hover:bg-primary-dark' : ''
+        <div className="w-full">
+            <div className="sticky top-24 bg-white rounded-xl shadow-lg p-4">
+                <h2 className="text-2xl font-bold text-[#0A3460] mb-4">Categories</h2>
+                <ul className="space-y-2">
+                    <li>
+                        <button
+                            onClick={() => onSelectCategory('all')}
+                            className={`w-full text-left px-4 py-2 rounded-lg transition-colors ${selectedCategory === 'all'
+                                ? 'bg-[#0A3460] text-white'
+                                : 'text-gray-600 hover:bg-gray-100'
                                 }`}
                         >
-                            {category.name}
-                        </Link>
+                            All Categories
+                        </button>
                     </li>
-                ))}
-            </ul>
+
+                    {categories.data.map(cat => (
+                        <li key={cat._id}>
+                            <button
+                                onClick={() => onSelectCategory(cat._id)}
+                                className={`w-full text-left px-4 py-2 rounded-lg transition-colors ${selectedCategory === cat._id
+                                    ? 'bg-[#0A3460] text-white'
+                                    : 'text-gray-600 hover:bg-gray-100'
+                                    }`}
+                            >
+                                {cat.name}
+                            </button>
+                        </li>
+                    ))}
+                </ul>
+            </div>
         </div>
     );
 }
+
+export default CategoriesFilter;
+
+// 'use client';
+// import React from 'react';
+
+// function CategoriesFilter({ categories, selectedCategory, onSelectCategory }) {
+//     return (
+//         <div className="w-full">
+//             <div className="sticky top-24 bg-white rounded-xl shadow-lg p-4">
+//                 <h2 className="text-2xl font-bold text-[#0A3460] mb-4">Categories</h2>
+//                 <ul className="space-y-2">
+//                     <li>
+//                         <button
+//                             onClick={() => onSelectCategory('all')}
+//                             className={`w-full text-left px-4 py-2 rounded-lg transition-colors ${selectedCategory === 'all'
+//                                 ? 'bg-[#0A3460] text-white'
+//                                 : 'text-gray-600 hover:bg-gray-100'
+//                                 }`}
+//                         >
+//                             All Categories
+//                         </button>
+//                     </li>
+
+//                     {categories.data.map(cat => (
+//                         <li key={cat._id}>
+//                             <button
+//                                 onClick={() => onSelectCategory(cat._id)}
+//                                 className={`w-full text-left px-4 py-2 rounded-lg transition-colors ${selectedCategory === cat._id
+//                                     ? 'bg-[#0A3460] text-white'
+//                                     : 'text-gray-600 hover:bg-gray-100'
+//                                     }`}
+//                             >
+//                                 {cat.name}
+//                             </button>
+//                         </li>
+//                     ))}
+//                 </ul>
+//             </div>
+//         </div>
+//     );
+// }
+
+// export default CategoriesFilter;

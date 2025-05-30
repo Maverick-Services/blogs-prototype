@@ -1,17 +1,20 @@
+"use client"
+import React from 'react'
 import Footer from '@/components/website/common/Footer'
 import NavBar from '@/components/website/common/Navbar'
-import React from 'react'
 
-export default function WebsiteLayout({ children }) {
+export default function WebsiteLayout({ services, categories, children }) {
+
     return (
         <div className='bg-gray-100'>
             <div className=''>
-                <NavBar />
+                <NavBar services={services} categories={categories} />
             </div>
 
-            <div className='min-h-screen'>
+            <div className='min-h-screen px-3 sm:px-8 pb-8'>
                 {children}
             </div>
+
             <Footer />
         </div>
     )

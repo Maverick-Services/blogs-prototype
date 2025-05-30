@@ -3,7 +3,7 @@ import React from 'react';
 
 function CategoriesBox({ categories, selectedCategory, onSelectCategory }) {
     return (
-        <div className="w-full lg:w-1/4">
+        <div className="w-full">
             <div className="sticky top-24 bg-white rounded-xl shadow-lg p-4">
                 <h2 className="text-2xl font-bold text-[#0A3460] mb-4">Categories</h2>
                 <ul className="space-y-2">
