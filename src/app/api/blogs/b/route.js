@@ -22,7 +22,7 @@ export async function GET(req) {
         // Add sorting by createdAt descending
         const [blogs, totalCount] = await Promise.all([
             Blog.find(filter)
-                .sort({ createdAt: -1 })  // Newest first
+                .sort({ updatedAt: -1 })  // Newest first
                 .skip(skip)
                 .limit(limit),
             // .populate('categories', 'name'),

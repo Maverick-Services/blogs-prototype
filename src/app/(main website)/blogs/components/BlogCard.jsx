@@ -3,7 +3,6 @@ import Link from 'next/link';
 import Image from 'next/image';
 
 export default function BlogCard({ blog }) {
-    console.log(blog)
     return (
         <article className="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
             <Link href={`/blogs/${blog.slug}`}>

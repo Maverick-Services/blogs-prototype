@@ -29,13 +29,6 @@ export default function Footer() {
 
     return (
         <footer className="relative overflow-hidden bg-gradient-to-br from-[#002244] to-[#003366] text-white pt-16 pb-8 px-4">
-            {/* Decorative elements */}
-            <div className="absolute top-0 left-0 w-full h-16 overflow-hidden">
-                <div className="absolute top-0 left-0 w-full h-full bg-[#003366] opacity-10">
-                    <div className="absolute -top-24 -left-24 w-64 h-64 rounded-full bg-[#0055aa] opacity-20"></div>
-                    <div className="absolute top-10 right-0 w-48 h-48 rounded-full bg-[#0055aa] opacity-15"></div>
-                </div>
-            </div>
 
             <div className="max-w-7xl mx-auto relative z-10">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
@@ -55,9 +48,9 @@ export default function Footer() {
                             </div>
                         </div>
 
-                        <p className="text-gray-300 leading-relaxed max-w-xs">
+                        {/* <p className="text-gray-300 leading-relaxed max-w-xs">
                             Providing comprehensive legal solutions to help your business thrive in today's competitive environment.
-                        </p>
+                        </p> */}
 
                         <div className="space-y-4">
                             <div className="flex items-start gap-4">
@@ -131,12 +124,13 @@ export default function Footer() {
 
                     {/* Newsletter */}
                     <div>
-                        <h3 className="text-xl font-bold mb-6 pb-2 border-b-2 border-[#0055aa] inline-block">Newsletter</h3>
-                        <p className="text-gray-300 mb-4">
+                        <h3 className="text-xl font-bold mb-3 pb-2 border-b-2 border-[#0055aa] inline-block">Best Services</h3>
+                        <p className="text-gray-300 mb-3">
+                            Providing comprehensive legal solutions to help your business thrive in today's competitive environment.
                             Subscribe to our newsletter for legal updates and business insights.
                         </p>
 
-                        <form className="space-y-4">
+                        {/* <form className="space-y-4">
                             <div>
                                 <input
                                     type="email"
@@ -150,7 +144,7 @@ export default function Footer() {
                             >
                                 Subscribe Now
                             </button>
-                        </form>
+                        </form> */}
 
                         <div className="mt-8">
                             <h4 className="font-semibold mb-4">Follow Us</h4>

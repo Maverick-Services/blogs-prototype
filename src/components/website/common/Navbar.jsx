@@ -136,7 +136,7 @@ export default function NavBar({ services, categories }) {
                                                             getServicesFor(cat._id).map((svc) => (
                                                                 <li key={svc._id} className="group">
                                                                     <Link
-                                                                        href={`services/${svc.slug}`}
+                                                                        href={`/services/${svc.slug}`}
                                                                         className="flex items-center py-3 px-4 rounded-lg hover:bg-gray-50 transition-all duration-200 border border-gray-100"
                                                                     >
                                                                         <div className="flex-1">

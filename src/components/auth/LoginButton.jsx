@@ -1,7 +1,7 @@
 "use client"
 // components/auth/loginButton.jsx
 import React, { useState } from 'react'
-import LoginDialog from './LoginDialog';
+import AuthDialog from './LoginDialog';
 import { Button } from '../ui/button';
 
 function LoginButton() {
@@ -10,7 +10,7 @@ function LoginButton() {
     return (
         <div>
             <Button onClick={() => setIsDialogOpen(true)}>Login</Button>
-            <LoginDialog
+            <AuthDialog
                 onOpenChange={setIsDialogOpen}
                 open={isDialogOpen}
             />

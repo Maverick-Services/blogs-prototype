@@ -7,24 +7,12 @@ export async function getBlogsData({ page = 1, limit = 30, category = 'all' } = 
             url.searchParams.append('category', category);
         }
 
-        console.log(url);
+        // console.log(url);
 
-        const blogsRes = await fetch(url);
-
-        // if (!blogsRes.ok) {
-        //     // Try to get error message from response
-        //     let errorMsg = 'Failed to fetch blogs data';
-        //     try {
-        //         const errorData = await blogsRes.json();
-        //         errorMsg = errorData.message || errorMsg;
-        //     } catch (e) {
-        //         console.error('Error parsing error response:', e);
-        //     }
-        //     throw new Error(errorMsg);
-        // }
+        const blogsRes = await fetch(url)
 
         const data = await blogsRes.json();
-        console.log(data);
+        // console.log(data);
         return {
             blogs: data.data || [],
             totalCount: data.totalCount || 0,
@@ -42,6 +30,30 @@ export async function getBlogsData({ page = 1, limit = 30, category = 'all' } = 
         };
     }
 }
+
+
+const API_BASE = process.env.NEXT_PUBLIC_SITE_URL;
+
+export async function getBlogBySlug(slug) {
+    try {
+        const res = await fetch(
+            `${API_BASE}/api/blogs/bySlug/${slug}`,
+            { next: { revalidate: 300 }, }
+        );
+
+        if (!res.ok) {
+            console.error(`Failed to fetch service ${slug}: ${res.status}`);
+            return null;
+        }
+
+        const service = await res.json();
+        return service;
+    } catch (error) {
+        console.error(`Error fetching blog ${slug}:`, error);
+        return null;
+    }
+}
+
 
 // export async function getBlogsData() {
 //     try {

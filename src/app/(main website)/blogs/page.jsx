@@ -9,7 +9,7 @@ export default async function page() {
     // Fix: Set initial limit to 30
     const initialData = await getBlogsData({
         page: 1,
-        limit: 1,
+        limit: 30,
         category: 'all'
     });
 

@@ -11,7 +11,7 @@ export default function WebsiteLayout({ services, categories, children }) {
                 <NavBar services={services} categories={categories} />
             </div>
 
-            <div className='min-h-screen px-3 sm:px-8 pb-8'>
+            <div className='min-h-screen'>
                 {children}
             </div>
 

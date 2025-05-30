@@ -1,4 +1,4 @@
-// app/api/services/blog/bySlug/[slug]
+// app/api/services/bySlug/[slug]
 import { connectDB } from "@/lib/mongodb";
 import Service from "@/models/serviceModel";
 import { NextResponse } from "next/server";
@@ -9,6 +9,8 @@ export async function GET(req, { params }) {
         const { slug } = params;
 
         const service = await Service.findOne({ slug })
+            .populate('categories')
+            .populate('tags')
 
         if (!service) {
             return NextResponse.json({ message: 'Service not found' }, { status: 404 });
