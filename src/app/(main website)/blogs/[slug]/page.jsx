@@ -48,8 +48,6 @@ export default async function page({ params }) {
         3
     );
 
-    console.log(relatedServices)
-
     return (
         <WebsiteLayout services={services} categories={categories}>
             <article className="max-w-7xl mx-auto space-y-5">

@@ -19,7 +19,7 @@ function ServicesBox({ services }) {
                         <div className="sm:ml-6 mt-4 sm:mt-0 flex-1">
                             <h3 className="text-lg sm:text-lg font-bold text-gray-900">{service.name}</h3>
                             <p className="text-gray-600 mt-1 text-xs sm:text-base">{service.shortDescription}</p>
-                            <Link href={`/services/${service.slug}`} passHref
+                            <Link href={`/services/${service.slug}`} passHref   
                                 className="inline-block mt-4 px-4 py-2 bg-[#0A3460] text-white text-sm rounded-full hover:bg-[#082c50] transition"
                             >
                                 Read More

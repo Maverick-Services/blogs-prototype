@@ -10,7 +10,7 @@ export async function GET(req, { params }) {
 
         const service = await Service.findOne({ slug })
             .populate('categories')
-            .populate('tags')
+        // .populate('tags')
 
         if (!service) {
             return NextResponse.json({ message: 'Service not found' }, { status: 404 });
