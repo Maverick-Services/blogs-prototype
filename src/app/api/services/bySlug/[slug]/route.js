@@ -9,7 +9,7 @@ export async function GET(req, { params }) {
         const { slug } = params;
 
         const service = await Service.findOne({ slug })
-            .populate('categories')
+        // .populate('categories')
         // .populate('tags')
 
         if (!service) {
