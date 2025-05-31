@@ -79,7 +79,6 @@ function arrayLimit(max) {
     };
 }
 
-serviceSchema.index({ name: 1 }, { unique: true });
 serviceSchema.index({ status: 1 });
 serviceSchema.index({ featured: 1 });
 serviceSchema.index({ categories: 1, status: 1 });
