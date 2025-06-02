@@ -3,11 +3,11 @@
 import React, { useState } from 'react'
 import InnerDashboardLayout from '@/components/dashboard/InnerDashboardLayout'
 import { Button } from '@/components/ui/button'
-import { useBlogs } from '@/hooks/useBlogs'
 import { CirclePlus } from 'lucide-react'
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '@/components/ui/select'
 import Link from 'next/link'
 import BlogsTable from './components/BlogsTable'
+import { useBlogs } from '@/hooks/useBlogs';
 
 function Page() {
     // filters

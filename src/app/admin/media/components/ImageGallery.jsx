@@ -36,7 +36,7 @@ export default function ImageGallery({ images, isLoading }) {
                 {images.map(img => (
                     <div
                         key={img.public_id}
-                        className="border-2 rounded-lg overflow-hidden shadow-sm cursor-pointer bottom-0 relative duration-200 hover:bottom-2 hover:border-purple-400 hover:border-2 "
+                        className="border-2 bg-white rounded-lg overflow-hidden shadow-sm cursor-pointer bottom-0 relative duration-200 hover:bottom-2 hover:border-purple-400 hover:border-2 "
                         onClick={() => {
                             setSelectedImage(img);
                             setIsDialogOpen(true);

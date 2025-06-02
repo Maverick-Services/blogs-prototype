@@ -24,7 +24,7 @@ export default function Sidebar({ isOpen, setIsSidebarOpen, sidebarLinks }) {
     }
 
     return (
-        <div className={`max-[640px]:max-w-58 max-[640px]:absolute ${!isOpen ? "-left-full" : 'left-0'} max-[640px]:top-0 lg:w-[16rem] h-screen bg-gray-900 overflow-auto text-gray-100 border-r border-gray-700 shadow-xl flex flex-col items-center gap-2 px-3 py-2 transition-all duration-500 ease-in-out`}>
+        <div className={`max-[640px]:max-w-58 max-[640px]:absolute ${!isOpen ? "-left-full" : 'left-0'} max-[640px]:top-0 lg:w-[16rem] h-screen bg-gray-900 overflow-auto text-gray-100 border-r border-gray-700 shadow-xl flex flex-col items-center gap-2 px-3 py-2 transition-all duration-500 ease-in-out z-[100]`}>
             {/* Logo Section */}
             <div className="w-full pt-4 pb-4 px-4 hover:scale-[1.02] transition-transform duration-300">
                 <Image
