@@ -1,26 +1,41 @@
-
 import {
-    Home,
-    MessageSquare,
-    Briefcase,
-    Grid,
-    FileText,
-    Tag,
-    Users as UsersIcon,
-    Images,
-    ServerCog,
-    User,
-    Settings,
-} from 'lucide-react';
+    FaHome,
+    FaEnvelope,
+    FaBriefcase,
+    FaThLarge,
+    FaFileAlt,
+    FaTags,
+    FaUsers,
+    FaImages,
+    FaCogs,
+    FaUser,
+    FaBlog,
+    FaQuoteRight,
+    FaPhoneAlt,
+    FaCalendarCheck,
+    FaClipboardList,
+} from 'react-icons/fa';
+
 import { Resources } from '../permissions';
-import { FaBlog } from 'react-icons/fa';
 
 export const ADMIN_SIDEBAR_LINKS = [
+    {
+        key: 'dashboard',
+        label: 'Dashboard',
+        href: '/admin',
+        icon: <FaHome />,
+    },
+    {
+        key: 'enquiries',
+        label: 'Enquiries',
+        href: '/admin/enquiries',
+        icon: <FaEnvelope />,
+    },
     {
         key: Resources.SERVICES,
         label: 'Services',
         href: '/admin/services',
-        icon: <ServerCog />,
+        icon: <FaBriefcase />,
     },
     {
         key: Resources.BLOGS,
@@ -32,53 +47,54 @@ export const ADMIN_SIDEBAR_LINKS = [
         key: Resources.CATEGORIES,
         label: 'Categories',
         href: '/admin/categories',
-        icon: <Grid />,
+        icon: <FaThLarge />,
     },
     {
         key: Resources.TAGS,
         label: 'Tags',
         href: '/admin/tags',
-        icon: <Tag />,
+        icon: <FaTags />,
     },
     {
         key: Resources.MEDIA,
         label: 'Media',
         href: '/admin/media',
-        icon: <Images />,
+        icon: <FaImages />,
     },
     {
         key: Resources.USERS,
-        label: "Users",
-        href: "/admin/users",
-        icon: <User />
+        label: 'Users',
+        href: '/admin/users',
+        icon: <FaUser />,
     },
     {
         key: Resources.SETTINGS,
-        label: "Settings",
-        href: "/admin/settings",
-        icon: <Settings />
+        label: 'Settings',
+        href: '/admin/settings',
+        icon: <FaCogs />,
+    },
+    {
+        key: 'testimonials',
+        label: 'Testimonials',
+        href: '/admin/testimonials',
+        icon: <FaQuoteRight />,
+    },
+    {
+        key: 'call-plans',
+        label: 'Call Plans',
+        href: '/admin/call-plans',
+        icon: <FaPhoneAlt />,
+    },
+    {
+        key: 'call-bookings',
+        label: 'Call Bookings',
+        href: '/admin/call-bookings',
+        icon: <FaCalendarCheck />,
+    },
+    {
+        key: 'service-bookings',
+        label: 'Service Bookings',
+        href: '/admin/service-bookings',
+        icon: <FaClipboardList />,
     },
 ];
-
-
-
-
-
-// {
-//     key: 'dashboard',
-//     label: 'Dashboard',
-//     href: '/admin',
-//     icon: <Home />,
-// },
-// {
-//     key: 'enquiries',
-//     label: 'Enquiries',
-//     href: '/admin/enquiries',
-//     icon: <MessageSquare />,
-// },
-// {
-//     key: 'services',
-//     label: 'Services',
-//     href: '/admin/services',
-//     icon: <Briefcase />,
-// },

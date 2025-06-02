@@ -1,5 +1,6 @@
 "use client"
 import React, { useState } from 'react';
+import toast, { Toaster } from 'react-hot-toast';
 
 export const ContactForm = () => {
     const [formData, setFormData] = useState({
@@ -17,21 +18,36 @@ export const ContactForm = () => {
         setFormData(prev => ({ ...prev, [name]: value }));
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         setIsSubmitting(true);
 
-        // Simulate form submission
-        setTimeout(() => {
-            setIsSubmitting(false);
-            setIsSubmitted(true);
+        try {
+            const response = await fetch('/api/contact', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+            })
 
-            // Reset form after success
-            setTimeout(() => {
-                setIsSubmitted(false);
-                setFormData({ name: '', phone: '', email: '', description: '' });
-            }, 3000);
-        }, 1500);
+            if (response.ok) {
+                setIsSubmitted(true)
+                setTimeout(() => {
+                    setIsSubmitted(false);
+                    setFormData({ name: '', phone: '', email: '', description: '' });
+                }, 3000);
+                toast.success('Message sent successfully!')
+            } else {
+                toast.error('Failed to send message. Please try again.')
+            }
+        } catch (error) {
+            console.log(error)
+            toast.error('An error occurred. Please try again later.')
+        } finally {
+            setIsSubmitting(false)
+        }
+
     };
 
     return (
@@ -164,13 +180,8 @@ export const ContactForm = () => {
                         </button>
                     </form>
                 )}
-
-                {/* <div className="mt-6 text-center">
-                    <p className="text-blue-200 text-sm">
-                        Or call us directly at <span className="font-semibold text-white">(123) 456-7890</span>
-                    </p>
-                </div> */}
             </div>
+            <Toaster position="top-right" />
         </div>
     );
 };

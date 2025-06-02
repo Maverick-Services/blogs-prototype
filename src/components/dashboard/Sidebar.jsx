@@ -24,8 +24,7 @@ export default function Sidebar({ isOpen, setIsSidebarOpen, sidebarLinks }) {
     }
 
     return (
-        <div className={`max-[640px]:max-w-58 w-full max-[640px]:absolute ${!isOpen ? "-left-full" : 'left-0'
-            } max-[640px]:top-0 sm:w-[7rem] lg:w-[18rem] h-screen bg-gray-900 overflow-auto text-gray-100 border-r border-gray-700 shadow-xl flex flex-col items-center gap-2 px-6 py-2 transition-all duration-500 ease-in-out`}>
+        <div className={`max-[640px]:max-w-58 max-[640px]:absolute ${!isOpen ? "-left-full" : 'left-0'} max-[640px]:top-0 lg:w-[16rem] h-screen bg-gray-900 overflow-auto text-gray-100 border-r border-gray-700 shadow-xl flex flex-col items-center gap-2 px-3 py-2 transition-all duration-500 ease-in-out`}>
             {/* Logo Section */}
             <div className="w-full pt-4 pb-4 px-4 hover:scale-[1.02] transition-transform duration-300">
                 <Image
@@ -33,15 +32,7 @@ export default function Sidebar({ isOpen, setIsSidebarOpen, sidebarLinks }) {
                     alt="logo"
                     height={160}
                     width={160}
-                    className="w-full block sm:hidden lg:block object-contain "
-                />
-
-                <Image
-                    src={IMAGES.MINILOGODARK}
-                    alt="logo"
-                    height={160}
-                    width={160}
-                    className="w-full hidden sm:block lg:hidden object-contain"
+                    className="object-contain "
                 />
 
             </div>
@@ -65,14 +56,14 @@ export default function Sidebar({ isOpen, setIsSidebarOpen, sidebarLinks }) {
                             <span className={`p-2 rounded-lg ${isActive ? "bg-white/10" : "bg-gray-800 group-hover:bg-gray-700"
                                 }`}>
                                 <span
-                                    className="text-xl text-gray-100"
-                                    style={{ fontSize: "max(1.3vw, 20px)" }}
+                                    className="text-sm text-gray-100"
+                                // style={{ fontSize: "max(1.1vw, 15px)" }}
                                 >
                                     {icon}
                                 </span>
                             </span>
 
-                            <span className="text-sm sm:hidden lg:block font-medium opacity-90 group-hover:opacity-100 transition-opacity">
+                            <span className="text-sm font-medium opacity-90 group-hover:opacity-100 transition-opacity">
                                 {label}
                             </span>
                         </Link>
