@@ -1,24 +1,29 @@
+import { getTestimonialsData } from '@/lib/main/getStaticData';
 import Image from 'next/image';
 
-export default function Testimonials() {
-    const testimonials = [
+export default async function Testimonials() {
+    const data = await getTestimonialsData();
+    const testimonials = data?.data?.length > 0 ? data.data : [
         {
-            name: 'Sneha Kapoor',
-            role: 'Boutique Owner',
-            image: '/avatars/sneha.png',
-            text: 'Starting my company felt overwhelming, but their legal team made it smooth and stress-free. Everything was done on time with full clarity.'
+            userName: 'Sneha Kapoor',
+            designation: 'Boutique Owner',
+            company: 'Fashion Forward',
+            imageURL: '/avatars/sneha.png',
+            message: 'Starting my company felt overwhelming, but their legal team made it smooth and stress-free. Everything was done on time with full clarity.'
         },
         {
-            name: 'Priya Mehta',
-            role: 'Startup Founder',
-            image: '/avatars/priya.png',
-            text: 'Their GST and PF registration service was quick, transparent, and affordable. Highly recommend for any small business owner.'
+            userName: 'Priya Mehta',
+            designation: 'Startup Founder',
+            company: 'InnovateX',
+            imageURL: '/avatars/priya.png',
+            message: 'Their GST and PF registration service was quick, transparent, and affordable. Highly recommend for any small business owner.'
         },
         {
-            name: 'Yogesh Arora',
-            role: 'Tech Entrepreneur',
-            image: '/avatars/yogesh.png',
-            text: 'We had no idea how to protect our brand, but their trademark experts guided us through every step. Professional and reliable.'
+            userName: 'Yogesh Arora',
+            designation: 'Tech Entrepreneur',
+            company: 'CodeVerse',
+            imageURL: '/avatars/yogesh.png',
+            message: 'We had no idea how to protect our brand, but their trademark experts guided us through every step. Professional and reliable.'
         }
     ];
 
@@ -39,22 +44,23 @@ export default function Testimonials() {
                         <div key={idx} className="relative bg-white rounded-2xl p-4 pt-16 flex-1 shadow-lg">
                             {/* Avatar */}
                             <div className="absolute -top-12 left-1/2 transform -translate-x-1/2">
-                                <div className="w-24 h-24 rounded-full overflow-hidden">
+                                <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-gray-500">
                                     <Image
-                                        src={t.image}
-                                        alt={t.name}
-                                        width={96}
-                                        height={96}
-                                        objectFit="cover"
+                                        src={t.imageURL}
+                                        alt={t.userName}
+                                        width={200}
+                                        height={200}
+                                        className='h-full w-full object-cover'
                                     />
                                 </div>
                             </div>
 
                             {/* Name & Role */}
                             <h4 className="text-center text-xl font-semibold text-gray-800">
-                                {t.name}
+                                {t.userName}
                             </h4>
-                            <p className="text-center text-gray-500 mt-1">{t.role}</p>
+                            <p className="text-sm text-gray-500 text-center">{t?.designation && t?.designation + ','} {t.company}</p>
+
 
                             {/* Stars */}
                             <div className="flex justify-center mt-2">
@@ -67,7 +73,7 @@ export default function Testimonials() {
                             {/* Quote */}
                             <blockquote className="text-gray-700 text-sm leading-relaxed relative pl-4">
                                 <span className="absolute top-0 left-0 text-4xl text-gray-200">“</span>
-                                <span className="ml-2">{t.text}</span>
+                                <span className="ml-2">{t.message}</span>
                             </blockquote>
                         </div>
                     ))}

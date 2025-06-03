@@ -9,7 +9,8 @@ export const Resources = {
     TAGS: 'tags',
     USERS: 'users',
     SETTINGS: 'settings',
-    ENQUIRIES: 'enquiries'
+    ENQUIRIES: 'enquiries',
+    TESTIMONIALS: 'testimonials'
 };
 
 // Define possible actions

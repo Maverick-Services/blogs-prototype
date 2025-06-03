@@ -17,7 +17,7 @@ import {
 function page() {
     const [roleFilter, setRoleFilter] = useState('user')
     const [page, setPage] = useState(1)
-    const [pageSize, setPageSize] = useState(1)
+    const [pageSize, setPageSize] = useState(10)
 
     // fetch users query
     const {

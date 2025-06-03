@@ -23,3 +23,5 @@ export async function getHomePageData() {
         return { services: [], categories: [] };
     }
 }
+
+

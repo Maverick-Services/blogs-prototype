@@ -48,7 +48,7 @@ export const useEnquiries = ({ status, important, page, pageSize }) => {
             return response;
         },
         enabled: canView, // Only run query if user has permission
-        staleTime: 1000 * 60 * 5, // 5 minutes
+        staleTime: 1000 * 10, // 5 minutes
         retry: 2,
         onError: (err) => {
             console.error('Enquiries fetch error:', err);
