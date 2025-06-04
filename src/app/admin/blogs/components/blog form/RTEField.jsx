@@ -24,10 +24,10 @@ function RTEField({ content, setValue }) {
     }
 
     return (
-        <div className="border-t-2 pt-6 mt-6 w-full mx-auto bg-whiteCard text-primary">
-            <div className="flex w-full justify-between items-center mb-2">
+        <div className=" w-full mx-auto bg-white text-primary">
+            {/* <div className="flex w-full justify-between items-center mb-2">
                 <h1 className="text-xl font-bold">Blog Content</h1>
-            </div>
+            </div> */}
             <div className="bg-white">
                 <Editor
                     ref={editorRef}

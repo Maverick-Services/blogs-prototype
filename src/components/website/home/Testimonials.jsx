@@ -44,7 +44,7 @@ export default async function Testimonials() {
                         <div key={idx} className="relative bg-white rounded-2xl p-4 pt-16 flex-1 shadow-lg">
                             {/* Avatar */}
                             <div className="absolute -top-12 left-1/2 transform -translate-x-1/2">
-                                <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-gray-500">
+                                <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-white shadow-sm shadow-black/50">
                                     <Image
                                         src={t.imageURL}
                                         alt={t.userName}

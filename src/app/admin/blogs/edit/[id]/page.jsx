@@ -48,7 +48,7 @@ export default function Page() {
 
     return (
         <InnerDashboardLayout>
-            <h1>Update blog</h1>
+            <h1 className="text-primary font-bold sm:text-2xl lg:text-4xl mb-4">Update Blog</h1>
 
             <BlogForm defaultValues={blog} />
         </InnerDashboardLayout>

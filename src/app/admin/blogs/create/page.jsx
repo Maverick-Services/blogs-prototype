@@ -7,8 +7,7 @@ function page() {
 
     return (
         <InnerDashboardLayout>
-            <h1>Create new blog</h1>
-
+            <h1 className="text-primary font-bold sm:text-2xl lg:text-4xl mb-4">Create New Blog</h1>
             <BlogForm />
         </InnerDashboardLayout>
     )
