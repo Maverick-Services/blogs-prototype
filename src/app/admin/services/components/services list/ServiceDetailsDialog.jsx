@@ -7,7 +7,7 @@ import Image from "next/image";
 
 export default function ServiceDetailsDialog({ service }) {
     const [activeTab, setActiveTab] = useState(0);
-    console.log(service)
+    // console.log(service)
     return (
         <Dialog>
             <DialogTrigger asChild>

@@ -4,6 +4,19 @@ import { connectDB } from "@/lib/mongodb";
 import Service from "@/models/serviceModel";
 import { NextResponse } from "next/server";
 
+async function checkForDuplicate({ name, slug, excludeId = null }) {
+    const conditions = [];
+    if (name) conditions.push({ name });
+    if (slug) conditions.push({ slug });
+
+    if (conditions.length === 0) return false;
+
+    const query = { $or: conditions };
+    if (excludeId) query._id = { $ne: excludeId };
+
+    return await Service.findOne(query);
+}
+
 export async function GET(req, { params }) {
     try {
         await connectDB();
@@ -26,18 +39,29 @@ export async function GET(req, { params }) {
 
 export async function PUT(req, { params }) {
     try {
-        await connectDB();
-        const { slug } = params;
+        const { id } = params;
         const data = await req.json();
+        await connectDB();
 
-        const updatedService = await Service.findOneAndUpdate(
-            { slug },
+        // Check for duplicates
+        const duplicate = await checkForDuplicate({
+            name: data.name,
+            slug: data.slug,
+            excludeId: id
+        });
+
+        if (duplicate) {
+            return NextResponse.json(
+                { error: "Service with this slug or name already exists" },
+                { status: 409 } // 409 Conflict more appropriate
+            );
+        }
+
+        const updatedService = await Service.findByIdAndUpdate(
+            id,
             data,
-            {
-                new: true,
-                runValidators: true,
-            }
-        ).populate('categories').populate('tags');
+            { new: true, runValidators: true, }
+        );
 
         if (!updatedService) {
             return NextResponse.json({ message: 'Service not found' }, { status: 404 });

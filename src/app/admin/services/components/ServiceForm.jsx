@@ -19,7 +19,6 @@ const steps = [
 ];
 
 export default function ServiceForm({ defaultValues, onSubmit, loading, error }) {
-    const { createService, updateService } = useServices();
 
     const methods = useForm({
         resolver: zodResolver(ServiceFormSchema),
@@ -83,6 +82,8 @@ export default function ServiceForm({ defaultValues, onSubmit, loading, error })
             setCurrentStep(stepIndex);
         }
     };
+
+    console.log(error)
 
     return (
         <FormProvider {...methods}>
@@ -160,7 +161,7 @@ export default function ServiceForm({ defaultValues, onSubmit, loading, error })
                     {currentStep === 2 && <Step3PageContent />}
                 </div>
 
-                {error && <p className='text-red-700'>Error: {error}</p>}
+                {/* {error && <p className='text-red-700'>Error: {error}</p>} */}
 
                 {/* Navigation Buttons */}
                 <div className="flex justify-between pt-1">

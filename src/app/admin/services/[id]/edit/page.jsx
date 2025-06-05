@@ -4,9 +4,13 @@
 import React from 'react';
 import ServiceForm from '../../components/ServiceForm';
 import { useServiceStore } from '@/store/serviceStore';
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator, } from '@/components/ui/breadcrumb';
 import { useServices } from '@/hooks/useServices';
+import InnerDashboardLayout from '@/components/dashboard/InnerDashboardLayout';
+import { useRouter } from 'next/navigation';
 
 const EditServicePage = () => {
+    const router = useRouter()
     const { updateService } = useServices()
 
     const { selectedService } = useServiceStore();
@@ -15,13 +19,32 @@ const EditServicePage = () => {
     const handleSubmit = async (data) => {
         await updateService.mutateAsync({ id: selectedService._id, data })
         console.log('Update service:', data);
+        router.push('/admin/services')
+
     };
 
     return (
-        <div>
-            <h1>Edit Service</h1>
-            <ServiceForm defaultValues={selectedService} onSubmit={handleSubmit} />
-        </div>
+        <InnerDashboardLayout>
+            <div className="w-full items-center justify-between">
+                <h1 className="text-primary font-bold sm:text-2xl lg:text-3xl mb-3">Edit Service</h1>
+                <Breadcrumb className="mb-5">
+                    <BreadcrumbList>
+                        <BreadcrumbItem>
+                            <BreadcrumbLink href="/admin">Dashboard</BreadcrumbLink>
+                        </BreadcrumbItem>
+                        <BreadcrumbSeparator />
+                        <BreadcrumbItem>
+                            <BreadcrumbLink href="/admin/services">Services</BreadcrumbLink>
+                        </BreadcrumbItem>
+                        <BreadcrumbSeparator />
+                        <BreadcrumbItem>
+                            <BreadcrumbPage>Edit</BreadcrumbPage>
+                        </BreadcrumbItem>
+                    </BreadcrumbList>
+                </Breadcrumb>
+            </div>
+            <ServiceForm defaultValues={selectedService} onSubmit={handleSubmit} loading={updateService.isPending} error={updateService.error} />
+        </InnerDashboardLayout>
     );
 };
 
