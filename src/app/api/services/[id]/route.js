@@ -82,7 +82,7 @@ export async function DELETE(req, { params }) {
         await connectDB();
         const { id } = params;
 
-        const deletedService = await Service.findByIdAndDelete({ id });
+        const deletedService = await Service.findByIdAndDelete(id);
 
         if (!deletedService) {
             return NextResponse.json({ message: 'Service not found' }, { status: 404 });
