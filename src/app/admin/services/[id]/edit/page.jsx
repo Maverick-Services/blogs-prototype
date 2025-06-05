@@ -8,10 +8,11 @@ import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbP
 import { useServices } from '@/hooks/useServices';
 import InnerDashboardLayout from '@/components/dashboard/InnerDashboardLayout';
 import { useRouter } from 'next/navigation';
+import NotAuthorizedPage from '@/components/notAuthorized';
 
 const EditServicePage = () => {
     const router = useRouter()
-    const { updateService } = useServices()
+    const { updateService, permissions: { canEdit } } = useServices()
 
     const { selectedService } = useServiceStore();
     if (!selectedService) return <div className="p-4">Loading or Invalid Access</div>;
@@ -20,8 +21,9 @@ const EditServicePage = () => {
         await updateService.mutateAsync({ id: selectedService._id, data })
         console.log('Update service:', data);
         router.push('/admin/services')
-
     };
+
+    if (!canEdit) return <NotAuthorizedPage />;
 
     return (
         <InnerDashboardLayout>
