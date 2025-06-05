@@ -15,6 +15,7 @@ import { convertToBase64 } from '@/lib/services/convertToBase64';
 import { FolderUp, Loader2 } from 'lucide-react';
 
 export default function UploaderDialog({ open, onOpenChange }) {
+
     const [file, setFile] = useState(null);
     const [previewUrl, setPreviewUrl] = useState(null);
     const [metadata, setMetadata] = useState({ name: '', size: 0, width: 0, height: 0 });

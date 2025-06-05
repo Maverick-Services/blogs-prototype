@@ -6,11 +6,16 @@ import InnerDashboardLayout from '@/components/dashboard/InnerDashboardLayout';
 import TagsListView from './components/TagsListView';
 import TagDialog from './components/TagDialog';
 import { useState } from 'react';
-import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator, } from '@/components/ui/breadcrumb';
+import NotAuthorizedPage from '@/components/notAuthorized';
 
 export default function Page() {
     // fetch tags query
-    const { tagsQuery, createTag, updateTag, deleteTag } = useTags();
+    const { tagsQuery, createTag, updateTag, deleteTag, permissions: {
+        canView,
+        canAdd,
+        canEdit,
+        canDelete,
+    } } = useTags();
 
     // destructure createTag mutation
     const {
@@ -57,21 +62,12 @@ export default function Page() {
         setIsDialogOpen(true);
     };
 
+    if (!canView) return <NotAuthorizedPage />
+
     return (
         <InnerDashboardLayout>
             <div className="w-full items-center justify-between">
                 <h1 className="text-primary font-bold sm:text-2xl lg:text-4xl mb-3">Tags</h1>
-                <Breadcrumb className="mb-3">
-                    <BreadcrumbList>
-                        <BreadcrumbItem>
-                            <BreadcrumbLink href="/admin">Dashboard</BreadcrumbLink>
-                        </BreadcrumbItem>
-                        <BreadcrumbSeparator />
-                        <BreadcrumbItem>
-                            <BreadcrumbPage>Tags</BreadcrumbPage>
-                        </BreadcrumbItem>
-                    </BreadcrumbList>
-                </Breadcrumb>
             </div>
 
             <div>
@@ -79,9 +75,11 @@ export default function Page() {
                     <Button variant="outline">
                         Tags: {tagsQuery.data?.length || 0}
                     </Button>
-                    <Button onClick={handleAddClick}>
-                        <CirclePlus className="mr-2 h-4 w-4" /> Add New
-                    </Button>
+                    {canAdd &&
+                        <Button onClick={handleAddClick}>
+                            <CirclePlus className="mr-2 h-4 w-4" /> Add New
+                        </Button>
+                    }
                 </div>
 
                 <TagsListView
@@ -92,6 +90,8 @@ export default function Page() {
                     error={tagsQuery.error}
                     isDeleting={isDeleting}
                     deleteError={deleteError}
+                    canEdit={canEdit}
+                    canDelete={canDelete}
                 />
 
                 <TagDialog

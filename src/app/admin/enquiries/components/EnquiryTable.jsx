@@ -11,9 +11,7 @@ import {
 } from '@/components/ui/table'
 import { Button } from '@/components/ui/button'
 import { Pencil, Trash } from 'lucide-react'
-import Loader from '@/components/Loader'
 import DeleteConfirmationDialog from '@/components/DeleteConfirmationDialog '
-import Link from 'next/link'
 import { Switch } from '@/components/ui/switch'
 import {
     Select,
@@ -24,6 +22,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select"
+import Loader from '@/components/Loader'
 
 function EnquiryTable({
     enquiries,
@@ -51,6 +50,10 @@ function EnquiryTable({
         await onDelete(deletingEnquiryId)
         setDeletingEnquiryId(null)
     }
+
+    if (isLoading) { return <Loader /> }
+
+    if (error) return <p className='text-red-600'>Error: {error}</p>
 
     return (
         <section className="space-y-4">

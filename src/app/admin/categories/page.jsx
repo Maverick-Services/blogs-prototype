@@ -5,12 +5,17 @@ import InnerDashboardLayout from '@/components/dashboard/InnerDashboardLayout';
 import CategoriesListView from './components/CategoriesListView';
 import CategoryDialog from './components/CategoryDialog';
 import { useState } from 'react';
-import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator, } from '@/components/ui/breadcrumb';
 import { useCategories } from '@/hooks/useCategories';
+import NotAuthorizedPage from '@/components/notAuthorized';
 
 export default function Page() {
     // fetch categories query
-    const { categoriesQuery, createCategory, deleteCategory, updateCategory } = useCategories();
+    const { categoriesQuery, createCategory, deleteCategory, updateCategory, permissions: {
+        canView,
+        canAdd,
+        canEdit,
+        canDelete,
+    } } = useCategories();
 
     // destructure createCategory mutation
     const {
@@ -60,21 +65,12 @@ export default function Page() {
         setIsDialogOpen(true);
     };
 
+    if (!canView) return <NotAuthorizedPage />
+
     return (
         <InnerDashboardLayout>
             <div className="w-full items-center justify-between">
                 <h1 className="text-primary font-bold sm:text-2xl lg:text-4xl mb-3">Categories</h1>
-                <Breadcrumb className="mb-3">
-                    <BreadcrumbList>
-                        <BreadcrumbItem>
-                            <BreadcrumbLink href="/admin">Dashboard</BreadcrumbLink>
-                        </BreadcrumbItem>
-                        <BreadcrumbSeparator />
-                        <BreadcrumbItem>
-                            <BreadcrumbPage>Categories</BreadcrumbPage>
-                        </BreadcrumbItem>
-                    </BreadcrumbList>
-                </Breadcrumb>
             </div>
 
             <div>
@@ -82,9 +78,11 @@ export default function Page() {
                     <Button variant="outline">
                         Categories: {categoriesQuery.data?.length || 0}
                     </Button>
-                    <Button onClick={handleAddClick}>
-                        <CirclePlus className="mr-2 h-4 w-4" /> Add New
-                    </Button>
+                    {canAdd &&
+                        <Button onClick={handleAddClick}>
+                            <CirclePlus className="mr-2 h-4 w-4" /> Add New
+                        </Button>
+                    }
                 </div>
 
                 <CategoriesListView
@@ -95,6 +93,8 @@ export default function Page() {
                     onDelete={deleteCategoryAsync}
                     isDeleting={isDeleting}
                     deleteError={deleteError}
+                    canEdit={canEdit}
+                    canDelete={canDelete}
                 />
 
                 <CategoryDialog

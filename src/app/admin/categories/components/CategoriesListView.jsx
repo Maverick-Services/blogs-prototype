@@ -1,12 +1,32 @@
-"use client";
+'use client';
+
+import { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { Loader2, Pencil, Trash } from "lucide-react";
-import { useState } from "react";
-import DeleteConfirmationDialog from "./DeleteConfirmationDialog ";
+import { Loader2, Pencil, Trash } from 'lucide-react';
+// import DeleteConfirmationDialog from './DeleteConfirmationDialog';
+import DeleteConfirmationDialog from './DeleteConfirmationDialog ';
 import Loader from '@/components/Loader';
 import Image from 'next/image';
+import {
+    Table,
+    TableHeader,
+    TableRow,
+    TableHead,
+    TableBody,
+    TableCell,
+} from '@/components/ui/table';
 
-export default function CategoriesListView({ isLoading, error, categories, onEdit, onDelete, isDeleting, deleteError }) {
+export default function CategoriesListView({
+    isLoading,
+    error,
+    categories,
+    onEdit,
+    onDelete,
+    isDeleting,
+    deleteError,
+    canEdit,
+    canDelete,
+}) {
     const [deletingCategoryId, setDeletingCategoryId] = useState(null);
 
     const handleDeleteClick = (categoryId) => {
@@ -18,38 +38,61 @@ export default function CategoriesListView({ isLoading, error, categories, onEdi
         setDeletingCategoryId(null);
     };
 
-    if (isLoading) return <div className="text-center p-4">
-        {/* <Loader2 className="animate-spin inline-block" /> */}
-        <Loader />
-    </div>;
+    if (isLoading)
+        return (
+            <div className="text-center p-4">
+                <Loader />
+            </div>
+        );
 
-    if (error) return <div className="text-red-600 p-4">Error: {error.message}</div>;
-    if (!categories?.length) return <div className="text-center text-gray-500 p-4">No categories Found!</div>;
+    if (error)
+        return (
+            <div className="text-red-600 p-4">
+                Error: {error.message}
+            </div>
+        );
+
+    if (!categories?.length)
+        return (
+            <div className="text-center text-gray-500 p-4">
+                No categories Found!
+            </div>
+        );
 
     return (
         <section className="w-full">
             <div className="overflow-x-auto rounded-md border border-gray-200">
-                <table className="w-full border-collapse">
-                    <thead>
-                        <tr className="bg-gray-50 text-xl border-b text-primary">
-                            <th className="px-6 py-3 text-center font-semibold align-middle">#</th>
-                            <th className="px-6 py-3 text-center font-semibold align-middle">Image</th>
-                            <th className="px-6 py-3 text-center font-semibold align-middle">Name</th>
-                            <th className="px-6 py-3 text-center font-semibold align-middle">Slug</th>
-                            <th className="px-6 py-3 text-center font-semibold align-middle">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {categories?.map((item, index) => (
-                            <tr
+                <Table className="w-full border-collapse">
+                    <TableHeader>
+                        <TableRow className="bg-gray-50 text-xl border-b text-primary">
+                            <TableHead className="px-6 py-3 text-center font-semibold align-middle">
+                                #
+                            </TableHead>
+                            <TableHead className="px-6 py-3 text-center font-semibold align-middle">
+                                Image
+                            </TableHead>
+                            <TableHead className="px-6 py-3 text-center font-semibold align-middle">
+                                Name
+                            </TableHead>
+                            <TableHead className="px-6 py-3 text-center font-semibold align-middle">
+                                Slug
+                            </TableHead>
+                            <TableHead className="px-6 py-3 text-center font-semibold align-middle">
+                                Action
+                            </TableHead>
+                        </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                        {categories.map((item, index) => (
+                            <TableRow
                                 key={item._id || index}
-                                className="even:bg-gray-50 hover:bg-gray-100 transition"
+                                className=" transition"
                             >
-                                <td className="px-6 py-3 border-b text-center align-middle">
+                                <TableCell className="px-6 py-3 border-b text-center align-middle">
                                     {index + 1}
-                                </td>
+                                </TableCell>
 
-                                <td className="px-6 py-3 border-b align-middle">
+                                <TableCell className="px-6 py-3 border-b align-middle">
                                     <div className="flex items-center justify-center min-h-20 py-1">
                                         <Image
                                             height={80}
@@ -57,40 +100,44 @@ export default function CategoriesListView({ isLoading, error, categories, onEdi
                                             quality={100}
                                             src={item.imageURL}
                                             alt={item.name}
-                                            className="object-contain"
+                                            className="object-contain rounded-md"
                                         />
                                     </div>
-                                </td>
+                                </TableCell>
 
-                                <td className="px-6 py-3 border-b text-center align-middle">
+                                <TableCell className="px-6 py-3 border-b text-center align-middle">
                                     {item.name}
-                                </td>
+                                </TableCell>
 
-                                <td className="px-6 py-3 border-b text-center align-middle">
+                                <TableCell className="px-6 py-3 border-b text-center align-middle">
                                     {item.slug}
-                                </td>
+                                </TableCell>
 
-                                <td className="px-6 py-3 border-b align-middle">
+                                <TableCell className="px-6 py-3 border-b align-middle">
                                     <div className="flex items-center justify-center gap-2">
-                                        <Button
-                                            size="icon"
-                                            variant="outline"
-                                            onClick={() => onEdit(item)}
-                                        >
-                                            <Pencil size={16} />
-                                        </Button>
-                                        <Button
-                                            variant="destructive"
-                                            onClick={() => handleDeleteClick(item._id)}
-                                        >
-                                            <Trash size={16} />
-                                        </Button>
+                                        {canEdit && (
+                                            <Button
+                                                size="icon"
+                                                variant="outline"
+                                                onClick={() => onEdit(item)}
+                                            >
+                                                <Pencil size={16} />
+                                            </Button>
+                                        )}
+                                        {canDelete && (
+                                            <Button
+                                                variant="destructive"
+                                                onClick={() => handleDeleteClick(item._id)}
+                                            >
+                                                <Trash size={16} />
+                                            </Button>
+                                        )}
                                     </div>
-                                </td>
-                            </tr>
+                                </TableCell>
+                            </TableRow>
                         ))}
-                    </tbody>
-                </table>
+                    </TableBody>
+                </Table>
             </div>
 
             <DeleteConfirmationDialog

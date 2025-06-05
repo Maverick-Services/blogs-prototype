@@ -5,7 +5,7 @@ import { useState } from "react";
 import DeleteConfirmationDialog from "./DeleteConfirmationDialog ";
 import Loader from '@/components/Loader';
 
-export default function TagsListView({ isLoading, error, tags, onEdit, onDelete, isDeleting, deleteError }) {
+export default function TagsListView({ isLoading, error, tags, onEdit, onDelete, isDeleting, deleteError, canEdit, canDelete }) {
     const [deletingTagId, setDeletingTagId] = useState(null);
 
     const handleDeleteClick = (tagId) => {
@@ -46,21 +46,24 @@ export default function TagsListView({ isLoading, error, tags, onEdit, onDelete,
                                 <td className="px-6 py-3 border-b">{item?.name}</td>
                                 <td className="px-6 py-3 border-b">{item?.slug}</td>
                                 <td className="px-6 py-3 border-b text-center flex gap-2 items-center justify-center">
-
-                                    <Button
-                                        size="icon"
-                                        variant="outline"
-                                        className='cursor-pointer'
-                                        onClick={() => { onEdit(item) }}
-                                    >
-                                        <Pencil size={16} />
-                                    </Button>
-                                    <Button
-                                        variant="destructive"
-                                        onClick={() => handleDeleteClick(item._id)}
-                                    >
-                                        <Trash size={16} />
-                                    </Button>
+                                    {canEdit &&
+                                        <Button
+                                            size="icon"
+                                            variant="outline"
+                                            className='cursor-pointer'
+                                            onClick={() => { onEdit(item) }}
+                                        >
+                                            <Pencil size={16} />
+                                        </Button>
+                                    }
+                                    {canDelete &&
+                                        <Button
+                                            variant="destructive"
+                                            onClick={() => handleDeleteClick(item._id)}
+                                        >
+                                            <Trash size={16} />
+                                        </Button>
+                                    }
                                 </td>
                             </tr>
                         ))}

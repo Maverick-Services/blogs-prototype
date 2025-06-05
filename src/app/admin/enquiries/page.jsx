@@ -4,6 +4,7 @@ import { useEnquiries } from '@/hooks/useEnquiries'
 import React, { useMemo, useState } from 'react'
 import EnquiryTable from './components/EnquiryTable';
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '@/components/ui/select'
+import NotAuthorizedPage from '@/components/notAuthorized';
 
 function page() {
 
@@ -36,9 +37,7 @@ function page() {
 
     if (!canView) {
         return (
-            <div className="flex items-center justify-center min-h-[200px]">
-                <p className="text-red-500">You don't have permission to view enquiries.</p>
-            </div>
+            <NotAuthorizedPage />
         );
     }
 
