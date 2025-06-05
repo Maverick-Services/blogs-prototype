@@ -19,7 +19,7 @@ export default function ServicesClient({ services, categories }) {
                     <h1 className='font-bold text-3xl md:text-4xl'>Our Services</h1>
                 </div>
 
-                <div className='grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 px-5 max-w-7xl mx-auto items-start gap-5'>
+                <div className='grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 max-w-7xl mx-auto items-start gap-5 mb-8'>
                     <div className='flex flex-col gap-4 w-full'>
 
                         <CategoriesBox

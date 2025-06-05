@@ -2,7 +2,6 @@
 import { CirclePlus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import InnerDashboardLayout from '@/components/dashboard/InnerDashboardLayout';
-import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator, } from '@/components/ui/breadcrumb';
 import { useRouter } from 'next/navigation';
 import { useServices } from '@/hooks/useServices';
 import ServicesListView from './components/services list/ServicesList';
@@ -23,17 +22,7 @@ export default function Page() {
         <InnerDashboardLayout>
             <div className="w-full items-center justify-between">
                 <h1 className="text-primary font-bold sm:text-2xl lg:text-4xl mb-3">Services</h1>
-                <Breadcrumb className="mb-3">
-                    <BreadcrumbList>
-                        <BreadcrumbItem>
-                            <BreadcrumbLink href="/admin">Dashboard</BreadcrumbLink>
-                        </BreadcrumbItem>
-                        <BreadcrumbSeparator />
-                        <BreadcrumbItem>
-                            <BreadcrumbPage>Services</BreadcrumbPage>
-                        </BreadcrumbItem>
-                    </BreadcrumbList>
-                </Breadcrumb>
+
             </div>
 
             <div>

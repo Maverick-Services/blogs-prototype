@@ -49,6 +49,8 @@ async function Page({ params }) {
         notFound();
     }
 
+    console.log(service);
+
     console.log(service)
     return (
         <WebsiteLayout services={services} categories={categories}>

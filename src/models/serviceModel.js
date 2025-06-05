@@ -6,20 +6,17 @@ const serviceSchema = new mongoose.Schema({
         required: true,
         unique: true,
         trim: true,
-        maxlength: 50
     },
     slug: {
         type: String,
         required: true,
         unique: true,
         trim: true,
-        maxlength: 50
     },
     shortDescription: {
         type: String,
         required: true,
         trim: true,
-        maxlength: 160
     },
     imageURL: {
         type: String,
@@ -35,21 +32,19 @@ const serviceSchema = new mongoose.Schema({
         type: String,
         required: true,
         trim: true,
-        maxlength: 100
     },
     serviceTypeDetails: {
         type: [{
             type: String,
             required: true,
             trim: true,
-            maxlength: 500
         }],
         validate: [arrayLimit(10), 'Exceeds maximum of 10 service type details']
     },
     serviceBigDescription: [{
-        name: { type: String, maxlength: 20, required: true, },
-        title: { type: String, maxlength: 50, required: true, },
-        content: { type: String, maxlength: 500, required: true, }
+        name: { type: String, maxlength: 40, required: true, },
+        title: { type: String, maxlength: 100, required: true, },
+        content: { type: String, required: true, }
     }],
     categories: [{
         type: mongoose.Schema.Types.ObjectId,

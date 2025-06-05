@@ -97,7 +97,7 @@ export default function BlogsTable({
                                 </TableCell>
                                 <TableCell><Switch checked={item.status} /></TableCell>
                                 <TableCell><Switch className={'data-[state=checked]:bg-emerald-600'} checked={item.featured} /></TableCell>
-                                <TableCell className={'text-center flex items-center justify-center gap-2'}>
+                                <TableCell className={'text-center space-x-2'}>
                                     {canEdit &&
                                         <Link href={`/admin/blogs/edit/${item._id}`}>
                                             <Button

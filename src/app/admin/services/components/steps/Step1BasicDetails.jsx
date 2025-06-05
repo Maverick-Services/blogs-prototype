@@ -1,15 +1,18 @@
 'use client';
 
+import React, { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Switch } from '@/components/ui/switch';
-import { Textarea } from '@/components/ui/textarea';
 import {
-    Popover,
-    PopoverTrigger,
-    PopoverContent,
-} from '@/components/ui/popover';
+    FormField,
+    FormItem,
+    FormLabel,
+    FormControl,
+    FormMessage,
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { Switch } from '@/components/ui/switch';
+import { Popover, PopoverTrigger, PopoverContent } from '@/components/ui/popover';
 import {
     Command,
     CommandInput,
@@ -17,23 +20,34 @@ import {
     CommandEmpty,
     CommandItem,
 } from '@/components/ui/command';
+import { ImageIcon, X } from 'lucide-react';
+import ImageSelector from '@/components/ImageSelector';
+import Image from 'next/image';
 import { useCategories } from '@/hooks/useCategories';
 import { useTags } from '@/hooks/useTags';
-import { X } from 'lucide-react';
+import { Label } from '@/components/ui/label';
 
-const Step1BasicDetails = () => {
-    const { register, formState: { errors }, watch, setValue, } = useFormContext();
+export default function Step1BasicDetails() {
+    const {
+        control,
+        watch,
+        setValue,
+        formState: { errors },
+    } = useFormContext();
+
     const { categoriesQuery } = useCategories();
     const { tagsQuery } = useTags();
-
     const allCategories = categoriesQuery.data || [];
     const allTags = tagsQuery.data || [];
 
-    // watch holds array of selected _id strings
+    // Local state for previewing the chosen image URL
+    const [imageURLPreview, setImageURLPreview] = useState(watch('imageURL') || null);
+    const [isDialogOpen, setIsDialogOpen] = useState(false);
+
     const selectedCats = watch('categories') || [];
     const selectedTags = watch('tags') || [];
 
-    // helper to add/remove
+    // Helper to toggle an ID in categories or tags
     const toggleSelect = (field, id) => {
         const curr = watch(field) || [];
         if (curr.includes(id)) {
@@ -47,57 +61,185 @@ const Step1BasicDetails = () => {
         }
     };
 
+    const watchName = watch("name");
+
+    useEffect(() => {
+        const generatedSlug = watchName
+            ?.toLowerCase()
+            .replace(/\s+/g, '-')
+            .replace(/[^a-z0-9-]/g, '');
+        setValue('slug', generatedSlug);
+    }, [watchName, setValue,]);
+
     return (
-        <div className="grid gap-4 grid-cols-2">
-            <div>
-                <Label>Name</Label>
-                <Input {...register('name')} />
-                {errors.name && <p className="text-red-500 text-sm">{errors.name.message}</p>}
-            </div>
-
-            <div>
-                <Label>Slug</Label>
-                <Input {...register('slug')} />
-                {errors.slug && <p className="text-red-500 text-sm">{errors.slug.message}</p>}
-            </div>
-
-            <div>
-                <Label>Short Description</Label>
-                <Textarea {...register('shortDescription')} />
-                {errors.shortDescription && (
-                    <p className="text-red-500 text-sm">{errors.shortDescription.message}</p>
+        <div className="grid gap-4 grid-cols-2 space-y-6 bg-white border rounded-xl p-7">
+            {/* Name */}
+            <FormField
+                control={control}
+                name="name"
+                render={({ field }) => (
+                    <FormItem>
+                        <FormLabel>Name</FormLabel>
+                        <FormControl>
+                            <Input placeholder="Service Name" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                    </FormItem>
                 )}
-            </div>
+            />
 
-            <div>
-                <Label>Image URL</Label>
-                <Input {...register('imageURL')} />
-                {errors.imageURL && <p className="text-red-500 text-sm">{errors.imageURL.message}</p>}
-            </div>
+            {/* Slug */}
+            <FormField
+                control={control}
+                name="slug"
+                render={({ field }) => (
+                    <FormItem>
+                        <FormLabel>Slug</FormLabel>
+                        <FormControl>
+                            <Input disabled placeholder="service-slug" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                    </FormItem>
+                )}
+            />
 
-            <div className="flex items-center gap-2">
-                <Label>Status</Label>
-                <Switch
-                    checked={watch('status')}
-                    onCheckedChange={(val) => setValue('status', val)}
+            {/* Short Description */}
+            <div className='col-span-2'>
+                <FormField
+                    control={control}
+                    name="shortDescription"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Short Description</FormLabel>
+                            <FormControl>
+                                <Textarea
+                                    placeholder="Brief service description…"
+                                    rows={1}
+                                    {...field}
+                                />
+                            </FormControl>
+                            <FormMessage />
+                        </FormItem>
+                    )}
                 />
             </div>
 
-            <div className="flex items-center gap-2">
-                <Label>Featured</Label>
-                <Switch
-                    checked={watch('featured')}
-                    onCheckedChange={(val) => setValue('featured', val)}
+            {/* Featured Image (imageURL) */}
+            <div className="col-span-2 space-y-2">
+                <FormLabel>Featured Image *</FormLabel>
+                {!imageURLPreview ? (
+                    <div
+                        className="border-2 border-dashed border-gray-300 rounded-xl flex flex-col items-center justify-center cursor-pointer h-48"
+                        onClick={() => setIsDialogOpen(true)}
+                    >
+                        <ImageIcon className="w-10 h-10 text-gray-400 mb-2" />
+                        <span className="text-gray-500">Click to select image</span>
+                    </div>
+                ) : (
+                    <div className="flex flex-col">
+                        <div className="h-48 w-full border rounded-xl mb-2">
+                            <Image
+                                height={200}
+                                width={400}
+                                quality={100}
+                                src={imageURLPreview}
+                                alt="Featured image"
+                                className="w-full h-full object-contain"
+                            />
+                        </div>
+                        <button
+                            type="button"
+                            className="inline-block px-4 py-2 border rounded-lg text-sm text-gray-700 hover:bg-gray-100"
+                            onClick={() => setIsDialogOpen(true)}
+                        >
+                            Change Image
+                        </button>
+                    </div>
+                )}
+                {errors.imageURL && (
+                    <p className="text-red-500 text-sm mt-1">{errors.imageURL.message}</p>
+                )}
+
+                <ImageSelector
+                    open={isDialogOpen}
+                    onOpenChange={setIsDialogOpen}
+                    setImage={(url) => {
+                        setValue('imageURL', url, { shouldValidate: true });
+                        setImageURLPreview(url);
+                    }}
                 />
             </div>
+
+            {/* Status Switch */}
+            <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg border">
+                <div>
+                    <Label htmlFor="status" className="block font-medium text-gray-700">
+                        Status
+                    </Label>
+                    <p className="text-sm text-gray-500 mt-1">
+                        {watch('status') ? 'Published (visible to public)' : 'Draft (only you can see)'}
+                    </p>
+                </div>
+                <FormField
+                    control={control}
+                    name="status"
+                    render={({ field }) => (
+                        <FormItem className="flex items-center gap-2">
+                            <FormLabel>Status</FormLabel>
+                            <FormControl>
+                                <Switch
+                                    checked={field.value}
+                                    onCheckedChange={(val) => field.onChange(val)}
+                                    className="scale-125 data-[state=checked]:bg-green-500"
+                                />
+                            </FormControl>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
+            </div>
+
+            {/* Featured Switch */}
+            <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg border">
+                <div>
+                    <Label htmlFor="featured" className="block font-medium text-gray-700">
+                        Featured
+                    </Label>
+                    <p className="text-sm text-gray-500 mt-1">
+                        {watch('featured') ? 'Featured Post' : 'Regular post'}
+                    </p>
+                </div>
+                <FormField
+                    control={control}
+                    name="featured"
+                    render={({ field }) => (
+                        <FormItem className="flex items-center gap-2">
+                            <FormLabel>Featured</FormLabel>
+                            <FormControl>
+                                <Switch
+                                    checked={field.value}
+                                    onCheckedChange={(val) => field.onChange(val)}
+                                />
+                            </FormControl>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
+            </div>
+
             {/* Categories Multi-Select */}
-            <div>
-                <Label>Categories</Label>
+            <div className="col-span-2">
+                <FormLabel className={'mb-3'}>Categories</FormLabel>
                 <Popover>
                     <PopoverTrigger asChild>
                         <div
-                            className="min-h-[38px] w-full flex flex-wrap items-center gap-1 px-2 border rounded cursor-pointer"
-                            onClick={(e) => e.currentTarget.nextElementSibling?.dispatchEvent(new MouseEvent('click'))}
+                            className={`min-h-[38px] w-full flex flex-wrap items-center gap-1 px-2 ${errors.categories ? 'border border-red-500' : 'border'
+                                } rounded cursor-pointer`}
+                            onClick={(e) =>
+                                e.currentTarget.nextElementSibling?.dispatchEvent(
+                                    new MouseEvent('click')
+                                )
+                            }
                         >
                             {selectedCats.length === 0 && (
                                 <span className="text-gray-400">Select categories…</span>
@@ -123,6 +265,7 @@ const Step1BasicDetails = () => {
                             })}
                         </div>
                     </PopoverTrigger>
+
                     <PopoverContent className="w-[300px] p-0">
                         <Command>
                             <CommandInput placeholder="Search categories..." />
@@ -147,20 +290,25 @@ const Step1BasicDetails = () => {
                     </PopoverContent>
                 </Popover>
                 {errors.categories && (
-                    <p className="text-red-500 text-sm">
+                    <p className="text-red-500 text-sm mt-1">
                         {errors.categories.message}
                     </p>
                 )}
             </div>
 
-            {/* Tags Multi-Select (same pattern) */}
-            <div>
-                <Label>Tags</Label>
+            {/* Tags Multi-Select */}
+            <div className="col-span-2">
+                <FormLabel className={'mb-3'}>Tags</FormLabel>
                 <Popover>
                     <PopoverTrigger asChild>
                         <div
-                            className="min-h-[38px] w-full flex flex-wrap items-center gap-1 px-2 border rounded cursor-pointer"
-                            onClick={(e) => e.currentTarget.nextElementSibling?.dispatchEvent(new MouseEvent('click'))}
+                            className={`min-h-[38px] w-full flex flex-wrap items-center gap-1 px-2 ${errors.tags ? 'border border-red-500' : 'border'
+                                } rounded cursor-pointer`}
+                            onClick={(e) =>
+                                e.currentTarget.nextElementSibling?.dispatchEvent(
+                                    new MouseEvent('click')
+                                )
+                            }
                         >
                             {selectedTags.length === 0 && (
                                 <span className="text-gray-400">Select tags…</span>
@@ -186,6 +334,7 @@ const Step1BasicDetails = () => {
                             })}
                         </div>
                     </PopoverTrigger>
+
                     <PopoverContent className="w-[300px] p-0">
                         <Command>
                             <CommandInput placeholder="Search tags..." />
@@ -210,13 +359,9 @@ const Step1BasicDetails = () => {
                     </PopoverContent>
                 </Popover>
                 {errors.tags && (
-                    <p className="text-red-500 text-sm">
-                        {errors.tags.message}
-                    </p>
+                    <p className="text-red-500 text-sm mt-1">{errors.tags.message}</p>
                 )}
             </div>
         </div>
     );
-};
-
-export default Step1BasicDetails;
+}

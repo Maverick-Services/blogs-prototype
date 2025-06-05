@@ -1,14 +1,21 @@
 'use client';
 
-import { useFieldArray, useFormContext } from 'react-hook-form';
+import React from 'react';
+import { useFormContext, useFieldArray } from 'react-hook-form';
+import {
+    FormField,
+    FormItem,
+    FormLabel,
+    FormControl,
+    FormMessage,
+} from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 
-const Step2PageDetails = () => {
+export default function Step2PageDetails() {
     const {
-        register,
         control,
+        register,
         formState: { errors },
     } = useFormContext();
 
@@ -19,34 +26,46 @@ const Step2PageDetails = () => {
 
     return (
         <div className="space-y-6">
-            {/* Page Heading */}
-            <div>
-                <Label>Page Heading</Label>
-                <Input {...register('pageHeading')} />
-                {errors.pageHeading && (
-                    <p className="text-red-500 text-sm">{errors.pageHeading.message}</p>
-                )}
+            <div className=' bg-white border rounded-xl p-7'>
+                {/* Page Heading */}
+                <FormField
+                    control={control}
+                    name="pageHeading"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Page Heading</FormLabel>
+                            <FormControl>
+                                <Input placeholder="GST Registration Online: Documents, Requirements, Procedure & Expert Support" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
             </div>
 
-            {/* Service Type Details */}
-            <div>
-                <Label>Service Type Details (max 10)</Label>
+            {/* Service Type Details list */}
+            <div className=' bg-white border rounded-xl p-7'>
+                <FormLabel className={'mb-5 text-lg'}>Service Type Details (max 10)</FormLabel>
+
                 <div className="space-y-3">
                     {fields.map((field, index) => (
-                        <div key={field.id} className="flex gap-2 items-center">
-                            <Input
-                                {...register(`serviceTypeDetails.${index}`)}
-                                placeholder={`Type detail #${index + 1}`}
-                            />
+                        <FormItem key={field.id} className="flex gap-2 items-center">
+                            <Button variant={'outline'}>{index + 1}</Button>
+                            <FormControl>
+                                <Input
+                                    {...register(`serviceTypeDetails.${index}`)}
+                                    placeholder={`Detail #${index + 1}`}
+                                />
+                            </FormControl>
                             <Button
                                 type="button"
                                 variant="destructive"
-                                onClick={() => remove(index)}
                                 size="icon"
+                                onClick={() => remove(index)}
                             >
                                 ✕
                             </Button>
-                        </div>
+                        </FormItem>
                     ))}
 
                     {errors.serviceTypeDetails && (
@@ -69,6 +88,4 @@ const Step2PageDetails = () => {
             </div>
         </div>
     );
-};
-
-export default Step2PageDetails;
+}

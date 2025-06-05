@@ -2,10 +2,10 @@ export async function getHomePageData() {
     try {
         const [servicesRes, categoriesRes] = await Promise.all([
             fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/services`, {
-                next: { revalidate: 3600 } // Revalidate every hour
+                next: { revalidate: 300 }
             }),
             fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/categories`, {
-                next: { revalidate: 3600 }
+                next: { revalidate: 300 }
             })
         ]);
 
