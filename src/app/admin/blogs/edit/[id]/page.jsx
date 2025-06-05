@@ -6,8 +6,15 @@ import InnerDashboardLayout from '@/components/dashboard/InnerDashboardLayout';
 import BlogForm from '../../components/blog form/BlogForm';
 import { useParams } from 'next/navigation';
 import Loader from '@/components/Loader';
+import { useBlogs } from '@/hooks/useBlogs';
+import NotAuthorizedPage from '@/components/notAuthorized';
 
 export default function Page() {
+
+    const {
+        permissions: { canEdit }
+    } = useBlogs({ status: true, featured: false, page: 1, pageSize: 10 })
+
     const { id } = useParams();
     const [blog, setBlog] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -44,6 +51,9 @@ export default function Page() {
     }
 
 
+    if (!canEdit) {
+        return <NotAuthorizedPage />
+    }
     console.log(blog);
 
     return (

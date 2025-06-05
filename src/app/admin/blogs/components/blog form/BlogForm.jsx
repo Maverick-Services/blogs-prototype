@@ -117,7 +117,7 @@ export default function BlogForm({ defaultValues }) {
 
         try {
             if (defaultValues?._id) {
-                await updateBlog.mutateAsync({ id: defaultValues._id, finalData });
+                await updateBlog.mutateAsync({ id: defaultValues._id, data: finalData });
             } else {
                 await createBlogAsync(finalData);
             }

@@ -14,6 +14,8 @@ import { Pencil, Trash } from 'lucide-react'
 import Loader from '@/components/Loader'
 import DeleteConfirmationDialog from '@/components/DeleteConfirmationDialog '
 import Link from 'next/link'
+import Image from 'next/image'
+import { Switch } from '@/components/ui/switch'
 
 export default function BlogsTable({
     isLoading,
@@ -67,21 +69,35 @@ export default function BlogsTable({
                 <Table className={'bg-white'}>
                     <TableHeader>
                         <TableRow>
-                            <TableHead>#</TableHead>
+                            <TableHead className={'text-center'}>#</TableHead>
+                            <TableHead>Image</TableHead>
                             <TableHead>Title</TableHead>
                             <TableHead>Publish Date</TableHead>
-                            <TableHead>Actions</TableHead>
+                            <TableHead>Status</TableHead>
+                            <TableHead>Featured</TableHead>
+                            <TableHead className={'text-center'}>Actions</TableHead>
                         </TableRow>
                     </TableHeader>
                     <TableBody>
                         {blogs.map((item, idx) => (
                             <TableRow key={item._id}>
-                                <TableCell>{(page - 1) * blogs.length + idx + 1}</TableCell>
+                                <TableCell className={'text-center'}>{(page - 1) * blogs.length + idx + 1}</TableCell>
+                                <TableCell>
+                                    <Image
+                                        src={item.imageURL}
+                                        height={80}
+                                        width={50}
+                                        alt={'image'}
+                                        className='rounded-sm w-auto'
+                                    />
+                                </TableCell>
                                 <TableCell>{item.title}</TableCell>
                                 <TableCell>
-                                    {new Date(item.createdAt).toLocaleDateString()}
+                                    {new Date(item.createdAt).toLocaleString()}
                                 </TableCell>
-                                <TableCell className="">
+                                <TableCell><Switch checked={item.status} /></TableCell>
+                                <TableCell><Switch className={'data-[state=checked]:bg-emerald-600'} checked={item.featured} /></TableCell>
+                                <TableCell className={'text-center flex items-center justify-center gap-2'}>
                                     {canEdit &&
                                         <Link href={`/admin/blogs/edit/${item._id}`}>
                                             <Button

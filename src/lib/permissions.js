@@ -2,14 +2,15 @@
 
 // Define resources
 export const Resources = {
-    MEDIA: 'media',
+    DASHBOARD: 'dashboard',
+    ENQUIRIES: 'enquiries',
     SERVICES: 'services',
     BLOGS: 'blogs',
     CATEGORIES: 'categories',
     TAGS: 'tags',
+    MEDIA: 'media',
     USERS: 'users',
     SETTINGS: 'settings',
-    ENQUIRIES: 'enquiries',
     TESTIMONIALS: 'testimonials'
 };
 

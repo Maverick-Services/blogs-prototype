@@ -44,7 +44,11 @@ export async function GET(req) {
         const skip = (page - 1) * limit;
 
         const [blogs, totalCount] = await Promise.all([
-            Blog.find(filter).skip(skip).limit(limit),
+            Blog
+                .find(filter)
+                .sort({ updatedAt: -1 })
+                .skip(skip)
+                .limit(limit),
             Blog.countDocuments(filter)
         ]);
 

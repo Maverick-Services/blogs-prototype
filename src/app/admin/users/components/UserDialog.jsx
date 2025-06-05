@@ -14,13 +14,17 @@ import PasswordDialog from "./PasswordDialog";
 
 const permissionSections = [
     { id: 'dashboard', name: 'Dashboard' },
+    { id: 'enquiries', name: 'Enquiries' },
     { id: 'services', name: 'Services' },
+    { id: 'blogs', name: 'Blogs' },
     { id: 'categories', name: 'Categories' },
     { id: 'tags', name: 'Tags' },
     { id: 'media', name: 'Media' },
     { id: 'settings', name: 'Settings' },
     { id: 'users', name: 'Users' },
+    { id: 'testimonials', name: 'Testimonials' },
 ];
+
 
 const permissionTypes = [
     { id: 'view', label: 'View' },

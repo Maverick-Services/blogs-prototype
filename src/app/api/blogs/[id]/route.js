@@ -25,14 +25,18 @@ export async function GET(req, { params }) {
 export async function PUT(req, { params }) {
     try {
         await connectDB();
-        const { id } = params;
+        const { id } = await params;
         const body = await req.json();
+
+        if (!body) {
+            return NextResponse.json({ message: 'Request body is empty' }, { status: 400 });
+        }
 
         const updatedBlog = await Blog.findByIdAndUpdate(
             id,
             body,
             { new: true, runValidators: true }
-        ).populate('categories').populate('tags');
+        )
 
         if (!updatedBlog) {
             return NextResponse.json({ message: 'Blog not found' }, { status: 404 });

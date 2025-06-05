@@ -8,6 +8,7 @@ import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '@
 import Link from 'next/link'
 import BlogsTable from './components/BlogsTable'
 import { useBlogs } from '@/hooks/useBlogs';
+import NotAuthorizedPage from '@/components/notAuthorized'
 
 function Page() {
     // filters
@@ -24,6 +25,10 @@ function Page() {
         deleteBlog,
         permissions: { canView, canAdd, canEdit, canDelete, onlyAdmin }
     } = useBlogs({ status, featured, page, pageSize })
+
+    if (!blogsQuery.isPending && !canView) {
+        return <NotAuthorizedPage />
+    }
 
     return (
         <InnerDashboardLayout>
