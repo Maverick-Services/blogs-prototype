@@ -80,9 +80,9 @@ export async function PUT(req, { params }) {
 export async function DELETE(req, { params }) {
     try {
         await connectDB();
-        const { slug } = params;
+        const { id } = params;
 
-        const deletedService = await Service.findOneAndDelete({ slug });
+        const deletedService = await Service.findByIdAndDelete({ id });
 
         if (!deletedService) {
             return NextResponse.json({ message: 'Service not found' }, { status: 404 });
