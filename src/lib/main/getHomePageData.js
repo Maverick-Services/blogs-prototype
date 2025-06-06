@@ -1,4 +1,6 @@
 export async function getHomePageData() {
+    console.log("🔍 MONGODB_URI =>", process.env.MONGODB_URI);
+
     try {
         const [servicesRes, categoriesRes] = await Promise.all([
             fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/services`, {
