@@ -1,4 +1,4 @@
-// // app/api/blogs/infinite/route.js
+// // app/api/blogs/b/route.js
 import { connectDB } from "@/lib/mongodb";
 import Blog from "@/models/blogModel";
 import { NextResponse } from "next/server";

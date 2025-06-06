@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 
 export async function POST(req) {
     try {
-        connectDB();
+        await connectDB();
         const body = await req.json();
         const newService = await Service.create(body);
 

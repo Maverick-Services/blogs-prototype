@@ -37,7 +37,7 @@ const API_BASE = process.env.NEXT_PUBLIC_SITE_URL;
 export async function getBlogBySlug(slug) {
     try {
         const res = await fetch(
-            `${API_BASE}/api/blogs/bySlug/${slug}`,
+            `${process.env.NEXT_PUBLIC_SITE_URL}/api/blogs/bySlug/${slug}`,
             { next: { revalidate: 300 }, }
         );
 

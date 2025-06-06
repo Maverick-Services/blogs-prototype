@@ -12,7 +12,8 @@ import LatestBlogs from '@/components/website/LatestBlogs';
 
 
 export async function generateMetadata({ params }) {
-    const blog = await getBlogBySlug(params.slug);
+    const slug = await params
+    const blog = await getBlogBySlug(slug.slug);
 
     if (!blog) return {
         title: "blog Not Found",
@@ -40,7 +41,9 @@ export async function generateMetadata({ params }) {
 
 export default async function page({ params }) {
     const { services, categories } = await getHomePageData();
-    const blog = await getBlogBySlug(params.slug)
+    const slug = await params
+
+    const blog = await getBlogBySlug(slug.slug)
 
     const relatedServices = getRelatedServices(
         blog.tags || [],
