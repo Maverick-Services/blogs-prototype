@@ -2,8 +2,15 @@ import { getTestimonialsData } from '@/lib/main/getStaticData';
 import Image from 'next/image';
 
 export default async function Testimonials() {
-    const data = await getTestimonialsData();
-    const testimonials = data?.data?.length > 0 ? data.data : [
+    const data = await getTestimonialsData({
+        isVisible: true,
+        limit: 3,
+        page: 1
+    });
+
+    console.log(data);
+
+    const testimonials = data?.testimonials?.length > 0 ? data.testimonials : [
         {
             userName: 'Sneha Kapoor',
             designation: 'Boutique Owner',

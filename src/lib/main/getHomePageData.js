@@ -1,29 +1,80 @@
-export async function getHomePageData() {
-    console.log("🔍 MONGODB_URI =>", process.env.MONGODB_URI);
+import clientPromise from "../mongodbClient";
 
+
+
+export async function getServices() {
     try {
-        const [servicesRes, categoriesRes] = await Promise.all([
-            fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/services`, {
-                next: { revalidate: 300 }
-            }),
-            fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/categories`, {
-                next: { revalidate: 300 }
-            })
+        const client = await clientPromise;
+        const db = client.db();
+        return await db.collection("services").find({}).toArray();
+    } catch (e) {
+        console.error(e);
+        return [];
+    }
+}
+
+
+export async function getCategories() {
+    try {
+        const client = await clientPromise;
+        const db = client.db();
+        return await db.collection("categories").find({}).toArray();
+    } catch (e) {
+        console.error(e);
+        return [];
+    }
+}
+
+
+
+export async function getHomePageData() {
+    try {
+        const [services, categories] = await Promise.all([
+            getServices(),
+            getCategories()
         ]);
 
-        if (!servicesRes.ok || !categoriesRes.ok) {
-            throw new Error('Failed to fetch data');
-        }
-
-        const services = await servicesRes.json();
-        const categories = await categoriesRes.json();
-
-        return { services, categories };
+        return {
+            services: JSON.parse(JSON.stringify(services)),
+            categories: JSON.parse(JSON.stringify(categories))
+        };
     } catch (error) {
         console.error('Error fetching data:', error);
-        // Return empty data or fallback data
         return { services: [], categories: [] };
     }
 }
+
+
+
+
+
+
+
+
+
+// export async function getHomePageData() {
+//     try {
+//         const [servicesRes, categoriesRes] = await Promise.all([
+//             fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/services`, {
+//                 next: { revalidate: 300 }
+//             }),
+//             fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/categories`, {
+//                 next: { revalidate: 300 }
+//             })
+//         ]);
+
+//         if (!servicesRes.ok || !categoriesRes.ok) {
+//             throw new Error('Failed to fetch data');
+//         }
+
+//         const services = await servicesRes.json();
+//         const categories = await categoriesRes.json();
+
+//         return { services, categories };
+//     } catch (error) {
+//         console.error('Error fetching data:', error);
+//         return { services: [], categories: [] };
+//     }
+// }
 
 

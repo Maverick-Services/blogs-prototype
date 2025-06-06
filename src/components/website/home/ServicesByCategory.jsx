@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 
 export default function ServicesByCategory({ services, categories }) {
-    const displayCategories = categories.data.slice(0, 4);
+    const displayCategories = categories.slice(0, 4);
 
     // Animation variants
     const container = {
@@ -73,7 +73,7 @@ export default function ServicesByCategory({ services, categories }) {
                     className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8"
                 >
                     {displayCategories.map((category) => {
-                        const matchedServices = services.data.filter(
+                        const matchedServices = services.filter(
                             service => service.categories.includes(category._id)
                         ).slice(0, 4);
 

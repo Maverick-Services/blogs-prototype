@@ -1,7 +1,7 @@
 // app/services/[slug]/page.jsx
 import TalkToLawyerCard from '@/components/website/TalkToLawyerCard';
 import WebsiteLayout from '@/components/website/WebsiteLayout';
-import { getAllServicesSlugs, getServiceBySlug } from '@/lib/main/services';
+import { getServiceBySlug } from '@/lib/main/services';
 import { notFound } from 'next/navigation';
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator, } from '@/components/ui/breadcrumb';
 import EnquiryForm from '@/components/website/EnquiryForm';
@@ -11,7 +11,7 @@ import { getHomePageData } from '@/lib/main/getHomePageData';
 
 // export async function generateStaticParams() {
 //     const services = await getAllServicesSlugs();
-//     return services.data.map(({ slug }) => ({ slug }))
+//     return services.map(({ slug }) => ({ slug }))
 // }
 
 export async function generateMetadata({ params }) {
@@ -49,9 +49,6 @@ async function Page({ params }) {
         notFound();
     }
 
-    console.log(service);
-
-    console.log(service)
     return (
         <WebsiteLayout services={services} categories={categories}>
             <main className="mx-auto px-4 py-8">

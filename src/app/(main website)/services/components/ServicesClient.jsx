@@ -9,8 +9,8 @@ export default function ServicesClient({ services, categories }) {
 
     const [selectedCategory, setSelectedCategory] = useState('all')
     const filteredServices = selectedCategory === 'all'
-        ? services.data
-        : services.data.filter(s => s.categories.includes(selectedCategory))
+        ? services
+        : services.filter(s => s.categories.includes(selectedCategory))
 
     return (
         <WebsiteLayout services={services} categories={categories}>
@@ -23,7 +23,7 @@ export default function ServicesClient({ services, categories }) {
                     <div className='flex flex-col gap-4 w-full'>
 
                         <CategoriesBox
-                            categories={categories.data}
+                            categories={categories}
                             selectedCategory={selectedCategory}
                             onSelectCategory={setSelectedCategory}
                         />

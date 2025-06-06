@@ -1,26 +1,22 @@
 // lib/services.js
 
-const API_BASE = process.env.NEXT_PUBLIC_SITE_URL;
+import clientPromise from "../mongodbClient";
+
 
 export async function getServiceBySlug(slug) {
     try {
-        const res = await fetch(
-            `${process.env.NEXT_PUBLIC_SITE_URL}/api/services/bySlug/${slug}`,
-            { next: { revalidate: 300 }, }
-        );
+        const client = await clientPromise;
+        const db = client.db();
+        const service = await db.collection("services").findOne({ slug });
 
-        if (!res.ok) {
-            console.error(`Failed to fetch service ${slug}: ${res.status}`);
-            return null;
-        }
-
-        const service = await res.json();
-        return service;
+        return service ? JSON.parse(JSON.stringify(service)) : null;
     } catch (error) {
         console.error(`Error fetching service ${slug}:`, error);
         return null;
     }
 }
+
+
 // export async function getAllServicesSlugs() {
 //     try {
 //         const res = await fetch(`${API_BASE}/api/services/`, {

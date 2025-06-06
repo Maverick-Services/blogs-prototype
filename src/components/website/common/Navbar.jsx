@@ -13,11 +13,11 @@ export default function NavBar({ services, categories }) {
     const primaryColor = "#003366"
 
     // Take first 4 categories
-    const topCategories = categories.data.slice(0, 4)
+    const topCategories = categories.slice(0, 4)
 
     // Helper to get up to 4 services per category
     const getServicesFor = (catId) =>
-        services.data.filter((s) => s.categories.includes(catId)).slice(0, 4)
+        services.filter((s) => s.categories.includes(catId)).slice(0, 4)
 
     // Handle scroll effect for navbar
     useEffect(() => {
