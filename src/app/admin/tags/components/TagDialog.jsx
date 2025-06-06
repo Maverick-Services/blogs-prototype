@@ -37,13 +37,11 @@ export default function TagDialog({ open, onOpenChange, selectedTag, onCreate, o
     const watchName = watch("name");
 
     useEffect(() => {
-        if (!selectedTag) {
-            const generatedSlug = watchName
-                ?.toLowerCase()
-                .replace(/\s+/g, '-')
-                .replace(/[^a-z0-9-]/g, '');
-            setValue('slug', generatedSlug);
-        }
+        const generatedSlug = watchName
+            ?.toLowerCase()
+            .replace(/\s+/g, '-')
+            .replace(/[^a-z0-9-]/g, '');
+        setValue('slug', generatedSlug);
     }, [watchName, setValue, selectedTag]);
 
 
@@ -104,6 +102,7 @@ export default function TagDialog({ open, onOpenChange, selectedTag, onCreate, o
                             <div className="col-span-3">
                                 <Input
                                     id="slug"
+                                    disabled
                                     {...register("slug", {
                                         required: "Slug is required",
                                         validate: value =>

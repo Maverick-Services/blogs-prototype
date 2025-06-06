@@ -87,32 +87,33 @@ function page() {
                 </div>
 
                 <div className="flex justify-between items-center mb-4 mt-4">
-                    <Select value={roleFilter} onValueChange={setRoleFilter}>
-                        <SelectTrigger className="w-[150px]">
-                            <SelectValue placeholder="Select role" />
-                        </SelectTrigger>
-                        <SelectContent>
-                            {onlyAdmin &&
-                                <>
-                                    <SelectItem value="admin">Admin</SelectItem>
-                                    <SelectItem value="sub-admin">Sub-Admin</SelectItem>
-                                </>
-                            }
-                            <SelectItem value="user">User</SelectItem>
-                        </SelectContent>
-                    </Select>
+                    <div className='flex gap-3'>
+                        <Select value={roleFilter} onValueChange={setRoleFilter}>
+                            <SelectTrigger className="w-[150px]">
+                                <SelectValue placeholder="Select role" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                {onlyAdmin &&
+                                    <>
+                                        <SelectItem value="admin">Admin</SelectItem>
+                                        <SelectItem value="sub-admin">Sub-Admin</SelectItem>
+                                    </>
+                                }
+                                <SelectItem value="user">User</SelectItem>
+                            </SelectContent>
+                        </Select>
 
-                    <Select value={pageSize.toString()} onValueChange={v => { setPageSize(+v); setPage(1) }}>
-                        <SelectTrigger className="w-[100px]">
-                            <SelectValue placeholder="Rows" />
-                        </SelectTrigger>
-                        <SelectContent>
-                            {[1, 2, 5, 10, 25, 50, 100].map(n => (
-                                <SelectItem key={n} value={n.toString()}>{n} / page</SelectItem>
-                            ))}
-                        </SelectContent>
-                    </Select>
-
+                        <Select value={pageSize.toString()} onValueChange={v => { setPageSize(+v); setPage(1) }}>
+                            <SelectTrigger className="w-[100px]">
+                                <SelectValue placeholder="Rows" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                {[1, 2, 5, 10, 25, 50, 100].map(n => (
+                                    <SelectItem key={n} value={n.toString()}>{n} / page</SelectItem>
+                                ))}
+                            </SelectContent>
+                        </Select>
+                    </div>
                     {canAdd &&
                         <Button onClick={handleAddClick}>
                             <CirclePlus className="mr-2 h-4 w-4" /> Add New
