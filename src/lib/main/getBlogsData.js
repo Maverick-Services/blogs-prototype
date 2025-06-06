@@ -1,38 +1,28 @@
+import Blog from '@/models/blogModel';
+import { connectDB } from '@/lib/mongodb';
+
 export async function getBlogsData({ page = 1, limit = 30, category = 'all' } = {}) {
-    try {
-        const url = new URL(`${process.env.NEXT_PUBLIC_SITE_URL}/api/blogs/b`);
-        url.searchParams.append('page', page);
-        url.searchParams.append('limit', limit);
-        if (category && category !== 'all') {
-            url.searchParams.append('category', category);
-        }
-
-        // console.log(url);
-
-        const blogsRes = await fetch(url)
-
-        const data = await blogsRes.json();
-        // console.log(data);
-        return {
-            blogs: data.data || [],
-            totalCount: data.totalCount || 0,
-            currentPage: data.currentPage || 1,
-            totalPages: data.totalPages || 1
-        };
-
-    } catch (error) {
-        console.error('Error fetching blogs:', error);
-        return {
-            blogs: [],
-            totalCount: 0,
-            currentPage: 1,
-            totalPages: 1
-        };
+    await connectDB();
+    const filter = { status: true };
+    if (category && category !== 'all') {
+        filter.categories = { $in: [category] };
     }
+    const skip = (page - 1) * limit;
+    const [blogs, totalCount] = await Promise.all([
+        Blog.find(filter)
+            .sort({ updatedAt: -1 })
+            .skip(skip)
+            .limit(limit),
+        Blog.countDocuments(filter)
+    ]);
+
+    return {
+        blogs,
+        totalCount,
+        currentPage: page,
+        totalPages: Math.ceil(totalCount / limit)
+    };
 }
-
-
-const API_BASE = process.env.NEXT_PUBLIC_SITE_URL;
 
 export async function getBlogBySlug(slug) {
     try {
