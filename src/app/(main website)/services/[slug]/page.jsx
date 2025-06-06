@@ -9,10 +9,10 @@ import ScrollableServiceSections from '@/components/website/ScrollableServiceSec
 import TabbedDocuments from '@/components/website/TabbedDocuments';
 import { getHomePageData } from '@/lib/main/getHomePageData';
 
-export async function generateStaticParams() {
-    const services = await getAllServicesSlugs();
-    return services.data.map(({ slug }) => ({ slug }))
-}
+// export async function generateStaticParams() {
+//     const services = await getAllServicesSlugs();
+//     return services.data.map(({ slug }) => ({ slug }))
+// }
 
 export async function generateMetadata({ params }) {
     const service = await getServiceBySlug(params.slug);
