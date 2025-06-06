@@ -13,8 +13,8 @@ import { getHomePageData } from "@/lib/main/getHomePageData";
 export default async function Home() {
 
   const { services, categories } = await getHomePageData();
-  console.log(services);
-  console.log(categories);
+  // console.log(services);
+  // console.log(categories);
   return (
     <div className="font-sans">
       <NavBar services={services} categories={categories} />

@@ -5,8 +5,13 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { FiMenu, FiX, FiChevronDown, FiChevronUp, FiArrowRight } from 'react-icons/fi'
 import LoginButton from '@/components/auth/LoginButton'
+// import { useSession } from 'next-auth/react'
 
 export default function NavBar({ services, categories }) {
+    // const { data: session } = useSession();
+    // const user = session?.user;
+    // console.log(user);
+
     const [mobileOpen, setMobileOpen] = useState(false)
     const [activeDropdown, setActiveDropdown] = useState(null)
     const [scrolled, setScrolled] = useState(false)
@@ -166,10 +171,10 @@ export default function NavBar({ services, categories }) {
 
                             {/* Static Blogs Link */}
                             <Link
-                                href="/blogs"
+                                href="/admin"
                                 className="flex items-center px-4 py-3 text-sm font-medium text-gray-700 hover:text-white hover:bg-[#003366] rounded-lg transition-colors duration-200"
                             >
-                                Blogs
+                                Admin
                             </Link>
                         </div>
 
@@ -281,11 +286,11 @@ export default function NavBar({ services, categories }) {
                             ))}
 
                             <Link
-                                href="/blogs"
+                                href="/admin"
                                 className="block py-3 px-2 text-gray-800 font-medium border-b border-gray-100"
                                 onClick={() => setMobileOpen(false)}
                             >
-                                Blogs
+                                Admin
                             </Link>
                         </div>
 

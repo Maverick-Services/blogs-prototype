@@ -1,7 +1,5 @@
 import clientPromise from "../mongodbClient";
 
-
-
 export async function getServices() {
     try {
         const client = await clientPromise;
@@ -13,7 +11,6 @@ export async function getServices() {
     }
 }
 
-
 export async function getCategories() {
     try {
         const client = await clientPromise;
@@ -24,8 +21,6 @@ export async function getCategories() {
         return [];
     }
 }
-
-
 
 export async function getHomePageData() {
     try {
