@@ -107,6 +107,17 @@ export default function BlogForm({ defaultValues }) {
         setValue(field, newValue, { shouldValidate: true });
     };
 
+    const watchName = watch("title");
+
+    useEffect(() => {
+        const generatedSlug = watchName
+            ?.toLowerCase()
+            .replace(/\s+/g, '-')
+            .replace(/[^a-z0-9-]/g, '');
+        setValue('slug', generatedSlug);
+    }, [watchName, setValue,]);
+
+
     async function onSubmit(data) {
         const finalData = { ...data, imageURL: image }
         // Validate RTE content separately
@@ -163,6 +174,7 @@ export default function BlogForm({ defaultValues }) {
                             <Label htmlFor="slug" className={' mb-2'}>Slug *</Label>
                             <Input
                                 id="slug"
+                                disabled
                                 placeholder="e.g., my-awesome-blog"
                                 className={cn(errors.slug && "border-red-500")}
                                 {...register('slug', VALIDATION_RULES.slug)}

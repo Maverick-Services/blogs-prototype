@@ -23,6 +23,7 @@ import {
     SelectValue,
 } from "@/components/ui/select"
 import Loader from '@/components/Loader'
+import EnquiryDetailsDialog from './EnquiryDialog'
 
 function EnquiryTable({
     enquiries,
@@ -104,6 +105,7 @@ function EnquiryTable({
                                     </span>
                                 </TableCell>
                                 <TableCell className="flex gap-2 items-center justify-center">
+                                    <EnquiryDetailsDialog enquiry={item} />
                                     {canEdit &&
                                         <Select
                                             value={item.status}

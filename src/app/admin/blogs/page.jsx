@@ -34,6 +34,60 @@ function Page() {
         <InnerDashboardLayout>
             <div className="flex items-center justify-between mb-4">
                 <h1 className="text-primary font-bold sm:text-2xl lg:text-4xl">Blogs</h1>
+
+            </div>
+
+            <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
+                {/* Status Select */}
+                <div className="flex items-center  space-x-2">
+                    <div>
+                        <Select value={status} onValueChange={(value) => { setStatus(value); setPage(1); }}>
+                            <SelectTrigger className="w-[150px]">
+                                <SelectValue placeholder="Status" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectItem value="all">All</SelectItem>
+                                <SelectItem value="active">Active</SelectItem>
+                                <SelectItem value="inactive">Inactive</SelectItem>
+                            </SelectContent>
+                        </Select>
+                    </div>
+
+                    {/* Featured Select */}
+                    <div className="flex items-center space-x-2">
+                        <Select value={featured} onValueChange={(value) => { setFeatured(value); setPage(1); }}>
+                            <SelectTrigger className="w-[180px]">
+                                <SelectValue placeholder="Featured" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectItem value="all">All</SelectItem>
+                                <SelectItem value="featured">Featured</SelectItem>
+                                <SelectItem value="not-featured">Not Featured</SelectItem>
+                            </SelectContent>
+                        </Select>
+                    </div>
+
+                    {/* Page size selector */}
+                    <Select
+                        value={pageSize.toString()}
+                        onValueChange={(v) => {
+                            setPageSize(+v)
+                            setPage(1)
+                        }}
+                    >
+                        <SelectTrigger className="w-[100px]">
+                            <SelectValue placeholder="Rows" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            {[1, 2, 5, 10, 25, 50, 100].map((n) => (
+                                <SelectItem key={n} value={n.toString()}>
+                                    {n} / page
+                                </SelectItem>
+                            ))}
+                        </SelectContent>
+                    </Select>
+                </div>
+
                 {canAdd && (
                     <Link href={'/admin/blogs/create'}>
                         <Button>
@@ -41,56 +95,6 @@ function Page() {
                         </Button>
                     </Link>
                 )}
-            </div>
-
-            <div className="flex flex-wrap items-center gap-4 mb-6">
-                {/* Status Select */}
-                <div className="flex items-center space-x-2">
-                    <Select value={status} onValueChange={(value) => { setStatus(value); setPage(1); }}>
-                        <SelectTrigger className="w-[150px]">
-                            <SelectValue placeholder="Status" />
-                        </SelectTrigger>
-                        <SelectContent>
-                            <SelectItem value="all">All</SelectItem>
-                            <SelectItem value="active">Active</SelectItem>
-                            <SelectItem value="inactive">Inactive</SelectItem>
-                        </SelectContent>
-                    </Select>
-                </div>
-
-                {/* Featured Select */}
-                <div className="flex items-center space-x-2">
-                    <Select value={featured} onValueChange={(value) => { setFeatured(value); setPage(1); }}>
-                        <SelectTrigger className="w-[180px]">
-                            <SelectValue placeholder="Featured" />
-                        </SelectTrigger>
-                        <SelectContent>
-                            <SelectItem value="all">All</SelectItem>
-                            <SelectItem value="featured">Featured</SelectItem>
-                            <SelectItem value="not-featured">Not Featured</SelectItem>
-                        </SelectContent>
-                    </Select>
-                </div>
-
-                {/* Page size selector */}
-                <Select
-                    value={pageSize.toString()}
-                    onValueChange={(v) => {
-                        setPageSize(+v)
-                        setPage(1)
-                    }}
-                >
-                    <SelectTrigger className="w-[100px]">
-                        <SelectValue placeholder="Rows" />
-                    </SelectTrigger>
-                    <SelectContent>
-                        {[1, 2, 5, 10, 25, 50, 100].map((n) => (
-                            <SelectItem key={n} value={n.toString()}>
-                                {n} / page
-                            </SelectItem>
-                        ))}
-                    </SelectContent>
-                </Select>
             </div>
 
             {/* Blogs table */}
