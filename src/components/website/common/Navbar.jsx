@@ -170,12 +170,17 @@ export default function NavBar({ services, categories }) {
                             ))}
 
                             {/* Static Blogs Link */}
-                            <Link
+                            <div className='bg-gray-100 rounded-xl flex items-center justify-center px-3 font-semibold'>
+                                <a href="https://blogs-prototype-khaki.vercel.app/admin">
+                                    Admin
+                                </a>
+                            </div>
+                            {/* <Link
                                 href="/admin"
                                 className="flex items-center px-4 py-3 text-sm font-medium text-gray-700 hover:text-white hover:bg-[#003366] rounded-lg transition-colors duration-200"
                             >
                                 Admin
-                            </Link>
+                            </Link> */}
                         </div>
 
                         <div className="ml-4 flex items-center space-x-3">
