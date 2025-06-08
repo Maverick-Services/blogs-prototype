@@ -18,7 +18,7 @@ export default function NavBar({ services, categories }) {
     const primaryColor = "#003366"
 
     // Take first 4 categories
-    const topCategories = categories.slice(0,)
+    const topCategories = categories.slice(0, 4)
 
     // Helper to get up to 4 services per category
     const getServicesFor = (catId) =>
