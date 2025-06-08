@@ -3,19 +3,17 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import api from '@/lib/api';
 import { toast } from 'react-hot-toast';
-import { useSession } from 'next-auth/react';
-import { Actions, checkPermission, onlyAdminPermission, Resources } from '@/lib/permissions';
+import { Resources } from '@/lib/permissions';
+import { usePermissions } from './usePermissions';
 
 export const useEnquiries = ({ status, important, page, pageSize }) => {
-    const { data: session } = useSession();
-    const user = session?.user;
-    const queryClient = useQueryClient();
+    const queryClient = useQueryClient()
+    const { checkView, checkEdit, checkDelete, onlyAdmin } = usePermissions()
 
     // Permissions
-    const canView = checkPermission(user, Resources.ENQUIRIES, Actions.VIEW);
-    const canEdit = checkPermission(user, Resources.ENQUIRIES, Actions.EDIT);
-    const canDelete = checkPermission(user, Resources.ENQUIRIES, Actions.DELETE);
-    const onlyAdmin = onlyAdminPermission(user);
+    const canView = checkView(Resources.ENQUIRIES)
+    const canEdit = checkEdit(Resources.ENQUIRIES)
+    const canDelete = checkDelete(Resources.ENQUIRIES)
 
     // Build query parameters correctly
     const buildQueryString = () => {

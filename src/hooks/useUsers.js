@@ -1,19 +1,18 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import api from '@/lib/api';
 import { toast } from 'react-hot-toast';
-import { useSession } from 'next-auth/react';
-import { Actions, checkPermission, onlyAdminPermission, Resources } from '@/lib/permissions';
+import { Resources } from '@/lib/permissions';
+import { usePermissions } from './usePermissions';
 
 export const useUsers = ({ role, page = 1, pageSize = 10 }) => {
-    const { data: session } = useSession();
-    const user = session?.user
-    const queryClient = useQueryClient();
+    const queryClient = useQueryClient()
+    const { checkView, checkAdd, checkEdit, checkDelete, onlyAdmin } = usePermissions()
 
-    const canView = checkPermission(user, Resources.USERS, Actions.VIEW)
-    const canAdd = checkPermission(user, Resources.USERS, Actions.ADD)
-    const canEdit = checkPermission(user, Resources.USERS, Actions.EDIT)
-    const canDelete = checkPermission(user, Resources.USERS, Actions.DELETE)
-    const onlyAdmin = onlyAdminPermission(user)
+    // Permissions
+    const canView = checkView(Resources.USERS)
+    const canAdd = checkAdd(Resources.USERS)
+    const canEdit = checkEdit(Resources.USERS)
+    const canDelete = checkDelete(Resources.USERS)
 
     // Get all users
     const usersQuery = useQuery({

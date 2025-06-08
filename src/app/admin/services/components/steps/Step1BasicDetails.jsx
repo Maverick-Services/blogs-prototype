@@ -102,30 +102,60 @@ export default function Step1BasicDetails() {
                     </FormItem>
                 )}
             />
+            <div className='space-y-6'>
+                {/* Short Description */}
+                <div className='col-span-2'>
+                    <FormField
+                        control={control}
+                        name="shortDescription"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Short Description</FormLabel>
+                                <FormControl>
+                                    <Textarea
+                                        placeholder="Brief service description…"
+                                        rows={1}
+                                        {...field}
+                                    />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                </div>
 
-            {/* Short Description */}
-            <div className='col-span-2'>
-                <FormField
-                    control={control}
-                    name="shortDescription"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>Short Description</FormLabel>
-                            <FormControl>
-                                <Textarea
-                                    placeholder="Brief service description…"
-                                    rows={1}
-                                    {...field}
-                                />
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
+
+                {/* Status Switch */}
+                <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg border">
+                    <div>
+                        <Label htmlFor="status" className="block font-medium text-gray-700">
+                            Status
+                        </Label>
+                        <p className="text-sm text-gray-500 mt-1">
+                            {watch('status') ? 'Published (visible to public)' : 'Draft (only you can see)'}
+                        </p>
+                    </div>
+                    <FormField
+                        control={control}
+                        name="status"
+                        render={({ field }) => (
+                            <FormItem className="flex items-center gap-2">
+                                <FormLabel>Status</FormLabel>
+                                <FormControl>
+                                    <Switch
+                                        checked={field.value}
+                                        onCheckedChange={(val) => field.onChange(val)}
+                                        className="scale-125 data-[state=checked]:bg-green-500"
+                                    />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                </div>
             </div>
-
             {/* Featured Image (imageURL) */}
-            <div className="col-span-2 space-y-2">
+            <div className=" space-y-2">
                 <FormLabel>Featured Image *</FormLabel>
                 {!imageURLPreview ? (
                     <div
@@ -170,62 +200,6 @@ export default function Step1BasicDetails() {
                 />
             </div>
 
-            {/* Status Switch */}
-            <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg border">
-                <div>
-                    <Label htmlFor="status" className="block font-medium text-gray-700">
-                        Status
-                    </Label>
-                    <p className="text-sm text-gray-500 mt-1">
-                        {watch('status') ? 'Published (visible to public)' : 'Draft (only you can see)'}
-                    </p>
-                </div>
-                <FormField
-                    control={control}
-                    name="status"
-                    render={({ field }) => (
-                        <FormItem className="flex items-center gap-2">
-                            <FormLabel>Status</FormLabel>
-                            <FormControl>
-                                <Switch
-                                    checked={field.value}
-                                    onCheckedChange={(val) => field.onChange(val)}
-                                    className="scale-125 data-[state=checked]:bg-green-500"
-                                />
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
-            </div>
-
-            {/* Featured Switch */}
-            <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg border">
-                <div>
-                    <Label htmlFor="featured" className="block font-medium text-gray-700">
-                        Featured
-                    </Label>
-                    <p className="text-sm text-gray-500 mt-1">
-                        {watch('featured') ? 'Featured Post' : 'Regular post'}
-                    </p>
-                </div>
-                <FormField
-                    control={control}
-                    name="featured"
-                    render={({ field }) => (
-                        <FormItem className="flex items-center gap-2">
-                            <FormLabel>Featured</FormLabel>
-                            <FormControl>
-                                <Switch
-                                    checked={field.value}
-                                    onCheckedChange={(val) => field.onChange(val)}
-                                />
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
-            </div>
 
             {/* Categories Multi-Select */}
             <div className="col-span-2">
@@ -365,3 +339,37 @@ export default function Step1BasicDetails() {
         </div>
     );
 }
+
+
+
+
+
+
+
+{/* Featured Switch */ }
+{/* <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg border">
+                <div>
+                    <Label htmlFor="featured" className="block font-medium text-gray-700">
+                        Featured
+                    </Label>
+                    <p className="text-sm text-gray-500 mt-1">
+                        {watch('featured') ? 'Featured Post' : 'Regular post'}
+                    </p>
+                </div>
+                <FormField
+                    control={control}
+                    name="featured"
+                    render={({ field }) => (
+                        <FormItem className="flex items-center gap-2">
+                            <FormLabel>Featured</FormLabel>
+                            <FormControl>
+                                <Switch
+                                    checked={field.value}
+                                    onCheckedChange={(val) => field.onChange(val)}
+                                />
+                            </FormControl>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
+            </div> */}

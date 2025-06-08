@@ -31,7 +31,6 @@ export default function ServiceForm({ defaultValues, onSubmit, loading, error })
             categories: [],
             tags: [],
             status: true,
-            featured: false,
             pageHeading: '',
             serviceTypeDetails: [''],
             serviceBigDescription: [
@@ -59,7 +58,6 @@ export default function ServiceForm({ defaultValues, onSubmit, loading, error })
             'categories',
             'tags',
             'status',
-            'featured',
         ],
         ['pageHeading', 'serviceTypeDetails'],
         ['serviceBigDescription'],
@@ -83,7 +81,6 @@ export default function ServiceForm({ defaultValues, onSubmit, loading, error })
         }
     };
 
-    console.log(error)
 
     return (
         <FormProvider {...methods}>

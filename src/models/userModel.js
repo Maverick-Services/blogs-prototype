@@ -10,12 +10,19 @@ const permissionSchema = new mongoose.Schema({
 const userSchema = new mongoose.Schema({
     name: {
         type: String,
+        trim: true
+    },
+    imageURL: {
+        type: String,
+    },
+    phone: {
+        type: String,
         required: true,
+        unique: true,
         trim: true
     },
     email: {
         type: String,
-        required: true,
         unique: true,
         lowercase: true,
         match: [/\S+@\S+\.\S+/, 'Please provide a valid email']
@@ -31,7 +38,7 @@ const userSchema = new mongoose.Schema({
     },
     provider: {
         type: String,
-        enum: ['google', 'credentials'],
+        enum: ['credentials'],
         default: 'credentials'
     },
     permissions: {

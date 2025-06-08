@@ -1,7 +1,7 @@
 // app/services/[slug]/page.jsx
 import TalkToLawyerCard from '@/components/website/TalkToLawyerCard';
 import WebsiteLayout from '@/components/website/WebsiteLayout';
-import { getServiceBySlug } from '@/lib/main/services';
+import { getAllServicesSlugs, getServiceBySlug } from '@/lib/main/services';
 import { notFound } from 'next/navigation';
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator, } from '@/components/ui/breadcrumb';
 import EnquiryForm from '@/components/website/EnquiryForm';
@@ -9,10 +9,15 @@ import ScrollableServiceSections from '@/components/website/ScrollableServiceSec
 import TabbedDocuments from '@/components/website/TabbedDocuments';
 import { getHomePageData } from '@/lib/main/getHomePageData';
 
-// export async function generateStaticParams() {
-//     const services = await getAllServicesSlugs();
-//     return services.map(({ slug }) => ({ slug }))
-// }
+
+export async function generateStaticParams() {
+    const services = await getAllServicesSlugs();
+
+    return services.map(service => ({
+        slug: service.slug,
+    }));
+}
+
 
 export async function generateMetadata({ params }) {
     const service = await getServiceBySlug(params.slug);
@@ -44,7 +49,7 @@ export async function generateMetadata({ params }) {
 async function Page({ params }) {
     const { services, categories } = await getHomePageData();
     const service = await getServiceBySlug(params.slug);
-
+    console.log(service)
     if (!service) {
         notFound();
     }
@@ -125,7 +130,7 @@ async function Page({ params }) {
                                         className="object-cover"
                                     />
                                 </div> */}
-                                <TabbedDocuments />
+                                <TabbedDocuments subServices={service?.subServices} />
                             </div>
                         </div>
 

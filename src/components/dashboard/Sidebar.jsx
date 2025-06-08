@@ -7,17 +7,25 @@ import Image from "next/image";
 import { LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { IMAGES } from "@/lib/constants/assets";
-import { signOut, useSession } from "next-auth/react";
-import { checkPermission } from "@/lib/permissions";
+import { signOut } from "next-auth/react";
+import { usePermissions } from "@/hooks/usePermissions";
+import SidebarSkeleton from "./SidebarSkeleton";
 
 export default function Sidebar({ isOpen, setIsSidebarOpen, sidebarLinks }) {
-    const { data: session } = useSession()
-    const user = session?.user
-
-    const allowedLinks = sidebarLinks.filter(link =>
-        checkPermission(user, link.key, 'view')
-    )
+    const { data, isLoading, error } = usePermissions();
     const pathname = usePathname();
+
+    const role = data?.role;
+    const perms = data?.permissions || {};
+
+    function can(resource, action) {
+        if (role === 'admin') return true;
+        if (role === 'sub-admin') return !!perms?.[resource]?.[action];
+        return false;
+    }
+
+    const allowedLinks = sidebarLinks.filter(link => can(link.key, 'view'));
+    // console.log(allowedLinks)
 
     function onLinkClick() {
         setIsSidebarOpen(false);
@@ -38,39 +46,40 @@ export default function Sidebar({ isOpen, setIsSidebarOpen, sidebarLinks }) {
             </div>
 
             {/* Navigation Links */}
-            <div className="w-full flex flex-col gap-3 transition-all duration-300 ease-in-out">
-                {allowedLinks?.map(({ href, label, icon }) => {
-                    const abc = href.split('/')[1];
-                    const isActive = href === `/${abc}` ? pathname === `/${abc}` : pathname.startsWith(href);
-                    return (
-                        <Link
-                            key={href}
-                            href={href}
-                            onClick={onLinkClick}
-                            className={`group flex items-center gap-4 px-4 py-2 rounded-lg transition-all duration-300
+            {isLoading ? <div><SidebarSkeleton /></div>
+                : <div className="w-full flex flex-col gap-3 transition-all duration-300 ease-in-out">
+                    {allowedLinks?.map(({ href, label, icon }) => {
+                        const abc = href.split('/')[1];
+                        const isActive = href === `/${abc}` ? pathname === `/${abc}` : pathname.startsWith(href);
+                        return (
+                            <Link
+                                key={href}
+                                href={href}
+                                onClick={onLinkClick}
+                                className={`group flex items-center gap-4 px-4 py-2 rounded-lg transition-all duration-300
                                 ${isActive
-                                    ? "bg-gray-700 shadow-md text-white"
-                                    : "hover:bg-gray-800 hover:translate-x-1 text-gray-300 hover:text-white"}
+                                        ? "bg-gray-700 shadow-md text-white"
+                                        : "hover:bg-gray-800 hover:translate-x-1 text-gray-300 hover:text-white"}
                             `}
-                        >
-                            <span className={`p-2 rounded-lg ${isActive ? "bg-white/10" : "bg-gray-800 group-hover:bg-gray-700"
-                                }`}>
-                                <span
-                                    className="text-sm text-gray-100"
-                                // style={{ fontSize: "max(1.1vw, 15px)" }}
-                                >
-                                    {icon}
+                            >
+                                <span className={`p-2 rounded-lg ${isActive ? "bg-white/10" : "bg-gray-800 group-hover:bg-gray-700"
+                                    }`}>
+                                    <span
+                                        className="text-sm text-gray-100"
+                                    // style={{ fontSize: "max(1.1vw, 15px)" }}
+                                    >
+                                        {icon}
+                                    </span>
                                 </span>
-                            </span>
 
-                            <span className="text-sm font-medium opacity-90 group-hover:opacity-100 transition-opacity">
-                                {label}
-                            </span>
-                        </Link>
-                    );
-                })}
-            </div>
-
+                                <span className="text-sm font-medium opacity-90 group-hover:opacity-100 transition-opacity">
+                                    {label}
+                                </span>
+                            </Link>
+                        );
+                    })}
+                </div>
+            }
             {/* Profile Section */}
             <div className="mt-auto w-full border-t border-gray-700 pt-6">
                 <div className="flex items-center gap-3 px-4 py-2 hover:bg-gray-800 rounded-lg transition-colors">

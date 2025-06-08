@@ -1,23 +1,21 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import api from '@/lib/api';
 import { toast } from 'react-hot-toast';
-import { useSession } from 'next-auth/react';
+import { Resources } from '@/lib/permissions';
+import { usePermissions } from './usePermissions';
 import { useRouter } from 'next/navigation';
-import { Actions, checkPermission, onlyAdminPermission, Resources } from '@/lib/permissions';
 
 // Hook to manage Services
 export const useServices = () => {
-    const router = useRouter()
-    const { data: session } = useSession();
-    const user = session?.user;
-    const queryClient = useQueryClient();
+    const router = useRouter();
+    const queryClient = useQueryClient()
+    const { checkView, checkAdd, checkEdit, checkDelete, onlyAdmin } = usePermissions()
 
     // Permissions
-    const canView = checkPermission(user, Resources.SERVICES, Actions.VIEW);
-    const canAdd = checkPermission(user, Resources.SERVICES, Actions.ADD);
-    const canEdit = checkPermission(user, Resources.SERVICES, Actions.EDIT);
-    const canDelete = checkPermission(user, Resources.SERVICES, Actions.DELETE);
-    const onlyAdmin = onlyAdminPermission(user);
+    const canView = checkView(Resources.SERVICES)
+    const canAdd = checkAdd(Resources.SERVICES)
+    const canEdit = checkEdit(Resources.SERVICES)
+    const canDelete = checkDelete(Resources.SERVICES)
 
     // Get all Services
     const servicesQuery = useQuery({
@@ -27,6 +25,26 @@ export const useServices = () => {
         staleTime: 1000 * 60 * 5,
         onError: (err) => {
             toast.error(err.message || 'Failed to fetch services');
+        }
+    });
+
+    //  Get single Service by slug
+    const getServiceQuery = (id) => useQuery({
+        queryKey: ['service', id],
+        queryFn: async () => {
+            const res = await api.get(`/services/${id}`);
+            const data = res.data;
+
+            if (!data || data.message === 'Service not found') {
+                throw new Error('Service not found');
+            }
+
+            return data;
+        },
+        enabled: !!id && canView,
+        staleTime: 1000 * 60 * 5,
+        onError: (err) => {
+            toast.error(err.message || 'Failed to fetch service');
         }
     });
 
@@ -73,6 +91,7 @@ export const useServices = () => {
 
     return {
         servicesQuery,
+        getServiceQuery,
         createService,
         updateService,
         deleteService,

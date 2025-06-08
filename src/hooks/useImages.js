@@ -3,18 +3,17 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import api from '@/lib/api';
 import { toast } from 'react-hot-toast';
-import { useSession } from 'next-auth/react';
-import { Actions, checkPermission, Resources } from '@/lib/permissions';
+import { Resources } from '@/lib/permissions';
+import { usePermissions } from './usePermissions';
 
 export const useImages = () => {
-    const { data: session } = useSession();
-    const user = session?.user
-    const queryClient = useQueryClient();
+    const queryClient = useQueryClient()
+    const { checkView, checkAdd, checkDelete } = usePermissions()
 
-    // Check permissions
-    const canView = checkPermission(user, Resources.MEDIA, Actions.VIEW)
-    const canAdd = checkPermission(user, Resources.MEDIA, Actions.ADD)
-    const canDelete = checkPermission(user, Resources.MEDIA, Actions.DELETE)
+    // Permissions
+    const canView = checkView(Resources.MEDIA)
+    const canAdd = checkAdd(Resources.MEDIA)
+    const canDelete = checkDelete(Resources.MEDIA)
 
     const imagesQuery = useQuery({
         queryKey: ['images'],

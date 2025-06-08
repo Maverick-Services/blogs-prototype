@@ -59,10 +59,10 @@ const serviceSchema = new mongoose.Schema({
         type: Boolean,
         default: true
     },
-    featured: {
-        type: Boolean,
-        default: false
-    }
+    subServices: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'SubService',
+    }]
 }, {
     timestamps: true,
 });

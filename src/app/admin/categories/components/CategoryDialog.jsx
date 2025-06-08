@@ -39,13 +39,11 @@ export default function CategoryDialog({ open, onOpenChange, selectedCategory, o
     const watchName = watch("name");
 
     useEffect(() => {
-        // if (!selectedCategory) {
         const generatedSlug = watchName
             ?.toLowerCase()
             .replace(/\s+/g, '-')
             .replace(/[^a-z0-9-]/g, '');
         setValue('slug', generatedSlug);
-        // }
     }, [watchName, setValue,]);
 
 

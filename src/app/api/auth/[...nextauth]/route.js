@@ -1,20 +1,15 @@
 // app/api/auth/[...nextauth]/route.js
 import NextAuth from 'next-auth';
-import GoogleProvider from 'next-auth/providers/google';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import { MongoDBAdapter } from '@next-auth/mongodb-adapter';
-import clientPromise from '@/lib/mongodbClient';       // ← the MongoClient helper
+import clientPromise from '@/lib/mongodbClient';
 import User from '@/models/userModel';
 import bcrypt from 'bcryptjs';
-import { authOptions as sharedOptions } from '@/lib/nextAuthOptions';
 
 export const authOptions = {
     adapter: MongoDBAdapter(clientPromise),
+    session: { strategy: 'jwt' },
     providers: [
-        GoogleProvider({
-            clientId: process.env.GOOGLE_CLIENT_ID,
-            clientSecret: process.env.GOOGLE_CLIENT_SECRET
-        }),
         CredentialsProvider({
             name: 'credentials',
             credentials: {
@@ -22,23 +17,81 @@ export const authOptions = {
                 password: { label: 'Password', type: 'password' }
             },
             async authorize({ email, password }) {
-                // use your mongoose connectDB + model
                 await import('@/lib/mongodb').then(m => m.connectDB());
                 const user = await User.findOne({ email }).select('+password');
                 if (!user) throw new Error('No user found');
-                if (user.provider !== 'credentials') throw new Error('Please sign in with Google');
+                if (!["admin", "sub-admin"].includes(user.role)) throw new Error("Not authorized");
                 const valid = await bcrypt.compare(password, user.password);
                 if (!valid) throw new Error('Invalid credentials');
-                return user;
+                return { id: user._id.toString(), role: user.role, phone: user.phone };
+            }
+        }),
+        CredentialsProvider({
+            id: 'otp',
+            name: 'Phone OTP',
+            credentials: {
+                phone: { label: 'Phone', type: 'text' },
+                sessionId: { label: 'Session ID', type: 'text' },
+                otp: { label: 'OTP', type: 'text' }
+            },
+            async authorize({ phone, sessionId, otp }) {
+                try {
+                    await import('@/lib/mongodb').then(m => m.connectDB());
+                    console.log(sessionId)
+                    console.log(otp)
+                    // Validate phone format
+                    if (!phone || !/^\d{10}$/.test(phone)) {
+                        throw new Error('Invalid phone number');
+                    }
+
+                    let user = await User.findOne({ phone });
+
+                    // Prevent admin login through this flow
+                    if (user && user.role !== 'user') {
+                        throw new Error('Invalid user: Admin must use email login');
+                    }
+
+                    if (!user) {
+                        user = await User.create({ phone, role: 'user' });
+                    }
+
+                    return {
+                        id: user._id.toString(),
+                        role: user.role,
+                        phone: user.phone
+                    };
+                } catch (error) {
+                    console.error('OTP Auth Error:', error);
+                    throw new Error(error.message || 'Could not authenticate');
+                }
             }
         })
     ],
-    session: { strategy: 'jwt' },
+    callbacks: {
+        async jwt({ token, user }) {
+            if (user) {
+                token.id = user.id;
+                token.role = user.role;
+                token.phone = user.phone;
+
+                const maxAge = user.role === 'user' ? 60 * 60 * 24 * 30 : 60 * 30;
+                token.exp = Math.floor(Date.now() / 1000) + maxAge;
+            }
+            return token;
+        },
+        async session({ session, token }) {
+            session.user = {
+                id: token.id,
+                role: token.role,
+                phone: token.phone
+            };
+            return session;
+        }
+    },
     secret: process.env.NEXTAUTH_SECRET,
     pages: {
         signIn: '/',
     },
-    callbacks: sharedOptions.callbacks,
 };
 
 const handler = NextAuth(authOptions);

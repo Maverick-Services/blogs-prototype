@@ -1,23 +1,26 @@
 // middleware.js
-import { withAuth } from 'next-auth/middleware'
-import { NextResponse } from 'next/server'
+import { NextResponse } from 'next/server';
+import { getToken } from 'next-auth/jwt';
 
-export default withAuth(
-    (req) => {
-        const role = req.nextauth.token?.role
-        if (
-            req.nextUrl.pathname.startsWith('/admin') &&
-            !['admin', 'sub-admin'].includes(role)
-        ) {
-            return NextResponse.redirect(new URL('/', req.url))
+export async function middleware(req) {
+    const path = req.nextUrl.pathname;
+
+    // Admin route protection
+    if (path.startsWith('/admin')) {
+        const session = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
+
+        if (!session) {
+            return NextResponse.redirect(new URL('/auth', req.url));
         }
-    },
-    {
-        callbacks: {
-            authorized: ({ token }) => !!token
+
+        // Only allow admin/sub-admin roles
+        if (!['admin', 'sub-admin'].includes(session.role)) {
+            return NextResponse.redirect(new URL('/', req.url));
         }
     }
-)
+
+    return NextResponse.next();
+}
 
 export const config = {
     matcher: ['/admin/:path*']

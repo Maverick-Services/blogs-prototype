@@ -52,6 +52,7 @@ export default function UserDialog({ open, onOpenChange, selectedUser, onCreate,
                 reset({
                     name: selectedUser.name || "",
                     email: selectedUser.email || "",
+                    phone: selectedUser.phone || "",
                     password: selectedUser.password || "",
                     role: selectedUser.role || "user",
                     permissions: selectedUser.permissions
@@ -60,6 +61,7 @@ export default function UserDialog({ open, onOpenChange, selectedUser, onCreate,
                 reset({
                     name: "",
                     email: "",
+                    phone: "",
                     password: "",
                     role: "user",
                     permissions: {}
@@ -148,6 +150,26 @@ export default function UserDialog({ open, onOpenChange, selectedUser, onCreate,
                                 {errors.email && (
                                     <p className="text-sm text-red-500 mt-1">
                                         {errors.email.message}
+                                    </p>
+                                )}
+                            </div>
+                        </div>
+
+                        {/* Phone */}
+                        <div className="grid grid-cols-4 items-start gap-4">
+                            <Label htmlFor="phone" className="text-right mt-2">
+                                Phone Number<span className="text-red-500"> *</span>
+                            </Label>
+                            <div className="col-span-3">
+                                <Input
+                                    id="phone"
+                                    {...register("phone", { required: "Phone Number is required" })}
+                                    className={clsx({ "border-red-500": errors.name })}
+                                    placeholder="8965899658"
+                                />
+                                {errors.name && (
+                                    <p className="text-sm text-red-500 mt-1">
+                                        {errors.name.message}
                                     </p>
                                 )}
                             </div>

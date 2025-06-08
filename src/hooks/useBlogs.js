@@ -1,22 +1,18 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import api from '@/lib/api';
 import { toast } from 'react-hot-toast';
-import { useSession } from 'next-auth/react';
-import { Actions, checkPermission, onlyAdminPermission, Resources } from '@/lib/permissions';
-import { useRouter } from 'next/navigation';
+import { Resources } from '@/lib/permissions';
+import { usePermissions } from './usePermissions';
 
 export const useBlogs = ({ featured = 'all', status = 'active', page = 1, pageSize = 10 }) => {
-    const router = useRouter()
-    const { data: session } = useSession();
-    const user = session?.user;
-    const queryClient = useQueryClient();
+    const queryClient = useQueryClient()
+    const { checkView, checkAdd, checkEdit, checkDelete, onlyAdmin } = usePermissions()
 
     // Permissions
-    const canView = checkPermission(user, Resources.BLOGS, Actions.VIEW);
-    const canAdd = checkPermission(user, Resources.BLOGS, Actions.ADD);
-    const canEdit = checkPermission(user, Resources.BLOGS, Actions.EDIT);
-    const canDelete = checkPermission(user, Resources.BLOGS, Actions.DELETE);
-    const onlyAdmin = onlyAdminPermission(user);
+    const canView = checkView(Resources.BLOGS)
+    const canAdd = checkAdd(Resources.BLOGS)
+    const canEdit = checkEdit(Resources.BLOGS)
+    const canDelete = checkDelete(Resources.BLOGS)
 
     // Build query params
     const queryParams = [];

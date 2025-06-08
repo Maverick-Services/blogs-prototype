@@ -1,6 +1,8 @@
+// app/api/services/route.js
 import { connectDB } from "@/lib/mongodb";
 import Service from "@/models/serviceModel";
 import { NextResponse } from "next/server";
+import SubService from "@/models/subServiceModel";
 
 export async function POST(req) {
     try {
@@ -35,7 +37,10 @@ export async function GET(req) {
         if (status !== null) query.status = status === 'true';
         if (featured !== null) query.featured = featured === 'true';
 
-        const services = await Service.find(query).sort({ createdAt: -1 });
+        const services = await Service
+            .find(query)
+            .sort({ createdAt: -1 })
+            .populate('subServices');
 
         return NextResponse.json({ success: true, data: services });
     } catch (error) {

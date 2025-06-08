@@ -25,18 +25,23 @@ export default function ServicesListView({
     onDelete,
     isDeleting,
     deleteError,
-    categories, // array of { _id, name }
+    categories,
     canDelete,
     canEdit
 }) {
     const router = useRouter();
     const [deletingId, setDeletingId] = useState(null);
 
-    const { setSelectedService } = useServiceStore();
+    // const { setSelectedService } = useServiceStore();
 
     const handleEdit = (service) => {
-        setSelectedService(service);
+        // setSelectedService(service);
         router.push(`/admin/services/${service._id}/edit`);
+    };
+
+    const handleView = (service) => {
+        // setSelectedService(service);
+        router.push(`/admin/services/${service._id}/view`);
     };
 
     const handleDeleteClick = (id) => {
@@ -148,7 +153,17 @@ export default function ServicesListView({
                                 {/* 6. Actions Dropdown */}
                                 <TableCell className="">
                                     <div className="flex items-center justify-center gap-2">
-                                        <ServiceDetailsDialog service={service} />
+                                        {/* <ServiceDetailsDialog service={service} /> */}
+
+                                        <Button
+                                            size="icon"
+                                            variant="outline"
+                                            className="hover:bg-gray-100"
+                                            onClick={() => handleView(service)}
+                                        >
+                                            <Eye size={18} className="text-gray-600" />
+                                        </Button>
+
                                         {canEdit &&
                                             <Button
                                                 size="icon"

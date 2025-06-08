@@ -1,13 +1,17 @@
-// lib/services.js
-
-import clientPromise from "../mongodbClient";
-
+import { connectDB } from "@/lib/mongodb";
+import Service from "@/models/serviceModel";
+import Category from "@/models/categoryModel";
+import SubService from "@/models/subServiceModel";
+import Tag from "@/models/tagModel";
 
 export async function getServiceBySlug(slug) {
     try {
-        const client = await clientPromise;
-        const db = client.db();
-        const service = await db.collection("services").findOne({ slug });
+        await connectDB(); // ensures mongoose is connected
+
+        const service = await Service.findOne({ slug })
+            .populate("categories")
+            .populate("tags")
+            .populate("subServices");
 
         return service ? JSON.parse(JSON.stringify(service)) : null;
     } catch (error) {
@@ -16,23 +20,16 @@ export async function getServiceBySlug(slug) {
     }
 }
 
+export async function getAllServicesSlugs() {
+    try {
+        await connectDB();
 
-// export async function getAllServicesSlugs() {
-//     try {
-//         const res = await fetch(`${API_BASE}/api/services/`, {
-//             next: { revalidate: 300 },
-//         }
-//         );
-
-//         if (!res.ok) {
-//             console.error(`Failed to fetch services ${res.status}`);
-//             return null;
-//         }
-//         const services = await res.json();
-//         return services;
-
-//     } catch (error) {
-//         console.error('Error fetching slugs:', error);
-//         return [];
-//     }
-// }
+        const services = await Service.find({}, 'slug'); // only fetch `slug` field
+        return services.map(service => ({
+            slug: service.slug,
+        }));
+    } catch (error) {
+        console.error("Error fetching service slugs:", error);
+        return [];
+    }
+}

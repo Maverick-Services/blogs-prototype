@@ -7,7 +7,6 @@ import { ADMIN_SIDEBAR_LINKS } from '@/lib/constants/sidebarLinks'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { Toaster } from 'react-hot-toast'
-// import AdminRouteGuard from '@/components/auth/AdminRouteGuard'
 import { SessionProvider } from 'next-auth/react'
 
 function layout({ children }) {
@@ -21,9 +20,7 @@ function layout({ children }) {
     }))
 
     return (
-
         <SessionProvider>
-            {/* <AdminRouteGuard> */}
             <QueryClientProvider client={queryClient}>
                 <LayoutDashboard sidebarLinks={ADMIN_SIDEBAR_LINKS}>
                     {children}
@@ -34,7 +31,6 @@ function layout({ children }) {
                 )}
                 <Toaster position="top-right" />
             </QueryClientProvider>
-            {/* </AdminRouteGuard> */}
         </SessionProvider>
     )
 }

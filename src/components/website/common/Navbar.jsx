@@ -18,7 +18,7 @@ export default function NavBar({ services, categories }) {
     const primaryColor = "#003366"
 
     // Take first 4 categories
-    const topCategories = categories.slice(0, 4)
+    const topCategories = categories.slice(0,)
 
     // Helper to get up to 4 services per category
     const getServicesFor = (catId) =>
@@ -170,11 +170,6 @@ export default function NavBar({ services, categories }) {
                             ))}
 
                             {/* Static Blogs Link */}
-                            <div className='bg-gray-100 rounded-xl flex items-center justify-center px-3 font-semibold'>
-                                <a href="https://blogs-prototype-khaki.vercel.app/admin">
-                                    Admin
-                                </a>
-                            </div>
                             {/* <Link
                                 href="/admin"
                                 className="flex items-center px-4 py-3 text-sm font-medium text-gray-700 hover:text-white hover:bg-[#003366] rounded-lg transition-colors duration-200"
@@ -290,13 +285,13 @@ export default function NavBar({ services, categories }) {
                                 </div>
                             ))}
 
-                            <Link
+                            {/* <Link
                                 href="/admin"
                                 className="block py-3 px-2 text-gray-800 font-medium border-b border-gray-100"
                                 onClick={() => setMobileOpen(false)}
                             >
                                 Admin
-                            </Link>
+                            </Link> */}
                         </div>
 
                         <div className="px-4 pt-4 border-t border-gray-200">

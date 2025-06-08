@@ -19,7 +19,7 @@ export const useSubServices = (serviceId) => {
 
     // Create Sub-Service
     const createSubService = useMutation({
-        mutationFn: ({ data }) => api.post('/subservices', data),
+        mutationFn: (data) => api.post('/subservices', data),
         onSuccess: () => {
             queryClient.invalidateQueries(['subservices', serviceId]);
             toast.success('Sub-service created successfully');
@@ -37,6 +37,7 @@ export const useSubServices = (serviceId) => {
             toast.success('Sub-service updated successfully');
         },
         onError: (err) => {
+            console.log(err)
             toast.error(err.message || 'Failed to update sub-service');
         }
     });

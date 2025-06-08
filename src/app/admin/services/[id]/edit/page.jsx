@@ -7,22 +7,26 @@ import { useServiceStore } from '@/store/serviceStore';
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator, } from '@/components/ui/breadcrumb';
 import { useServices } from '@/hooks/useServices';
 import InnerDashboardLayout from '@/components/dashboard/InnerDashboardLayout';
-import { useRouter } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import NotAuthorizedPage from '@/components/notAuthorized';
 
 const EditServicePage = () => {
     const router = useRouter()
-    const { updateService, permissions: { canEdit } } = useServices()
+    const params = useParams();
+    const id = params.id;
+    const { updateService, getServiceQuery, permissions: { canEdit } } = useServices()
+    const { data: service, isLoading, error } = getServiceQuery(id);
 
-    const { selectedService } = useServiceStore();
-    if (!selectedService) return <div className="p-4">Loading or Invalid Access</div>;
+    // const { selectedService } = useServiceStore();
+    // if (!selectedService) return <div className="p-4">Loading or Invalid Access</div>;
 
     const handleSubmit = async (data) => {
-        await updateService.mutateAsync({ id: selectedService._id, data })
+        await updateService.mutateAsync({ id: service._id, data })
         console.log('Update service:', data);
         router.push('/admin/services')
     };
 
+    if (isLoading) return <p>Loading...</p>
     if (!canEdit) return <NotAuthorizedPage />;
 
     return (
@@ -45,7 +49,7 @@ const EditServicePage = () => {
                     </BreadcrumbList>
                 </Breadcrumb>
             </div>
-            <ServiceForm defaultValues={selectedService} onSubmit={handleSubmit} loading={updateService.isPending} error={updateService.error} />
+            <ServiceForm defaultValues={service} onSubmit={handleSubmit} loading={updateService.isPending} error={updateService.error} />
         </InnerDashboardLayout>
     );
 };

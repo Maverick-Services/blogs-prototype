@@ -33,40 +33,6 @@ export function checkPermission(user, resource, action) {
     return false;
 }
 
-// Add this permission check function
-function hasPermission(permissions, resource, action) {
-    if (!permissions) return false;
-    const resourcePerms = permissions[resource];
-    return resourcePerms?.[action];
-}
-
-// export async function requirePermissionApi(req, resource, action) {
-//     try {
-//         // ⚠️ Fix: Use headers() and cookies() when calling getServerSession
-//         const session = await getServerSession({ headers: headers(), cookies: cookies() }, authOptions);
-
-//         if (!session?.user) {
-//             return Response.json({ error: "Unauthorized" }, { status: 401 });
-//         }
-
-//         if (session.user.role === 'admin') return null;
-
-//         if (session.user.role === 'sub-admin') {
-//             if (hasPermission(session.user.permissions, resource, action)) {
-//                 return null;
-//             }
-//         }
-
-//         return Response.json({ error: "Forbidden" }, { status: 403 });
-//     } catch (error) {
-//         console.error('Permission Error:', error);
-//         return Response.json(
-//             { error: "Internal Server Error" },
-//             { status: 500 }
-//         );
-//     }
-// }
-
 export function onlyAdminPermission(user) {
     if (user?.role === 'admin') return true;
     return false;

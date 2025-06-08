@@ -8,8 +8,6 @@ export default async function Testimonials() {
         page: 1
     });
 
-    console.log(data);
-
     const testimonials = data?.testimonials?.length > 0 ? data.testimonials : [
         {
             userName: 'Sneha Kapoor',

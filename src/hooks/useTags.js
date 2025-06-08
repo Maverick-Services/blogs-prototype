@@ -1,19 +1,18 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import api from '@/lib/api';
 import { toast } from 'react-hot-toast';
-import { useSession } from 'next-auth/react';
-import { Actions, checkPermission, Resources } from '@/lib/permissions';
+import { Resources } from '@/lib/permissions';
+import { usePermissions } from './usePermissions';
 
 export const useTags = () => {
-    const { data: session } = useSession();
-    const user = session?.user;
-    const queryClient = useQueryClient();
+    const queryClient = useQueryClient()
+    const { checkView, checkAdd, checkEdit, checkDelete } = usePermissions()
 
     // Permissions
-    const canView = checkPermission(user, Resources.TAGS, Actions.VIEW);
-    const canAdd = checkPermission(user, Resources.TAGS, Actions.ADD);
-    const canEdit = checkPermission(user, Resources.TAGS, Actions.EDIT);
-    const canDelete = checkPermission(user, Resources.TAGS, Actions.DELETE);
+    const canView = checkView(Resources.TAGS)
+    const canAdd = checkAdd(Resources.TAGS)
+    const canEdit = checkEdit(Resources.TAGS)
+    const canDelete = checkDelete(Resources.TAGS)
 
     // Get all tags
     const tagsQuery = useQuery({

@@ -1,7 +1,10 @@
 // /api/services/[slug]/route.js
 
 import { connectDB } from "@/lib/mongodb";
+import Category from "@/models/categoryModel";
 import Service from "@/models/serviceModel";
+import SubService from "@/models/subServiceModel";
+import Tag from "@/models/tagModel";
 import { NextResponse } from "next/server";
 
 async function checkForDuplicate({ name, slug, excludeId = null }) {
@@ -20,17 +23,17 @@ async function checkForDuplicate({ name, slug, excludeId = null }) {
 export async function GET(req, { params }) {
     try {
         await connectDB();
-        const { slug } = params;
+        const { id } = params;
+        console.log(id)
 
-        const service = await Service.findOne({ slug })
-            .populate('categories')
-            .populate('tags');
+        const service = await Service.findById(id)
+            .populate('subServices')
 
         if (!service) {
             return NextResponse.json({ message: 'Service not found' }, { status: 404 });
         }
 
-        return NextResponse.json(service, { status: 200 });
+        return NextResponse.json({ data: service }, { status: 200 });
     } catch (error) {
         console.error('GET /api/services/[slug] error:', error);
         return NextResponse.json({ message: 'Internal Server Error' }, { status: 500 });

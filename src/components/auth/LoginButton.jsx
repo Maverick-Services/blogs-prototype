@@ -1,21 +1,15 @@
 "use client"
+import { SessionProvider } from 'next-auth/react'
 // components/auth/loginButton.jsx
 import React, { useState } from 'react'
-import AuthDialog from './LoginDialog';
-import { Button } from '../ui/button';
+import LoginMenu from './LoginMenu'
 
 function LoginButton() {
-    const [isDialogOpen, setIsDialogOpen] = useState(false);
 
     return (
-        <div>
-            <Button onClick={() => setIsDialogOpen(true)}>Login</Button>
-            <AuthDialog
-                onOpenChange={setIsDialogOpen}
-                open={isDialogOpen}
-            />
-
-        </div>
+        <SessionProvider>
+            <LoginMenu />
+        </SessionProvider>
     )
 }
 
