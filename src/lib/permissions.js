@@ -4,16 +4,24 @@
 export const Resources = {
     DASHBOARD: 'dashboard',
     ENQUIRIES: 'enquiries',
+    SERVICE_ORDERS: 'serviceOrders',
+    CALL_ORDERS: 'callOrders',
     SERVICES: 'services',
+    SUB_SERVICES: 'subServices',
     BLOGS: 'blogs',
     CATEGORIES: 'categories',
     TAGS: 'tags',
     MEDIA: 'media',
     USERS: 'users',
     SETTINGS: 'settings',
-    TESTIMONIALS: 'testimonials'
+    TESTIMONIALS: 'testimonials',
+    PRIVACY_POLICY: 'privacy-policy',
+    REFUND_POLICY: 'refund-policy',
+    TERMS_AND_CONDITIONS: 'terms-and-conditions',
 };
 
+// ABOUT_US: 'about-us',
+// CONTACT_US: 'contact-us',
 // Define possible actions
 export const Actions = {
     VIEW: 'view',

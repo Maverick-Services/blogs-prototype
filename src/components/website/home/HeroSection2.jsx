@@ -64,7 +64,7 @@ function HeroSection2() {
                             animate={{ opacity: 1, y: 0 }}
                             exit={{ opacity: 0, y: 20 }}
                             transition={{ duration: 0.5, delay: 0.2 }}
-                            className="text-4xl md:text-6xl font-bold text-yellow-200 mb-4"
+                            className="text-4xl md:text-6xl font-bold text-yellow-200 mb-4 font-poppins"
                         >
                             {slides[currentSlide].title}
                         </motion.h1>

@@ -16,7 +16,7 @@ export default async function Home() {
   // console.log(services);
   // console.log(categories);
   return (
-    <div className="font-sans">
+    <div className="">
       <NavBar services={services} categories={categories} />
       {/* <HeroSection /> */}
       <HeroSection2 />

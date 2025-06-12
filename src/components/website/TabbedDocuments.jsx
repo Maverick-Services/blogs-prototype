@@ -1,7 +1,10 @@
 "use client"
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 const TabbedDocuments = ({ subServices }) => {
+    const router = useRouter()
     const tabs = subServices || [];
     const [activeTab, setActiveTab] = useState(0);
     const currentTab = tabs[activeTab] || {};
@@ -20,6 +23,10 @@ const TabbedDocuments = ({ subServices }) => {
         ? Math.round(100 - (discountedPrice / actualPrice) * 100)
         : 0;
     const savings = actualPrice - discountedPrice;
+
+    function handleClick() {
+        router.replace()
+    }
 
     return (
         <div className="w-full bg-gradient-to-br from-white to-[#f0f7ff] rounded-md overflow-hidden border border-[#00336620]">
@@ -136,9 +143,11 @@ const TabbedDocuments = ({ subServices }) => {
                                 Excluding government charges
                             </p>
                         </div>
-                        <button className="bg-[#003366] hover:bg-[#002244] text-white font-medium py-2 px-6 rounded-lg transition duration-300">
-                            Get Service
-                        </button>
+                        <Link href={`/getService/${currentTab._id}`}>
+                            <button className="bg-[#003366] hover:bg-[#002244] text-white font-medium py-2 px-6 rounded-lg transition duration-300">
+                                Get Service
+                            </button>
+                        </Link>
                     </div>
                 </div>
             </div>

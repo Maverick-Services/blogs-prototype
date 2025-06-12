@@ -29,6 +29,7 @@ import AuthDialog from './LoginDialog';
 
 export default function LoginMenu() {
     const { data: session } = useSession();
+    // console.log(session)
     const router = useRouter();
     const [isLoginDialogOpen, setIsLoginDialogOpen] = useState(false);
     const [isLogoutDialogOpen, setIsLogoutDialogOpen] = useState(false);
@@ -116,24 +117,17 @@ export default function LoginMenu() {
                             <>
                                 <DropdownMenuItem
                                     className="flex items-center gap-2 p-3 rounded-md hover:bg-blue-50 cursor-pointer"
-                                    onClick={() => router.push('/user/profile')}
+                                    onClick={() => router.push('/user')}
                                 >
                                     <User className="w-4 h-4 text-blue-600" />
                                     <span>My Profile</span>
                                 </DropdownMenuItem>
                                 <DropdownMenuItem
                                     className="flex items-center gap-2 p-3 rounded-md hover:bg-blue-50 cursor-pointer"
-                                    onClick={() => router.push('/user/orders')}
+                                    onClick={() => router.push('/user')}
                                 >
                                     <FileText className="w-4 h-4 text-blue-600" />
                                     <span>Orders History</span>
-                                </DropdownMenuItem>
-                                <DropdownMenuItem
-                                    className="flex items-center gap-2 p-3 rounded-md hover:bg-blue-50 cursor-pointer"
-                                    onClick={() => router.push('/user/settings')}
-                                >
-                                    <Settings className="w-4 h-4 text-blue-600" />
-                                    <span>Account Settings</span>
                                 </DropdownMenuItem>
                             </>
                         )}

@@ -14,19 +14,35 @@ import {
     FaPhoneAlt,
     FaCalendarCheck,
     FaClipboardList,
+    FaShieldAlt,
+    FaUndoAlt,
+    FaFileContract,
+    FaInfoCircle,
+    FaAddressCard,
 } from 'react-icons/fa';
-
 import { Resources } from '../permissions';
 
 export const ADMIN_SIDEBAR_LINKS = [
     {
-        key: 'dashboard',
+        key: Resources.DASHBOARD,
         label: 'Dashboard',
         href: '/admin',
         icon: <FaHome />,
     },
     {
-        key: 'enquiries',
+        key: Resources.SERVICE_ORDERS,
+        label: 'Service Orders',
+        href: '/admin/serviceOrders',
+        icon: <FaClipboardList />,
+    },
+    {
+        key: Resources.CALL_ORDERS,
+        label: 'Call Orders',
+        href: '/admin/callOrders',
+        icon: <FaCalendarCheck />,
+    },
+    {
+        key: Resources.ENQUIRIES,
         label: 'Enquiries',
         href: '/admin/enquiries',
         icon: <FaEnvelope />,
@@ -36,6 +52,12 @@ export const ADMIN_SIDEBAR_LINKS = [
         label: 'Services',
         href: '/admin/services',
         icon: <FaBriefcase />,
+    },
+    {
+        key: 'call-plans',
+        label: 'Call Plans',
+        href: '/admin/call-plans',
+        icon: <FaPhoneAlt />,
     },
     {
         key: Resources.BLOGS,
@@ -74,27 +96,40 @@ export const ADMIN_SIDEBAR_LINKS = [
         icon: <FaCogs />,
     },
     {
-        key: 'testimonials',
+        key: Resources.TESTIMONIALS,
         label: 'Testimonials',
         href: '/admin/testimonials',
         icon: <FaQuoteRight />,
     },
+    // new policy & info pages
     {
-        key: 'call-plans',
-        label: 'Call Plans',
-        href: '/admin/call-plans',
-        icon: <FaPhoneAlt />,
+        key: Resources.PRIVACY_POLICY,
+        label: 'Privacy Policy',
+        href: '/admin/privacy-policy',
+        icon: <FaShieldAlt />,
     },
     {
-        key: 'call-bookings',
-        label: 'Call Bookings',
-        href: '/admin/call-bookings',
-        icon: <FaCalendarCheck />,
+        key: Resources.REFUND_POLICY,
+        label: 'Refund Policy',
+        href: '/admin/refund-policy',
+        icon: <FaUndoAlt />,
     },
     {
-        key: 'service-bookings',
-        label: 'Service Bookings',
-        href: '/admin/service-bookings',
-        icon: <FaClipboardList />,
+        key: Resources.TERMS_AND_CONDITIONS,
+        label: 'Terms & Conditions',
+        href: '/admin/terms-and-conditions',
+        icon: <FaFileContract />,
     },
+    // {
+    //     key: Resources.ABOUT_US,
+    //     label: 'About Us',
+    //     href: '/admin/about-us',
+    //     icon: <FaInfoCircle />,
+    // },
+    // {
+    //     key: Resources.CONTACT_US,
+    //     label: 'Contact Us',
+    //     href: '/admin/contact-us',
+    //     icon: <FaAddressCard />,
+    // },
 ];

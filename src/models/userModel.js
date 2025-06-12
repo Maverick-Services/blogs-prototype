@@ -41,6 +41,10 @@ const userSchema = new mongoose.Schema({
         enum: ['credentials'],
         default: 'credentials'
     },
+    orders: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Order'
+    }],
     permissions: {
         type: Map,
         of: permissionSchema,

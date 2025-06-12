@@ -8,6 +8,7 @@ import EnquiryForm from '@/components/website/EnquiryForm';
 import ScrollableServiceSections from '@/components/website/ScrollableServiceSections';
 import TabbedDocuments from '@/components/website/TabbedDocuments';
 import { getHomePageData } from '@/lib/main/getHomePageData';
+import { getServerSession } from 'next-auth';
 
 
 export async function generateStaticParams() {
@@ -47,9 +48,10 @@ export async function generateMetadata({ params }) {
 }
 
 async function Page({ params }) {
+
     const { services, categories } = await getHomePageData();
     const service = await getServiceBySlug(params.slug);
-    console.log(service)
+    // console.log(service)
     if (!service) {
         notFound();
     }
@@ -121,51 +123,16 @@ async function Page({ params }) {
 
                             {/* Filler Block */}
                             <div className="mt-4 flex-1 flex gap-4">
-                                {/* <div className="relative w-48 aspect-square rounded-lg overflow-hidden">
-                                    <Image
-                                        src={service.imageURL}
-                                        alt={service.name}
-                                        fill
-                                        priority
-                                        className="object-cover"
-                                    />
-                                </div> */}
                                 <TabbedDocuments subServices={service?.subServices} />
                             </div>
                         </div>
 
                         {/* right section */}
                         <div className="lg:w-82 flex flex-col gap-4 sticky top-5">
-                            {/* <div className="relative w-full aspect-square rounded-lg overflow-hidden">
-                                <Image
-                                    src={service.imageURL}
-                                    alt={service.name}
-                                    fill
-                                    priority
-                                    className="object-cover"
-                                />
-                            </div> */}
-
                             <EnquiryForm />
-
                             <TalkToLawyerCard />
                         </div>
                     </section>
-
-
-
-                    {/* <section className="prose lg:prose-xl">
-                        {service.serviceBigDescription.map((section, index) => (
-                            <div key={index} className="mb-8">
-                                <h2 className="text-2xl font-semibold text-gray-800 mb-2">
-                                    {section.title}
-                                </h2>
-                                <p className="text-gray-600 leading-relaxed">
-                                    {section.content}
-                                </p>
-                            </div>
-                        ))}
-                    </section> */}
 
                     <ScrollableServiceSections />
                 </article>

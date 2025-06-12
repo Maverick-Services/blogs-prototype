@@ -1,18 +1,28 @@
+// app/api/users/[id]/route.js
 import { connectDB } from "@/lib/mongodb";
 import User from "@/models/userModel";
 import { NextResponse } from "next/server";
 import { Actions, Resources } from "@/lib/permissions";
 import { requirePermissionApi } from "@/lib/serverPermissions";
+import Order from "@/models/orderModel";
+import Service from "@/models/serviceModel";
+import SubService from "@/models/subServiceModel";
 
-
-export async function GET(_, { params }) {
-    const errorResponse = await requirePermissionApi(req, Resources.USERS, Actions.VIEW);
-    if (errorResponse) return errorResponse;
+export async function GET(req, { params }) {
 
     await connectDB();
+    const { id } = params;
 
     try {
-        const user = await User.findById(params.id).select('-password');
+        const user = await User.findById(id)
+            .select('-password')
+            .populate({
+                path: 'orders',
+                populate: [
+                    { path: 'service' },
+                    { path: 'subService' },
+                ],
+            });
 
         if (!user) {
             return NextResponse.json({ success: false, message: 'User not found' }, { status: 404 });

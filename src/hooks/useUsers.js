@@ -29,6 +29,15 @@ export const useUsers = ({ role, page = 1, pageSize = 10 }) => {
         }
     });
 
+    const getUserQuery = (id) => useQuery({
+        queryKey: ['user', id],
+        queryFn: () => api.get(`/users/${id}`).then(res=> res.user),
+        staleTime: 1000 * 60 * 5,
+        onError: (err) => {
+            throw new Error(err.message || "Failed to fetch user")
+        }
+    })
+
     // Create User mutation
     const createUser = useMutation({
         mutationFn: (data) => api.post('/users', data),
@@ -86,6 +95,7 @@ export const useUsers = ({ role, page = 1, pageSize = 10 }) => {
         createUser,
         updateUser,
         deleteUser,
+        getUserQuery,
         changePassword,
         permissions: {
             canView,

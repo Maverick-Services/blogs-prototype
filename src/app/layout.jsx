@@ -1,6 +1,12 @@
 // app/layout.jsx
 import "./globals.css";;
-import { Poppins, Montserrat } from "next/font/google";
+import { Poppins, Montserrat, Inter } from "next/font/google";
+
+const inter = Inter({
+  variable: "--font-sans",
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+})
 
 const poppins = Poppins({
   variable: "--font-poppins",
@@ -23,7 +29,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${poppins.variable} ${montserrat.variable} antialiased`}
+        className={`${poppins.variable} ${montserrat.variable} ${inter.variable} antialiased`}
       >
         <main>{children}</main>
       </body>
