@@ -3,6 +3,7 @@ import React from 'react'
 import { useUsers } from '@/hooks/useUsers'
 import { useSession } from 'next-auth/react'
 import UserSection from './UserSection';
+import UserProfileSkeleton from './UserProfileSkeleton';
 
 function UserMain() {
     const { data: session } = useSession()
@@ -17,7 +18,7 @@ function UserMain() {
 
     console.log(userData)
 
-    if (!session || session === undefined || !session.user.id) return <p>Loading...</p>
+    if (!session || session === undefined || !session.user.id) return <UserProfileSkeleton />
 
     return (
         <div className='max-w-6xl mx-auto my- p-2 sm:p-5  rounded-2xl min-h-[90vh]'>

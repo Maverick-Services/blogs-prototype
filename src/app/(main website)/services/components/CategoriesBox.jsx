@@ -1,41 +1,58 @@
 'use client';
 import React from 'react';
+import { motion } from 'framer-motion';
 
-function CategoriesBox({ categories, selectedCategory, onSelectCategory }) {
+const CategoriesBox = ({ categories, selectedCategory, onSelectCategory }) => {
     return (
         <div className="w-full">
-            <div className="sticky top-24 bg-white rounded-xl shadow-lg p-4">
-                <h2 className="text-2xl font-bold text-[#0A3460] mb-4">Categories</h2>
+            <div className="sticky top-24 bg-white rounded-2xl shadow-xl p-5 border border-[#e0e7ff]">
+                <div className="flex items-center justify-between mb-6 pb-3 border-b border-[#d1ddf0]">
+                    <h2 className="text-xl font-bold text-[#0A3460]">Browse Categories</h2>
+                    <div className="bg-[#0A3460] text-white text-xs font-bold px-2 py-1 rounded-md">
+                        {categories.length}
+                    </div>
+                </div>
+
                 <ul className="space-y-2">
-                    <li>
+                    {/* All Categories */}
+                    <motion.li whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
                         <button
                             onClick={() => onSelectCategory('all')}
-                            className={`w-full text-left px-4 py-2 rounded-lg transition-colors ${selectedCategory === 'all'
-                                ? 'bg-[#0A3460] text-white'
-                                : 'text-gray-600 hover:bg-gray-100'
+                            className={`w-full text-left px-4 py-3 rounded-xl transition-all duration-300 flex items-center gap-2 ${selectedCategory === 'all'
+                                    ? 'bg-gradient-to-r from-[#0A3460] to-[#1e5a9e] text-white shadow-lg'
+                                    : 'text-[#0A3460] hover:bg-[#f0f5ff]'
                                 }`}
                         >
-                            All Categories
+                            <span
+                                className={`w-2 h-2 rounded-full ${selectedCategory === 'all' ? 'bg-white' : 'bg-[#0A3460]'
+                                    }`}
+                            ></span>
+                            <span className="font-medium">All Categories</span>
                         </button>
-                    </li>
+                    </motion.li>
 
-                    {categories.map(cat => (
-                        <li key={cat._id}>
+                    {/* Dynamic Categories */}
+                    {categories.map((cat) => (
+                        <motion.li key={cat._id} whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
                             <button
                                 onClick={() => onSelectCategory(cat._id)}
-                                className={`w-full text-left px-4 py-2 rounded-lg transition-colors ${selectedCategory === cat._id
-                                    ? 'bg-[#0A3460] text-white'
-                                    : 'text-gray-600 hover:bg-gray-100'
+                                className={`w-full text-left px-4 py-3 rounded-xl transition-all duration-300 flex items-center gap-2 ${selectedCategory === cat._id
+                                        ? 'bg-gradient-to-r from-[#0A3460] to-[#1e5a9e] text-white shadow-lg'
+                                        : 'text-[#0A3460] hover:bg-[#f0f5ff]'
                                     }`}
                             >
-                                {cat.name}
+                                <span
+                                    className={`w-2 h-2 rounded-full ${selectedCategory === cat._id ? 'bg-white' : 'bg-[#0A3460]'
+                                        }`}
+                                ></span>
+                                <span className="font-medium">{cat.name}</span>
                             </button>
-                        </li>
+                        </motion.li>
                     ))}
                 </ul>
             </div>
         </div>
     );
-}
+};
 
 export default CategoriesBox;

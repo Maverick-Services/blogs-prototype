@@ -63,7 +63,7 @@ export default function WhyChooseUs() {
     }, []);
 
     return (
-        <section className="relative overflow-hidden py-20 px-4">
+        <section className="relative overflow-hidden py-20 px-4" id='why'>
             {/* Background elements */}
             <div className="absolute inset-0 z-0">
                 <div className="absolute top-0 left-0 w-72 h-72 bg-blue-500 rounded-full filter blur-[100px] opacity-20"></div>

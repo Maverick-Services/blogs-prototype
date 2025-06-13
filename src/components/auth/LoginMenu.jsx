@@ -74,7 +74,7 @@ export default function LoginMenu() {
                         <div className="relative">
                             <div className="bg-gradient-to-br from-blue-500 to-indigo-600 p-0.5 rounded-full group-hover:from-blue-600 group-hover:to-indigo-700 transition-all">
                                 <Avatar className="w-10 h-10 bg-white border-2 border-white">
-                                    <AvatarImage src="/lawyer2.png" alt="avatar" />
+                                    <AvatarImage src="/avatar.jpg" alt="avatar" />
                                     <AvatarFallback className="bg-gradient-to-br from-blue-500 to-indigo-600 text-white font-semibold">
                                         {getInitials()}
                                     </AvatarFallback>

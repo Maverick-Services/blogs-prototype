@@ -23,18 +23,17 @@ export default function ServicesByCategory({ services, categories }) {
     };
 
     return (
-        <section className="py-20 relative overflow-hidden">
+        <section className="pt-20 pb-32 relative overflow-hidden bg-gradient-to-br from-[#f0f8ff] via-[#cae2f7] to-[#92bdff]">
             {/* Background elements */}
-            <div className="absolute inset-0 z-0">
-                <div className="absolute top-10 left-10 w-80 h-80 bg-indigo-100 rounded-full filter blur-[100px] opacity-40"></div>
-                <div className="absolute bottom-10 right-10 w-96 h-96 bg-blue-100 rounded-full filter blur-[120px] opacity-30"></div>
-                <div className="absolute top-1/3 right-1/4 w-64 h-64 bg-violet-100 rounded-full filter blur-[150px] opacity-20"></div>
-
-                {/* Decorative circles */}
-                <div className="absolute top-20 left-1/4 w-12 h-12 rounded-full bg-indigo-200 opacity-20 animate-pulse-slow"></div>
-                <div className="absolute bottom-40 right-1/3 w-16 h-16 rounded-full bg-blue-200 opacity-15 animate-pulse-slow-delay"></div>
-                <div className="absolute top-1/2 left-20 w-10 h-10 rounded-full bg-violet-200 opacity-15 animate-pulse-slow"></div>
+            <div className="absolute top-0 left-0 w-full h-full">
+                <div className="absolute top-20 -right-20 w-80 h-80 rounded-full bg-blue-100 opacity-40"></div>
+                <div className="absolute bottom-10 left-10 w-64 h-64 rounded-full bg-teal-100 opacity-30"></div>
+                <div className="absolute top-1/3 right-1/4 w-32 h-32 rounded-full bg-cyan-100 opacity-20"></div>
             </div>
+
+            {/* Floating shapes */}
+            <div className="absolute top-40 left-20 w-16 h-16 rounded-lg bg-blue-200 opacity-20 rotate-45"></div>
+            <div className="absolute bottom-40 right-24 w-20 h-20 rounded-full bg-teal-200 opacity-20"></div>
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                 <div className="text-center mb-16">
@@ -156,7 +155,7 @@ export default function ServicesByCategory({ services, categories }) {
             </div>
 
             {/* Decorative bottom element */}
-            <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-white to-transparent z-10"></div>
+            <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#EEF4FF] to-transparent z-10"></div>
         </section>
     );
 }

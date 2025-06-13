@@ -1,14 +1,10 @@
 
-import { getBlogsData } from '@/lib/main/getBlogsData';
+import { getLatestBlogs } from '@/lib/main/getBlogsData';
 import React from 'react';
 import BlogCard from './BlogShowCard';
 
 async function LatestBlogs() {
-    const { blogs } = await getBlogsData({
-        page: 1,
-        limit: 3,
-        category: 'all'
-    });
+    const blogs = await getLatestBlogs()
 
     return (
         <div className="py-12 px-4 sm:px-6 lg:px-8">
@@ -22,7 +18,7 @@ async function LatestBlogs() {
                     </p>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
                     {blogs?.map(blog => (
                         <div
                             key={`${blog._id}`}

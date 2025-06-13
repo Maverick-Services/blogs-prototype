@@ -2,6 +2,12 @@
 
 import { useEffect, useState, useRef, useCallback } from 'react';
 import { motion, LayoutGroup } from 'framer-motion';
+import ReactMarkdown from 'react-markdown';
+import styles from './post.module.css';
+import rehypeRaw from 'rehype-raw';
+import Link from 'next/link';
+import remarkGfm from 'remark-gfm'; // Import the plugin
+
 
 const serviceBigDescription = [
     {
@@ -36,7 +42,7 @@ const serviceBigDescription = [
     },
 ];
 
-export default function ScrollableServiceSections() {
+export default function ScrollableServiceSections({ serviceBigDescription }) {
     const [activeIndex, setActiveIndex] = useState(0);
     const sectionRefs = useRef([]);
     const [progress, setProgress] = useState(0);
@@ -143,9 +149,11 @@ export default function ScrollableServiceSections() {
                         <div className="mt-8 bg-gradient-to-r from-[#003366] to-[#0055aa] rounded-xl p-4 text-white">
                             <div className="font-bold text-sm mb-1">Need Assistance?</div>
                             <div className="text-xs opacity-90 mb-2">Our experts are ready to help</div>
-                            <button className="bg-white text-[#003366] text-sm font-medium py-2 px-4 rounded-lg hover:bg-opacity-90 transition-all">
-                                Contact Support
-                            </button>
+                            <Link href={'/talk-to-lawyer'}>
+                                <button className="bg-white text-[#003366] text-sm font-medium py-2 px-4 rounded-lg hover:bg-opacity-90 transition-all">
+                                    Contact Support
+                                </button>
+                            </Link>
                         </div>
                     </div>
                 </div>
@@ -162,7 +170,7 @@ export default function ScrollableServiceSections() {
                                 : 'bg-white'
                                 }`}
                         >
-                            <div className="flex items-start gap-4 mb-6">
+                            <div className="flex items-center gap-4 mb-6">
                                 <div className="bg-[#003366] w-12 h-12 rounded-lg flex items-center justify-center">
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
@@ -182,12 +190,14 @@ export default function ScrollableServiceSections() {
                                 <h2 className="text-2xl font-bold text-[#003366]">{title}</h2>
                             </div>
                             <div className="prose max-w-none text-gray-700 leading-relaxed">
-                                {content
-                                    .split('.')
-                                    .filter(Boolean)
-                                    .map((sentence, i) => (
-                                        <p key={i} className="mb-4">{sentence.trim()}.</p>
-                                    ))}
+                                <div className={`${styles.postStyle}`}>
+                                    <ReactMarkdown
+                                        rehypePlugins={[rehypeRaw]}
+                                        remarkPlugins={[remarkGfm]}
+                                    >
+                                        {content}
+                                    </ReactMarkdown>
+                                </div>
                             </div>
                         </section>
                     ))}

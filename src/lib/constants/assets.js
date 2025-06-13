@@ -2,6 +2,6 @@ export const IMAGES = {
     WHITE_LOGO: "/whiteLogo.png",
     LOGO: '/sidebar logo.png',
     MINILOGODARK: '/miniLogoDark.svg',
-    AVATAR: "/lawyer1.png",
+    AVATAR: "/avatar.jpg",
     LAWYWER_LOGO: '/LawyerIcon.png'
 }

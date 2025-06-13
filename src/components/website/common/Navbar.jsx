@@ -17,7 +17,7 @@ export default function NavBar({ services, categories }) {
     const primaryColor = "#003366"
 
     // Take first 4 categories (or empty if none)
-    const topCategories = catList.slice(0, 4)
+    const topCategories = catList.slice(0, 5)
 
     // Helper to get up to 4 services per category
     const getServicesFor = (catId) =>
@@ -163,6 +163,13 @@ export default function NavBar({ services, categories }) {
                                     </div>
                                 ))}
 
+                                <Link
+                                    href="/services"
+                                    className="flex items-center px-4 py-3 text-sm font-medium text-gray-700 hover:text-white hover:bg-[#003366] rounded-lg transition-colors duration-200"
+                                >
+                                    All Services
+                                </Link>
+
                                 {/* Static Blogs Link */}
                                 <Link
                                     href="/blogs"
@@ -175,9 +182,9 @@ export default function NavBar({ services, categories }) {
 
                         <div className="ml-4 flex items-center space-x-3">
                             <LoginButton className="px-4 py-2 rounded-lg hover:bg-gray-100" />
-                            <Link href="/services">
+                            <Link href="/contact-us">
                                 <button className="bg-[#003366] text-white px-5 py-2.5 rounded-lg text-sm font-medium hover:bg-[#002244] transition-colors flex items-center">
-                                    All Services
+                                    Contact Us
                                     <FiArrowRight className="ml-2" />
                                 </button>
                             </Link>

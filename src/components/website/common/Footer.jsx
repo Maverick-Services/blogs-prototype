@@ -4,12 +4,20 @@ import Image from 'next/image';
 export default function Footer() {
     const quickLinks = [
         { label: 'Home', href: '/' },
-        { label: 'About Us', href: '/about' },
+        // { label: 'About Us', href: '/about' },
         { label: 'Our Services', href: '/services' },
         { label: 'Why Choose Us', href: '/#why' },
         { label: 'Testimonials', href: '/#testimonials' },
-        { label: 'Contact', href: '/#contact' },
+        { label: 'Contact', href: '/contact-us' },
+        { label: 'Blogs', href: '/blogs' },
     ];
+
+    const policyLinks = [
+        { label: 'Privacy Policy', href: '/privacy-policy' },
+        { label: 'Terms & Conditions', href: '/terms&conditions' },
+        { label: 'Refund Policy', href: '/refund-policy' },
+    ];
+
 
     const services = [
         'Startup Registration',
@@ -109,8 +117,25 @@ export default function Footer() {
                         </ul>
                     </div>
 
-                    {/* Services */}
+                    {/* legal */}
                     <div>
+                        <h3 className="text-xl font-bold mb-6 pb-2 border-b-2 border-[#0055aa] inline-block">Policies</h3>
+                        <ul className="space-y-3">
+                            {policyLinks.map(link => (
+                                <li key={link.href}>
+                                    <Link href={link.href}>
+                                        <p className="flex items-center gap-3 group text-gray-300 hover:text-white transition-colors">
+                                            <span className="w-2 h-2 rounded-full bg-[#0055aa]"></span>
+                                            <span className="group-hover:underline group-hover:underline-offset-4">{link.label}</span>
+                                        </p>
+                                    </Link>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+
+                    {/* Services */}
+                    {/* <div>
                         <h3 className="text-xl font-bold mb-6 pb-2 border-b-2 border-[#0055aa] inline-block">Our Services</h3>
                         <ul className="space-y-3">
                             {services.map((svc, i) => (
@@ -120,7 +145,7 @@ export default function Footer() {
                                 </li>
                             ))}
                         </ul>
-                    </div>
+                    </div> */}
 
                     {/* Newsletter */}
                     <div>
@@ -167,23 +192,26 @@ export default function Footer() {
                 </div>
 
                 {/* Bottom section */}
+                {/* Bottom section */}
                 <div className="border-t border-[#0055aa] pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
                     <div className="text-gray-300 text-sm">
                         © {new Date().getFullYear()} CA Vakeel. All rights reserved.
                     </div>
 
-                    <div className="flex flex-wrap gap-6 text-sm">
-                        <Link href="/privacy">
-                            <p className="text-gray-300 hover:text-white transition-colors">Privacy Policy</p>
-                        </Link>
-                        <Link href="/terms">
-                            <p className="text-gray-300 hover:text-white transition-colors">Terms of Service</p>
-                        </Link>
-                        <Link href="/disclaimer">
-                            <p className="text-gray-300 hover:text-white transition-colors">Disclaimer</p>
-                        </Link>
+                    <div className="text-sm text-gray-400">
+                        Developed by{" "}
+                        <a
+                            href="https://matchbestsoftware.com/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="hover:text-white text-[#E7F7FF] transition-colors font-semibold no-underline"
+                        >
+                            Matchbest Software
+                        </a>
                     </div>
                 </div>
+
+
             </div>
 
             {/* Decorative bottom wave */}

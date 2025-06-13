@@ -1,19 +1,21 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
 import { LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { IMAGES } from "@/lib/constants/assets";
-import { signOut } from "next-auth/react";
 import { usePermissions } from "@/hooks/usePermissions";
 import SidebarSkeleton from "./SidebarSkeleton";
+import LogoutDialog from "../auth/LogoutDialog";
+
 
 export default function Sidebar({ isOpen, setIsSidebarOpen, sidebarLinks }) {
     const { data, isLoading, error } = usePermissions();
     const pathname = usePathname();
+    const [isLogoutDialogOpen, setIsLogoutDialogOpen] = useState(false);
 
     const role = data?.role;
     const perms = data?.permissions || {};
@@ -42,7 +44,6 @@ export default function Sidebar({ isOpen, setIsSidebarOpen, sidebarLinks }) {
                     width={160}
                     className="object-contain "
                 />
-
             </div>
 
             {/* Navigation Links */}
@@ -91,19 +92,20 @@ export default function Sidebar({ isOpen, setIsSidebarOpen, sidebarLinks }) {
                         className="rounded-full ring-2 ring-gray-400"
                     />
                     <div>
-                        <p className="text-sm font-medium sm:hidden lg:block text-gray-100">Admin</p>
-                        <p className="text-xs text-gray-400 sm:hidden lg:block">admin@admin.com</p>
+                        <p className="text-sm font-medium sm:hidden lg:block text-gray-100 capitalize">{role}</p>
+                        <p className="text-xs text-gray-400 sm:hidden lg:block">cavakeel.com</p>
                     </div>
                 </div>
 
                 <Button
                     className="w-full mt-2 bg-gray-800 hover:bg-gray-700 text-gray-100 transition-colors"
-                    onClick={() => signOut({ callbackUrl: '/' })}
+                    onClick={() => setIsLogoutDialogOpen(true)}
                 >
                     <LogOut className="mr-2 h-4 w-4 text-red-400" />
-                    <span className="sm:hidden lg:block">Logout</span>
+                    Logout
                 </Button>
             </div>
+            <LogoutDialog open={isLogoutDialogOpen} onOpenChange={setIsLogoutDialogOpen} />
         </div>
     );
 }

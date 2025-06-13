@@ -56,6 +56,8 @@ async function Page({ params }) {
         notFound();
     }
 
+    console.log(service)
+
     return (
         <WebsiteLayout services={services} categories={categories}>
             <main className="mx-auto px-4 py-8">
@@ -122,19 +124,25 @@ async function Page({ params }) {
                             </div>
 
                             {/* Filler Block */}
-                            <div className="mt-4 flex-1 flex gap-4">
-                                <TabbedDocuments subServices={service?.subServices} />
-                            </div>
+                            {service.subServices.length > 0 &&
+                                <div className="mt-4 flex-1 flex gap-4">
+                                    <TabbedDocuments subServices={service?.subServices} />
+                                </div>
+                            }
                         </div>
 
                         {/* right section */}
                         <div className="lg:w-82 flex flex-col gap-4 sticky top-5">
                             <EnquiryForm />
-                            <TalkToLawyerCard />
+                            {service.subServices.length > 0 &&
+                                <TalkToLawyerCard />
+                            }
                         </div>
                     </section>
 
-                    <ScrollableServiceSections />
+                    {service.serviceBigDescription.length > 0 &&
+                        <ScrollableServiceSections serviceBigDescription={service.serviceBigDescription} />
+                    }
                 </article>
             </main>
         </WebsiteLayout>

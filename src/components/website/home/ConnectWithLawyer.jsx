@@ -7,7 +7,7 @@ export const ConnectWithLawyer = () => {
     const [hovered, setHovered] = useState(false);
 
     return (
-        <div className="relative overflow-hidden py-16 lg:py-24 px-4 w-full bg-gradient-to-br from-blue-50 to-indigo-50">
+        <div className="relative overflow-hidden py-12 lg:py-18 px-4 w-full bg-gradient-to-br from-blue-50 to-indigo-50">
             {/* Background elements */}
             <div className="absolute inset-0 z-0">
                 <div className="absolute top-0 left-0 w-64 h-64 bg-blue-100 rounded-full filter blur-[80px] opacity-50"></div>

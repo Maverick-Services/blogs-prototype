@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { TalkToExpertBtn } from '../common/TalkToExpertBtn';
+import Link from 'next/link';
 
 export const LegalSolutions = () => {
     const [hoveredIndex, setHoveredIndex] = useState(null);
@@ -101,63 +102,67 @@ export const LegalSolutions = () => {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                         >
-                            {/* Hover effect overlay */}
-                            {hoveredIndex === index && (
-                                <motion.div
-                                    className="absolute inset-0 bg-gradient-to-br from-[#003366]/5 to-[#003366]/10"
-                                    initial={{ opacity: 0 }}
-                                    animate={{ opacity: 1 }}
-                                />
-                            )}
+                            <Link href={'/services'}>
+                                {/* Hover effect overlay */}
+                                {hoveredIndex === index && (
+                                    <motion.div
+                                        className="absolute inset-0 bg-gradient-to-br from-[#003366]/5 to-[#003366]/10"
+                                        initial={{ opacity: 0 }}
+                                        animate={{ opacity: 1 }}
+                                    />
+                                )}
 
-                            {/* Icon with animated background */}
-                            <div className="relative">
-                                <div
-                                    className="w-16 h-16 rounded-xl flex items-center justify-center mb-4 transition-all duration-300"
+                                {/* Icon with animated background */}
+                                <div className="relative">
+                                    <div
+                                        className="w-16 h-16 rounded-xl flex items-center justify-center mb-4 transition-all duration-300"
+                                        style={{
+                                            backgroundColor: hoveredIndex === index ? primaryColor : item.icon_bg
+                                        }}
+                                    >
+                                        <img
+                                            src={item.icon}
+                                            alt={`icon-${index}`}
+                                            className="w-8 h-8 transition-all duration-300"
+                                            style={{ filter: hoveredIndex === index ? "" : "" }}
+                                        />
+                                    </div>
+                                </div>
+
+                                <div className="flex flex-col items-start gap-2">
+                                    <p
+                                        className="w-full text-start font-bold text-lg text-[#003366] transition-colors duration-300"
+                                        style={{ color: hoveredIndex === index ? primaryColor : primaryColor }}
+                                    >
+                                        {item.heading}
+                                    </p>
+                                    <p className="text-gray-600 text-sm w-full text-start">
+                                        {item.desc}
+                                    </p>
+                                </div>
+
+                                {/* Learn more button */}
+                                <button
+                                    className="pt-4 text-sm font-medium flex items-center transition-all duration-300"
                                     style={{
-                                        backgroundColor: hoveredIndex === index ? primaryColor : item.icon_bg
+                                        color: hoveredIndex === index ? primaryColor : "#666",
+                                        marginTop: "auto"
                                     }}
                                 >
-                                    <img
-                                        src={item.icon}
-                                        alt={`icon-${index}`}
-                                        className="w-8 h-8 transition-all duration-300"
-                                        style={{ filter: hoveredIndex === index ? "invert(1)" : "none" }}
-                                    />
-                                </div>
-                            </div>
-
-                            <div className="flex flex-col items-start gap-2">
-                                <p
-                                    className="w-full text-start font-bold text-lg text-[#003366] transition-colors duration-300"
-                                    style={{ color: hoveredIndex === index ? primaryColor : primaryColor }}
-                                >
-                                    {item.heading}
-                                </p>
-                                <p className="text-gray-600 text-sm w-full text-start">
-                                    {item.desc}
-                                </p>
-                            </div>
-
-                            {/* Learn more button */}
-                            <button
-                                className="mt-4 text-sm font-medium flex items-center transition-all duration-300"
-                                style={{
-                                    color: hoveredIndex === index ? primaryColor : "#666",
-                                    marginTop: "auto"
-                                }}
-                            >
-                                Learn more
-                                <svg
-                                    className="w-4 h-4 ml-2 transition-transform duration-300"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    viewBox="0 0 24 24"
-                                    style={{ transform: hoveredIndex === index ? "translateX(4px)" : "none" }}
-                                >
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
-                                </svg>
-                            </button>
+                                    <p>
+                                        Learn more
+                                    </p>
+                                    <svg
+                                        className="w-4 h-4 ml-2 transition-transform duration-300"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                        style={{ transform: hoveredIndex === index ? "translateX(4px)" : "none" }}
+                                    >
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
+                                    </svg>
+                                </button>
+                            </Link>
                         </motion.div>
                     ))}
                 </div>

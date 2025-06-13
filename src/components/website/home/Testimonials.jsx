@@ -33,7 +33,7 @@ export default async function Testimonials() {
     ];
 
     return (
-        <section className="bg-secondary w-full">
+        <section className="bg-secondary w-full" id='testimonials'>
             <div className='w-11/12 md:max-w-7xl py-16 lg:px-16 mx-auto flex flex-col gap-12'>
                 {/* Heading */}
                 <div className="max-w-3xl mx-auto px-4 text-center">
