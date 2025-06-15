@@ -30,7 +30,7 @@ export default function UsersListView({
     onlyAdmin
 }) {
     const [deletingUserId, setDeletingUserId] = useState(null)
-
+    console.log(users)
     const handleDeleteClick = (userId) => {
         setDeletingUserId(userId)
     }

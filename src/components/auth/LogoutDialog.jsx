@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
     Dialog,
     DialogContent,
@@ -10,8 +10,21 @@ import {
 import { signOut } from 'next-auth/react';
 import { LogOut } from 'lucide-react';
 import { Button } from '../ui/button';
+import LoaderButton from '../custom/LoaderButton';
 
 function LogoutDialog({ open, onOpenChange }) {
+    const [loading, setLoading] = useState(false)
+
+    function handleSignOut() {
+        setLoading(true)
+        try {
+            signOut({ callbackUrl: '/' })
+            setLoading(false)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
             <DialogContent className="sm:max-w-md rounded-xl">
@@ -33,14 +46,15 @@ function LogoutDialog({ open, onOpenChange }) {
                     >
                         Cancel
                     </Button>
-                    <Button
+                    <LoaderButton
                         type="button"
+                        loading={loading}
                         variant="destructive"
-                        onClick={() => signOut({ callbackUrl: '/' })}
+                        onClick={handleSignOut}
                         className="px-6"
                     >
                         Sign Out
-                    </Button>
+                    </LoaderButton>
                 </DialogFooter>
             </DialogContent>
         </Dialog>

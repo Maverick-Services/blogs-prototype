@@ -4,11 +4,12 @@ import InnerDashboardLayout from '@/components/dashboard/InnerDashboardLayout'
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '@/components/ui/select'
 import NotAuthorizedPage from '@/components/notAuthorized';
 import { useOrders } from '@/hooks/useOrders';
-import OrdersTable from './OrdersTable';
+import OrdersTable from './components/OrdersTable';
 
 function page() {
     // filters
     const [status, setStatus] = useState('all');
+    const [type, setType] = useState('service')
 
     // pagination
     const [page, setPage] = useState(1)
@@ -19,7 +20,7 @@ function page() {
         deleteOrder,
         updateOrder,
         permissions: { canView, canEdit, canDelete, onlyAdmin }
-    } = useOrders({ status, page, pageSize })
+    } = useOrders({ status, page, pageSize, type })
 
     // Memoize expensive computations
     const ordersData = useMemo(() => {
@@ -51,8 +52,9 @@ function page() {
                             <SelectValue placeholder="Status" />
                         </SelectTrigger>
                         <SelectContent>
-                            <SelectItem value="all">All</SelectItem>s
-                            <SelectItem value="resolved">Resolved</SelectItem>
+                            <SelectItem value="all">All</SelectItem>
+                            <SelectItem value="active">Active</SelectItem>
+                            <SelectItem value="completed">Completed</SelectItem>
                         </SelectContent>
                     </Select>
                 </div>
@@ -65,7 +67,7 @@ function page() {
                         setPage(1)
                     }}
                 >
-                    <SelectTrigger className="w-[100px]">
+                    <SelectTrigger className="w-[150px]">
                         <SelectValue placeholder="Rows" />
                     </SelectTrigger>
                     <SelectContent>
@@ -78,24 +80,25 @@ function page() {
                 </Select>
             </div>
 
-            <OrdersTable
-                orders={ordersData}
-                canDelete={canDelete}
-                isDeleting={deleteOrder.isPending}
-                deleteError={deleteOrder.error}
-                canEdit={canEdit}
-                error={ordersQuery.error}
-                isLoading={ordersQuery.isPending}
-                onDelete={deleteOrder.mutateAsync}
-                onPageChange={setPage}
-                onlyAdmin={onlyAdmin}
-                page={page}
-                pageCount={pageCount}
-                onChangeStatus={(id, newStatus) =>
-                    updateOrder.mutate({ id, status: newStatus })
-                }
-            />
-
+            {type === 'service' &&
+                <OrdersTable
+                    orders={ordersData}
+                    canDelete={canDelete}
+                    isDeleting={deleteOrder.isPending}
+                    deleteError={deleteOrder.error}
+                    canEdit={canEdit}
+                    error={ordersQuery.error}
+                    isLoading={ordersQuery.isPending}
+                    onDelete={deleteOrder.mutateAsync}
+                    onPageChange={setPage}
+                    onlyAdmin={onlyAdmin}
+                    page={page}
+                    pageCount={pageCount}
+                    onChangeStatus={(id, newStatus) =>
+                        updateOrder.mutate({ id, status: newStatus })
+                    }
+                />
+            }
         </InnerDashboardLayout>
     )
 }

@@ -4,6 +4,7 @@ import { Loader2, Pencil, Trash } from "lucide-react";
 import { useState } from "react";
 import DeleteConfirmationDialog from "./DeleteConfirmationDialog ";
 import Loader from '@/components/Loader';
+import TableSkeleton from '@/components/custom/TableSkeleton';
 
 export default function TagsListView({ isLoading, error, tags, onEdit, onDelete, isDeleting, deleteError, canEdit, canDelete }) {
     const [deletingTagId, setDeletingTagId] = useState(null);
@@ -17,10 +18,13 @@ export default function TagsListView({ isLoading, error, tags, onEdit, onDelete,
         setDeletingTagId(null);
     };
 
-    if (isLoading) return <div className="text-center p-4">
-        {/* <Loader2 className="animate-spin inline-block" /> */}
-        <Loader />
-    </div>;
+    if (isLoading) return
+    <TableSkeleton
+        rows={5}
+        columns={4}
+        showHeader={false}
+        showPagination={true}
+    />;
 
     if (error) return <div className="text-red-600 p-4">Error: {error.message}</div>;
     if (!tags?.length) return <div className="text-center text-gray-500 p-4">No Tags Found!</div>;

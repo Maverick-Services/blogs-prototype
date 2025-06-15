@@ -1,5 +1,8 @@
 import { connectDB } from "@/lib/mongodb";
+import CallPlan from "@/models/callPlanModel";
 import Order from "@/models/orderModel";
+import Service from "@/models/serviceModel";
+import SubService from "@/models/subServiceModel";
 import { NextResponse } from "next/server";
 
 export async function GET(req) {
@@ -8,12 +11,17 @@ export async function GET(req) {
         const { searchParams } = new URL(req.url);
 
         const status = searchParams.get('status');
+        const type = searchParams.get('type');
         const page = Math.max(1, parseInt(searchParams.get('page') || '1'));
         const limit = Math.min(100, Math.max(1, parseInt(searchParams.get('limit') || '10')));
 
         const filter = {};
         if (status && status !== 'all') {
             filter.status = status;
+        }
+
+        if (type && type !== 'all') {
+            filter.type = type
         }
 
         const skip = (page - 1) * limit;
@@ -26,7 +34,8 @@ export async function GET(req) {
                 .lean()
                 .populate('user', 'phone role') // Only `phone` and `role` from User
                 .populate('service', 'name')    // Only `name` from Service
-                .populate('subService', 'name'), // Only `name` from SubService
+                .populate('subService', 'name') // Only `name` from SubService
+                .populate('callPlan'),
             Order.countDocuments(filter)
         ]);
 

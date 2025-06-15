@@ -59,6 +59,7 @@ export async function POST(request) {
         details: detailFields,
         documents,
         amount: Number(amount),
+        type: 'service',
         paymentStatus: 'paid',
         transactionId: razorpay_payment_id,
         razorpayOrder: razorpay_order_id,

@@ -15,6 +15,7 @@ import {
     TableBody,
     TableCell,
 } from '@/components/ui/table';
+import TableSkeleton from '@/components/custom/TableSkeleton';
 
 export default function CategoriesListView({
     isLoading,
@@ -41,7 +42,12 @@ export default function CategoriesListView({
     if (isLoading)
         return (
             <div className="text-center p-4">
-                <Loader />
+                <TableSkeleton
+                    rows={5}
+                    columns={4}
+                    showHeader={false}
+                    showPagination={true}
+                />
             </div>
         );
 

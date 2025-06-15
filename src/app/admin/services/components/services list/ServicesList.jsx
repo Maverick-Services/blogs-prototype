@@ -17,6 +17,7 @@ import Loader from '@/components/Loader';
 import ServiceDetailsDialog from './ServiceDetailsDialog';
 import DeleteConfirmationDialog from '../DeleteConfirmationDialog ';
 import { useServiceStore } from '@/store/serviceStore';
+import TableSkeleton from '@/components/custom/TableSkeleton';
 
 export default function ServicesListView({
     isLoading,
@@ -55,9 +56,12 @@ export default function ServicesListView({
 
     if (isLoading) {
         return (
-            <div className="text-center p-4">
-                <Loader />
-            </div>
+            <TableSkeleton
+                rows={5}
+                columns={4}
+                showHeader={false}
+                showPagination={true}
+            />
         );
     }
 

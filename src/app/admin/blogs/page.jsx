@@ -54,7 +54,7 @@ function Page() {
                     </div>
 
                     {/* Featured Select */}
-                    <div className="flex items-center space-x-2">
+                    {/* <div className="flex items-center space-x-2">
                         <Select value={featured} onValueChange={(value) => { setFeatured(value); setPage(1); }}>
                             <SelectTrigger className="w-[180px]">
                                 <SelectValue placeholder="Featured" />
@@ -65,7 +65,7 @@ function Page() {
                                 <SelectItem value="not-featured">Not Featured</SelectItem>
                             </SelectContent>
                         </Select>
-                    </div>
+                    </div> */}
 
                     {/* Page size selector */}
                     <Select
@@ -75,7 +75,7 @@ function Page() {
                             setPage(1)
                         }}
                     >
-                        <SelectTrigger className="w-[100px]">
+                        <SelectTrigger className="w-[150px]">
                             <SelectValue placeholder="Rows" />
                         </SelectTrigger>
                         <SelectContent>

@@ -24,6 +24,7 @@ import {
 } from "@/components/ui/select"
 import Loader from '@/components/Loader'
 import EnquiryDetailsDialog from './EnquiryDialog'
+import TableSkeleton from '@/components/custom/TableSkeleton'
 
 function EnquiryTable({
     enquiries,
@@ -52,7 +53,14 @@ function EnquiryTable({
         setDeletingEnquiryId(null)
     }
 
-    if (isLoading) { return <Loader /> }
+    if (isLoading) {
+        return <TableSkeleton
+            rows={5}
+            columns={4}
+            showHeader={false}
+            showPagination={true}
+        />
+    }
 
     if (error) return <p className='text-red-600'>Error: {error}</p>
 

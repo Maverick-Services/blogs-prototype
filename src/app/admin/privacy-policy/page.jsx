@@ -24,6 +24,12 @@ export default function PrivacyPolicyPage() {
         error: updateError
     } = updatePolicy;
 
+    const {
+        isPending: creating,
+        mutateAsync: createAsync,
+        error: createError
+    } = createPolicy;
+
     const [isEditing, setIsEditing] = useState(false)
 
     if (!canView) return <NotAuthorizedPage />;
@@ -38,7 +44,7 @@ export default function PrivacyPolicyPage() {
                     <h1 className="text-primary font-bold text-2xl lg:text-4xl">
                         Privacy Policy
                     </h1>
-                    {canEdit && (
+                    {policy && canEdit && (
                         <Button onClick={() => setIsEditing(true)}>Edit Policy</Button>
                     )}
                 </div>
@@ -54,7 +60,7 @@ export default function PrivacyPolicyPage() {
                     <div className="text-center py-12">
                         <p className="text-gray-500 mb-4">No privacy policy found</p>
                         {canAdd && (
-                            <Button onClick={createPolicy}>
+                            <Button onClick={() => setIsEditing(true)}>
                                 Create Privacy Policy
                             </Button>
                         )}
@@ -66,6 +72,7 @@ export default function PrivacyPolicyPage() {
                 onOpenChange={setIsEditing}
                 data={policy}
                 onUpdate={updateAsync}
+                onCreate={createAsync}
                 loading={updating}
                 error={updateError}
             />

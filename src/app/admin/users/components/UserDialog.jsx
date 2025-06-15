@@ -20,7 +20,7 @@ const permissionSections = [
     { id: 'categories', name: 'Categories' },
     { id: 'tags', name: 'Tags' },
     { id: 'media', name: 'Media' },
-    { id: 'settings', name: 'Settings' },
+    // { id: 'settings', name: 'Settings' },
     { id: 'users', name: 'Users' },
     { id: 'testimonials', name: 'Testimonials' },
 ];
@@ -176,7 +176,7 @@ export default function UserDialog({ open, onOpenChange, selectedUser, onCreate,
                         </div>
 
                         {/* Password */}
-                        {!selectedUser &&
+                        {!selectedUser && watchRole !== 'user' &&
                             <div className="grid grid-cols-4 items-start gap-4">
                                 <Label htmlFor="password" className="text-right mt-2">
                                     Password<span className="text-red-500"> *</span>
@@ -212,9 +212,10 @@ export default function UserDialog({ open, onOpenChange, selectedUser, onCreate,
                             </Label>
                             <div className="col-span-3">
                                 <select
+                                    disabled={selectedUser}
                                     id="role"
                                     {...register("role", { required: "Role is required" })}
-                                    className={clsx("w-full border px-3 py-2 rounded", {
+                                    className={clsx("w-full border px-3 py-2 rounded disabled:text-gray-600 disabled:bg-gray-200", {
                                         "border-red-500": errors.role,
                                     })}
                                 >
@@ -324,7 +325,7 @@ export default function UserDialog({ open, onOpenChange, selectedUser, onCreate,
                     {error && <p className="text-red-600 mb-5 text-sm">Error: {error}</p>}
 
                     <DialogFooter>
-                        {onlyAdmin && selectedUser &&
+                        {onlyAdmin && selectedUser && selectedUser?.role !== 'user' &&
                             <Button variant={"outline"} type="button" disabled={isSubmitting} onClick={() => setPwdDialogOpen(true)}>
                                 Update Password
                             </Button>

@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import CallPlan from './callPlanModel';
 
 const messageSchema = new mongoose.Schema({
     message: { type: String, required: true },
@@ -14,16 +15,13 @@ const refundSchema = new mongoose.Schema({
 
 const orderSchema = new mongoose.Schema(
     {
+        type: { type: String, enum: ['call', 'service'], required: true },
         user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-        service: { type: mongoose.Schema.Types.ObjectId, ref: 'Service', required: true },
-        subService: { type: mongoose.Schema.Types.ObjectId, ref: 'SubService', required: true },
+        service: { type: mongoose.Schema.Types.ObjectId, ref: 'Service' },
+        subService: { type: mongoose.Schema.Types.ObjectId, ref: 'SubService' },
+        callPlan: { type: mongoose.Schema.Types.ObjectId, ref: 'CallPlan' },
         details: { type: Object, required: true },
-        documents: [
-            {
-                fieldName: String,
-                url: String
-            }
-        ],
+        documents: [{ fieldName: String, url: String }],
         amount: { type: Number, required: true },
         paymentStatus: { type: String, enum: ['paid', 'pending', 'failed'], default: 'paid' },
         status: { type: String, enum: ['active', 'completed', 'cancelled'], default: 'active' },

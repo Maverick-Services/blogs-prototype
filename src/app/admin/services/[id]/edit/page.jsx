@@ -9,6 +9,7 @@ import { useServices } from '@/hooks/useServices';
 import InnerDashboardLayout from '@/components/dashboard/InnerDashboardLayout';
 import { useParams, useRouter } from 'next/navigation';
 import NotAuthorizedPage from '@/components/notAuthorized';
+import Loader from '@/components/Loader';
 
 const EditServicePage = () => {
     const router = useRouter()
@@ -26,7 +27,8 @@ const EditServicePage = () => {
         router.push('/admin/services')
     };
 
-    if (isLoading) return <p>Loading...</p>
+    if (isLoading) return <Loader />
+
     if (!canEdit) return <NotAuthorizedPage />;
 
     return (

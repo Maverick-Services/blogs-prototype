@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { format } from 'date-fns';
 import UserProfileSkeleton from './UserProfileSkeleton';
 import OrderCard from './OrderCard';
+import CallOrderCard from './CallOrderCard';
 
 function UserSection({ loading, error, userData }) {
     const [activeTab, setActiveTab] = useState('orders');
@@ -12,6 +13,10 @@ function UserSection({ loading, error, userData }) {
 
     const joinDate = format(new Date(userData.createdAt), 'MMMM d, yyyy');
 
+    const serviceOrdersData = userData?.orders.filter((order) => order.type === 'service')
+    const callOrdersData = userData?.orders.filter((order) => order.type === 'call')
+
+    console.log(userData)
     return (
         <div className="space-y-6">
             {/* Upper Strip */}
@@ -74,9 +79,9 @@ function UserSection({ loading, error, userData }) {
                         <div>
                             <h3 className="text-lg font-semibold text-gray-900 mb-4">Your Recent Orders</h3>
 
-                            {userData.orders?.length > 0 ? (
+                            {serviceOrdersData.length > 0 ? (
                                 <div className="space-y-4">
-                                    {userData.orders.map(order => (
+                                    {serviceOrdersData.map(order => (
                                         <div key={order._id}>
                                             <OrderCard order={order} />
                                         </div>
@@ -91,11 +96,21 @@ function UserSection({ loading, error, userData }) {
                             )}
                         </div>
                     ) : (
-                        <div className="text-center py-10">
-                            <div className="bg-gray-100 border-2 border-dashed rounded-xl w-16 h-16 mx-auto mb-4" />
-                            <h3 className="text-lg font-medium text-gray-900 mb-2">Call Plans</h3>
-                            <p className="text-gray-500">Coming soon!</p>
-                            <p className="text-gray-400 text-sm mt-2">Manage your call subscriptions here</p>
+                        <div className="">
+                            {callOrdersData.length > 0
+                                ? <div className="space-y-4">
+                                    {callOrdersData.map(order => (
+                                        <div key={order._id}>
+                                            <CallOrderCard order={order} />
+                                        </div>
+                                    ))}
+                                </div>
+                                : <div className="text-center py-10">
+                                    <div className="bg-gray-100 border-2 border-dashed rounded-xl w-16 h-16 mx-auto mb-4" />
+                                    <p className="text-gray-500">No orders found</p>
+                                    <p className="text-gray-400 text-sm mt-2">Your orders will appear here</p>
+                                </div>
+                            }
                         </div>
                     )}
                 </div>

@@ -14,6 +14,7 @@ import { Button } from '@/components/ui/button';
 import AddSubServiceDialog from './components/AddSubServiceDialog';
 import { useSubServices } from '@/hooks/useSubServices';
 import { Separator } from '@/components/ui/separator';
+import Loader from '@/components/Loader';
 
 const ViewServicePage = () => {
     const router = useRouter()
@@ -46,7 +47,7 @@ const ViewServicePage = () => {
     const [editing, setEditing] = useState({})
 
     if (isLoading) {
-        return <p>Loading...</p>
+        return <Loader />
     }
 
     if (!canView) return <NotAuthorizedPage />;

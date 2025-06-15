@@ -54,9 +54,9 @@ export const ADMIN_SIDEBAR_LINKS = [
         icon: <FaBriefcase />,
     },
     {
-        key: 'call-plans',
+        key: Resources.CALL_PLANS,
         label: 'Call Plans',
-        href: '/admin/call-plans',
+        href: '/admin/callPlans',
         icon: <FaPhoneAlt />,
     },
     {
@@ -89,12 +89,12 @@ export const ADMIN_SIDEBAR_LINKS = [
         href: '/admin/users',
         icon: <FaUser />,
     },
-    {
-        key: Resources.SETTINGS,
-        label: 'Settings',
-        href: '/admin/settings',
-        icon: <FaCogs />,
-    },
+    // {
+    //     key: Resources.SETTINGS,
+    //     label: 'Settings',
+    //     href: '/admin/settings',
+    //     icon: <FaCogs />,
+    // },
     {
         key: Resources.TESTIMONIALS,
         label: 'Testimonials',

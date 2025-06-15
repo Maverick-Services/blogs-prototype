@@ -15,10 +15,9 @@ import { Button } from '@/components/ui/button';
 import { useForm } from 'react-hook-form';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
-import { cn } from '@/lib/utils';
 import LoaderButton from '@/components/custom/LoaderButton';
 
-function PrivacyForm({ open, onOpenChange, data, onUpdate, loading, error }) {
+function PrivacyForm({ open, onOpenChange, data, onCreate, onUpdate, loading, error }) {
 
     const {
         register,
@@ -43,6 +42,8 @@ function PrivacyForm({ open, onOpenChange, data, onUpdate, loading, error }) {
         try {
             if (data) {
                 await onUpdate({ id: data._id, data: values })
+            } else {
+                await onCreate(values)
             }
             onOpenChange(false);
         } catch (error) {

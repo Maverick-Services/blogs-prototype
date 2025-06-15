@@ -3,6 +3,7 @@ import { connectDB } from "../mongodb";
 import clientPromise from "../mongodbClient";
 import TermsConditions from "@/models/termsConditionsModel";
 import RefundPolicy from "@/models/refundPolicyModel";
+import CallPlan from "@/models/callPlanModel";
 
 export async function getTestimonialsData({ isVisible = true, limit = 3, page = 1 }) {
     try {
@@ -59,7 +60,6 @@ export async function getTermsConditions() {
     }
 }
 
-
 export async function getRefundPolicy() {
     try {
         await connectDB();
@@ -70,5 +70,17 @@ export async function getRefundPolicy() {
     } catch (error) {
         console.error(`Error fetching refundPolicy:`, error);
         return null;
+    }
+}
+
+export async function getCallPlanData() {
+    try {
+        await connectDB();
+        const latest = await CallPlan.find()
+            .sort({ updatedAt: -1 })
+        return JSON.parse(JSON.stringify(latest));
+    } catch (error) {
+        console.error('Error fetching call plans:', error);
+        return [];
     }
 }

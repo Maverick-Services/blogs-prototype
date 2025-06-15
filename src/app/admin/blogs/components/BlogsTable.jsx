@@ -16,6 +16,7 @@ import DeleteConfirmationDialog from '@/components/DeleteConfirmationDialog '
 import Link from 'next/link'
 import Image from 'next/image'
 import { Switch } from '@/components/ui/switch'
+import TableSkeleton from '@/components/custom/TableSkeleton'
 
 export default function BlogsTable({
     isLoading,
@@ -43,9 +44,12 @@ export default function BlogsTable({
 
     if (isLoading)
         return (
-            <div className="text-center p-4">
-                <Loader />
-            </div>
+            <TableSkeleton
+                rows={5}
+                columns={4}
+                showHeader={false}
+                showPagination={true}
+            />
         )
 
     if (error)
@@ -74,7 +78,7 @@ export default function BlogsTable({
                             <TableHead>Title</TableHead>
                             <TableHead>Publish Date</TableHead>
                             <TableHead>Status</TableHead>
-                            <TableHead>Featured</TableHead>
+                            {/* <TableHead>Featured</TableHead> */}
                             <TableHead className={'text-center'}>Actions</TableHead>
                         </TableRow>
                     </TableHeader>
@@ -96,7 +100,7 @@ export default function BlogsTable({
                                     {new Date(item.createdAt).toLocaleString()}
                                 </TableCell>
                                 <TableCell><Switch checked={item.status} /></TableCell>
-                                <TableCell><Switch className={'data-[state=checked]:bg-emerald-600'} checked={item.featured} /></TableCell>
+                                {/* <TableCell><Switch className={'data-[state=checked]:bg-emerald-600'} checked={item.featured} /></TableCell> */}
                                 <TableCell className={'text-center space-x-2'}>
                                     {canEdit &&
                                         <Link href={`/admin/blogs/edit/${item._id}`}>

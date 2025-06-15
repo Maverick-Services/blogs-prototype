@@ -6,7 +6,7 @@ import { toast } from 'react-hot-toast';
 import { Resources } from '@/lib/permissions';
 import { usePermissions } from './usePermissions';
 
-export const useOrders = ({ status, page, pageSize }) => {
+export const useOrders = ({ status, type, page, pageSize }) => {
     const queryClient = useQueryClient()
     const { checkView, checkEdit, checkDelete, onlyAdmin } = usePermissions()
 
@@ -22,6 +22,10 @@ export const useOrders = ({ status, page, pageSize }) => {
         // Fix: Send actual status value, not boolean
         if (status !== 'all') {
             queryParams.push(`status=${status}`);
+        }
+
+        if (type !== 'all') {
+            queryParams.push(`type=${type}`);
         }
 
         queryParams.push(`page=${page}`);

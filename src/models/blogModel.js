@@ -6,20 +6,20 @@ const blogSchema = new mongoose.Schema({
         required: true,
         unique: true,
         trim: true,
-        maxlength: 100
+        maxlength: 120
     },
     slug: {
         type: String,
         required: true,
         unique: true,
         trim: true,
-        maxlength: 50
+        maxlength: 120
     },
     shortDescription: {
         type: String,
         required: true,
         trim: true,
-        maxlength: 160
+        maxlength: 220
     },
     imageURL: {
         type: String,

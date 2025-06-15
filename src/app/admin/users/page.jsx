@@ -13,6 +13,9 @@ import {
     SelectContent,
     SelectItem
 } from "@/components/ui/select"
+import RegularUsersTable from './components/RegularUsersTable';
+import StaffUsersTable from './components/StaffUsersTable';
+import NotAuthorizedPage from '@/components/notAuthorized';
 
 function page() {
     const [roleFilter, setRoleFilter] = useState('user')
@@ -79,6 +82,8 @@ function page() {
         setIsDialogOpen(true);
     };
 
+    if (!canView) return <NotAuthorizedPage />
+
     return (
         <div>
             <InnerDashboardLayout>
@@ -122,22 +127,45 @@ function page() {
 
                 </div>
 
-                {canView &&
-                    <UsersListView
-                        isLoading={usersQuery.isLoading}
-                        error={usersQuery.error}
-                        users={usersQuery.data?.data || []}
-                        page={page}
-                        pageCount={Math.ceil((usersQuery.data?.totalCount || 0) / pageSize)}
-                        onPageChange={setPage}
-                        onEdit={handleEditClick}
-                        canEdit={canEdit}
-                        canDelete={canDelete}
-                        onDelete={deleteUser.mutateAsync}
-                        isDeleting={deleteUser.isLoading}
-                        deleteError={deleteUser.error}
-                    />
-                }
+                {canView && (
+                    <>
+                        {/* For Admin/Sub-Admin */}
+                        {roleFilter !== 'user' && (
+                            <StaffUsersTable
+                                isLoading={usersQuery.isLoading}
+                                error={usersQuery.error}
+                                users={usersQuery.data?.data || []}
+                                page={page}
+                                pageCount={Math.ceil((usersQuery.data?.totalCount || 0) / pageSize)}
+                                onPageChange={setPage}
+                                onEdit={handleEditClick}
+                                onDelete={deleteUser.mutateAsync}
+                                isDeleting={deleteUser.isPending}
+                                deleteError={deleteUser.error}
+                                canEdit={canEdit}
+                                canDelete={canDelete}
+                            />
+                        )}
+
+                        {/* For Regular Users */}
+                        {roleFilter === 'user' && (
+                            <RegularUsersTable
+                                isLoading={usersQuery.isLoading}
+                                error={usersQuery.error}
+                                users={usersQuery.data?.data || []}
+                                page={page}
+                                pageCount={Math.ceil((usersQuery.data?.totalCount || 0) / pageSize)}
+                                onPageChange={setPage}
+                                onEdit={handleEditClick}
+                                onDelete={deleteUser.mutateAsync}
+                                isDeleting={deleteUser.isPending}
+                                deleteError={deleteUser.error}
+                                canEdit={canEdit}
+                                canDelete={canDelete}
+                            />
+                        )}
+                    </>
+                )}
 
                 <UserDialog
                     open={isDialogOpen}

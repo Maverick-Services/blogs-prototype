@@ -7,6 +7,7 @@ import { requirePermissionApi } from "@/lib/serverPermissions";
 import Order from "@/models/orderModel";
 import Service from "@/models/serviceModel";
 import SubService from "@/models/subServiceModel";
+import CallPlan from "@/models/callPlanModel";
 
 export async function GET(req, { params }) {
 
@@ -21,6 +22,7 @@ export async function GET(req, { params }) {
                 populate: [
                     { path: 'service' },
                     { path: 'subService' },
+                    { path: 'callPlan' },
                 ],
             });
 
