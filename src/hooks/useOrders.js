@@ -35,7 +35,7 @@ export const useOrders = ({ status, type, page, pageSize }) => {
     };
 
     const ordersQuery = useQuery({
-        queryKey: ['orders', status, page, pageSize],
+        queryKey: ['orders', status, page, pageSize, type],
         queryFn: async () => {
             if (!canView) {
                 throw new Error('You do not have permission to view orders');

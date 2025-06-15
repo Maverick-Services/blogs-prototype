@@ -71,9 +71,9 @@ function OrdersTable({
                         {orders.map((item, idx) => (
                             <TableRow key={item._id}>
                                 <TableCell className={' text-center'}>{(page - 1) * orders.length + idx + 1}</TableCell>
-                                <TableCell>{item.user.phone}</TableCell>
-                                <TableCell>{item.service.name}</TableCell>
-                                <TableCell>{item.subService.name}</TableCell>
+                                <TableCell>{item.user?.phone}</TableCell>
+                                <TableCell>{item.service?.name}</TableCell>
+                                <TableCell>{item.subService?.name}</TableCell>
                                 <TableCell>
                                     {new Date(item.createdAt).toLocaleString()}
                                 </TableCell>

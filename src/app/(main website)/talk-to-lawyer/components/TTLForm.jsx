@@ -16,6 +16,9 @@ import {
 import { Input } from '@/components/ui/input';
 import axios from 'axios';
 import { Textarea } from '@/components/ui/textarea';
+import { toast, Toaster } from 'sonner';
+import { useRouter } from 'next/navigation';
+import LoaderButton from '@/components/custom/LoaderButton';
 
 const formSchema = z.object({
     name: z.string().min(1, "Name is required"),
@@ -28,8 +31,10 @@ const formSchema = z.object({
 });
 
 function TTLForm({ selectedPlan, setSelectedPlan }) {
+    const router = useRouter()
     // console.log(selectedPlan)
     const plan = selectedPlan || []
+    const [loading, setLoading] = useState(false)
 
     const [isLoginDialogOpen, setIsLoginDialogOpen] = useState(false)
     const { data: session } = useSession()
@@ -63,7 +68,18 @@ function TTLForm({ selectedPlan, setSelectedPlan }) {
 
 
     const onSubmit = async (data) => {
-        if (!session) return setIsLoginDialogOpen(true)
+        const toastId = toast.loading('Processing Order... Please wait')
+        setLoading(true)
+        if (!session) {
+            setLoading(false)
+            setIsLoginDialogOpen(true);
+            return
+        };
+        if (session && session.user.role !== 'user') {
+            setLoading(false)
+            alert("Admins and Sub Admins cannot create order!");
+            return
+        };
 
         // build FormData
         const formData = new FormData()
@@ -73,6 +89,27 @@ function TTLForm({ selectedPlan, setSelectedPlan }) {
         formData.append('email', details.email)
         formData.append('phone', details.phone)
         formData.append('message', details.message)
+
+        if (selectedPlan.price === 0) {
+            try {
+                formData.append('amount', 0)
+                const res = await fetch('/api/order', {
+                    method: 'POST',
+                    body: formData
+                })
+                const result = await res.json()
+                console.log(result)
+                toast.success("Call Booked Successfully")
+                router.push('/user')
+
+            } catch (err) {
+                console.error("Call Booking failed:", err)
+                toast.error("Error Booking Call")
+            } finally {
+                setLoading(false)
+            }
+            return
+        }
 
         // 1. create Razorpay order
         const { data: orderData } = await axios.post(
@@ -119,13 +156,23 @@ function TTLForm({ selectedPlan, setSelectedPlan }) {
                     })
                     const result = await finalRes.json()
                     console.log('Order Created:', result)
-
+                    toast.success('Call Booked Successfully', { id: toastId })
+                    router.push('/user')
                 } catch (err) {
                     console.error('Order creation error:', err)
+                    toast.error('Error: ' + err, { id: toastId })
+                    setLoading(false)
                 }
             },
             prefill: { name: '', email: '' },
             theme: { color: '#184674' },
+            modal: {
+                ondismiss: () => {
+                    console.log("Payment popup closed.");
+                    toast.error("Payment cancelled by user!", { id: toastId })
+                    setLoading(false)
+                },
+            },
         }
 
         new window.Razorpay(options).open()
@@ -244,13 +291,14 @@ function TTLForm({ selectedPlan, setSelectedPlan }) {
                                     )}
                                 />
 
-                                <button
+                                <LoaderButton
+                                    loading={loading}
                                     type="submit"
-                                    disabled={!selectedPlan}
+                                    disabled={!selectedPlan || loading}
                                     className={`w-full py-4 px-4 rounded-lg font-bold text-white transition-all ${selectedPlan ? 'bg-[#003366] hover:bg-[#002244]' : 'bg-gray-400 cursor-not-allowed'}`}
                                 >
                                     {selectedPlan ? `Book Now - ₹${selectedPlan.price}` : 'Please select a plan'}
-                                </button>
+                                </LoaderButton>
                             </form>
                         </Form>
                     </div>
@@ -260,6 +308,7 @@ function TTLForm({ selectedPlan, setSelectedPlan }) {
                 open={isLoginDialogOpen}
                 onOpenChange={setIsLoginDialogOpen}
             />
+            <Toaster position="top-right" richColors />
         </div>
     )
 }

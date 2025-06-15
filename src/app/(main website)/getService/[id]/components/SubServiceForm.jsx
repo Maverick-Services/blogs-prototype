@@ -15,6 +15,10 @@ import { Input } from '@/components/ui/input'
 import { useSession } from 'next-auth/react'
 import axios from 'axios'
 import AuthDialog from '@/components/auth/LoginDialog'
+import { Loader2 } from 'lucide-react'
+import { Toaster } from '@/components/ui/sonner'
+import { toast } from 'sonner'
+import { useRouter } from 'next/navigation'
 
 export default function SubServiceForm({
     requiredDetails,
@@ -23,6 +27,7 @@ export default function SubServiceForm({
     discountedPrice,
     subService,
 }) {
+    const router = useRouter()
     // turn on real-time validation
     const form = useForm({ mode: 'onChange' })
     const { control, handleSubmit, formState } = form
@@ -33,6 +38,7 @@ export default function SubServiceForm({
     const { data: session } = useSession()
 
     const [service, setService] = useState('')
+    const [loading, setLoading] = useState(false)
 
     useEffect(() => {
         if (subService) {
@@ -58,7 +64,18 @@ export default function SubServiceForm({
     }, [])
 
     const onSubmit = async (data) => {
-        if (!session) return setIsLoginDialogOpen(true)
+        const toastId = toast.loading('Processing Order... Please wait')
+        setLoading(true)
+        if (!session) {
+            setLoading(false)
+            setIsLoginDialogOpen(true);
+            return
+        };
+        if (session && session.user.role !== 'user') {
+            setLoading(false)
+            alert("Admins and Sub Admins cannot create order!");
+            return
+        };
         // build FormData
         const formData = new FormData()
         requiredDetails.forEach((d) => formData.append(d.name, data[d.name]))
@@ -73,6 +90,27 @@ export default function SubServiceForm({
             discountedPrice && discountedPrice < actualPrice
                 ? discountedPrice
                 : actualPrice
+
+        if (price === 0) {
+            try {
+                formData.append('amount', 0)
+                const res = await fetch('/api/order', {
+                    method: 'POST',
+                    body: formData
+                })
+                const result = await res.json()
+                console.log(result)
+                toast.success("Order Created Successfully")
+                router.push('/user')
+
+            } catch (err) {
+                console.error("Free order failed:", err)
+                toast.error("Error creating order")
+            } finally {
+                setLoading(false)
+            }
+            return
+        }
 
         // 1. create Razorpay order
         const { data: orderData } = await axios.post(
@@ -126,12 +164,24 @@ export default function SubServiceForm({
                     })
                     const result = await finalRes.json()
                     console.log('Order Created:', result)
+                    setLoading(false)
+                    toast.success('Order Created Successfully', { id: toastId })
+                    router.push('/user')
                 } catch (err) {
                     console.error('Order creation error:', err)
+                    toast.error('Error: ' + err, { id: toastId })
+                    setLoading(false)
                 }
             },
             prefill: { name: '', email: '' },
             theme: { color: '#184674' },
+            modal: {
+                ondismiss: () => {
+                    console.log("Payment popup closed.");
+                    toast.error("Payment cancelled by user!", { id: toastId })
+                    setLoading(false)
+                },
+            },
         }
 
         new window.Razorpay(options).open()
@@ -243,9 +293,9 @@ export default function SubServiceForm({
                             type="submit"
                             size="lg"
                             className="px-8 py-4"
-                            disabled={!isValid}
+                            disabled={!isValid || loading}
                         >
-                            Pay Now
+                            {loading && <Loader2 className='animate-spin' />} Pay Now
                         </Button>
                     </div>
                 </form>
@@ -255,6 +305,7 @@ export default function SubServiceForm({
                 open={isLoginDialogOpen}
                 onOpenChange={setIsLoginDialogOpen}
             />
+            <Toaster position="top-right" richColors />
         </div>
     )
 }

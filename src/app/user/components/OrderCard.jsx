@@ -60,7 +60,7 @@ function OrderCard({ order }) {
                             <div>
                                 <p className="text-xs text-gray-500">Created</p>
                                 <p className="text-sm font-medium">
-                                    {format(new Date(order.createdAt), 'MMM dd')}
+                                    {format(new Date(order.createdAt), 'dd MMM, yy hh:mm:ss a')}
                                 </p>
                             </div>
                         </div>
@@ -72,7 +72,7 @@ function OrderCard({ order }) {
                             <div>
                                 <p className="text-xs text-gray-500">Last Updated</p>
                                 <p className="text-sm font-medium">
-                                    {format(new Date(order.updatedAt), 'MMM dd')}
+                                    {format(new Date(order.updatedAt), 'dd MMM, yy hh:mm:ss a')}
                                 </p>
                             </div>
                         </div>

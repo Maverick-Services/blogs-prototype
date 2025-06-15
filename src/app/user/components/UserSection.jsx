@@ -13,10 +13,11 @@ function UserSection({ loading, error, userData }) {
 
     const joinDate = format(new Date(userData.createdAt), 'MMMM d, yyyy');
 
-    const serviceOrdersData = userData?.orders.filter((order) => order.type === 'service')
-    const callOrdersData = userData?.orders.filter((order) => order.type === 'call')
+    const serviceOrdersData = userData?.orders.filter((order) => order.type === 'service').reverse();
 
-    console.log(userData)
+    const callOrdersData = userData?.orders.filter((order) => order.type === 'call').reverse();
+
+    // console.log(userData)
     return (
         <div className="space-y-6">
             {/* Upper Strip */}

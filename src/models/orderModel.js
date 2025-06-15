@@ -26,7 +26,9 @@ const orderSchema = new mongoose.Schema(
         paymentStatus: { type: String, enum: ['paid', 'pending', 'failed'], default: 'paid' },
         status: { type: String, enum: ['active', 'completed', 'cancelled'], default: 'active' },
         refund: refundSchema,
-        messages: [messageSchema]
+        messages: [messageSchema],
+        transactionId: { type: String },
+        razorpayOrder: { type: String }
     },
     { timestamps: true }
 );
