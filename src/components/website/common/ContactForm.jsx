@@ -51,7 +51,7 @@ export const ContactForm = () => {
     };
 
     return (
-        <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#003366] to-indigo-700 p-8 shadow-2xl">
+        <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#003366] to-indigo-700 p-4 sm:p-8 shadow-2xl">
             {/* Decorative elements */}
             <div className="absolute top-0 left-0 w-full h-full">
                 <div className="absolute top-10 -right-10 w-40 h-40 rounded-full bg-blue-500/20"></div>

@@ -116,7 +116,7 @@ export default function Contact() {
 
                     {/* Right: Contact Form */}
                     <div className="lg:w-3/5">
-                        <div className="bg-white rounded-3xl shadow-xl p-8 h-full">
+                        <div className="bg-white rounded-3xl shadow-xl p-3 md:p-8 h-full">
                             {/* <div className="mb-8">
                                 <h3 className="text-3xl font-bold text-gray-800 mb-2">Send us a message</h3>
                                 <div className="w-20 h-1 bg-gradient-to-r from-[#00564F] to-teal-500 rounded-full mb-6"></div>

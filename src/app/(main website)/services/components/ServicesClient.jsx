@@ -13,7 +13,7 @@ export default function ServicesClient({ services, categories }) {
 
     return (
         <WebsiteLayout services={services} categories={categories}>
-            <div className=''>
+            <div className='mb-10'>
                 {/* Enhanced Hero Section */}
                 <div className="w-full bg-gradient-to-r from-[#001a33] to-[#002244] py-12 md:py-14 text-white mb-8">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -30,7 +30,7 @@ export default function ServicesClient({ services, categories }) {
                 <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
                     <div className='flex flex-col lg:flex-row gap-8 mb-12'>
                         {/* Left Sidebar - Sticky on desktop */}
-                        <div className='w-full lg:w-1/4 flex flex-col gap-6'>
+                        <div className='w-full lg:w-1/4 sm:flex flex-col gap-6 hidden'>
                             <div className='sticky top-24'>
                                 <CategoriesBox
                                     categories={categories}

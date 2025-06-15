@@ -100,7 +100,7 @@ function BlogsClient({ services, categories, allBlogs }) {
                 </div>
             </div>
 
-            <div className='max-w-7xl mx-auto'>
+            <div className='max-w-7xl mx-auto px-4 pb-10'>
 
                 {allBlogs.length === 0 ? (
                     <div><Loader /></div>

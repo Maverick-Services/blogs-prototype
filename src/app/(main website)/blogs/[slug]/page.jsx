@@ -55,7 +55,7 @@ export default async function page({ params }) {
 
     return (
         <WebsiteLayout services={services} categories={categories}>
-            <article className="max-w-7xl mx-auto space-y-5">
+            <article className="max-w-7xl mx-auto space-y-5 px-2">
                 <script
                     type="application/ld+json"
                     dangerouslySetInnerHTML={{
@@ -71,7 +71,7 @@ export default async function page({ params }) {
                 />
                 <section className="flex gap-4 lg:gap-10 flex-col lg:flex-row pt-5">
                     <div className="flex-1 h-full flex flex-col">
-                        <Breadcrumb className="mb-1">
+                        <Breadcrumb className="mb-1 px-2">
                             <BreadcrumbList>
                                 <BreadcrumbItem>
                                     <BreadcrumbLink href="/">Home</BreadcrumbLink>
