@@ -47,7 +47,6 @@ export default function OrdersAreaChart({ days = 7 }) {
         new Date(d).toLocaleDateString('en-GB', {
             day: '2-digit',
             month: 'short',
-            year: 'numeric',
         })
 
     const [startDate, endDate] = React.useMemo(() => {
