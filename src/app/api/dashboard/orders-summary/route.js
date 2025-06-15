@@ -1,6 +1,16 @@
-
 import { connectDB } from '@/lib/mongodb'
-import Order from '@/models/orderModel'      // your Order mongoose model
+import Order from '@/models/orderModel'
+
+function getDateRangeArray(days) {
+    const dates = []
+    const today = new Date()
+    for (let i = days - 1; i >= 0; i--) {
+        const d = new Date(today)
+        d.setDate(today.getDate() - i)
+        dates.push(d.toISOString().split('T')[0]) // 'YYYY-MM-DD'
+    }
+    return dates
+}
 
 export async function GET(request) {
     const { searchParams } = new URL(request.url)
@@ -8,11 +18,10 @@ export async function GET(request) {
 
     await connectDB()
 
-    // Calculate the cutoff date
     const cutoff = new Date()
     cutoff.setDate(cutoff.getDate() - days)
 
-    // Aggregate counts per day and type
+    // Step 1: Get counts by day/type
     const agg = await Order.aggregate([
         {
             $match: {
@@ -27,32 +36,28 @@ export async function GET(request) {
                 },
                 count: { $sum: 1 }
             }
-        },
-        { $sort: { '_id.day': 1 } },
-        {
-            $group: {
-                _id: '$_id.day',
-                byType: {
-                    $push: { type: '$_id.type', count: '$count' }
-                }
-            }
         }
     ])
 
-    // Build arrays for dates / serviceCounts / callCounts
-    const dates = []
+    // Step 2: Convert to lookup
+    const dataMap = {}
+    for (const { _id, count } of agg) {
+        const day = _id.day
+        const type = _id.type
+        if (!dataMap[day]) dataMap[day] = { service: 0, call: 0 }
+        if (type === 'service') dataMap[day].service = count
+        if (type === 'call') dataMap[day].call = count
+    }
+
+    // Step 3: Fill missing dates and preserve order
+    const dates = getDateRangeArray(days)
     const serviceCounts = []
     const callCounts = []
-    for (const dayBucket of agg) {
-        dates.push(dayBucket._id)
-        // initialize
-        let svc = 0, call = 0
-        for (const { type, count } of dayBucket.byType) {
-            if (type === 'service') svc = count
-            if (type === 'call') call = count
-        }
-        serviceCounts.push(svc)
-        callCounts.push(call)
+
+    for (const date of dates) {
+        const dayData = dataMap[date] || { service: 0, call: 0 }
+        serviceCounts.push(dayData.service)
+        callCounts.push(dayData.call)
     }
 
     return new Response(
