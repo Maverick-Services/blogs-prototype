@@ -18,7 +18,7 @@ export default function BigNav({ services, categories }) {
         svcList.filter((s) => Array.isArray(s.categories) && s.categories.includes(catId)).slice(0, 4)
 
     return (
-        <div className="hidden md:flex items-center space-x-4">
+        <div className="hidden xl:flex items-center space-x-4">
             {topCategories.length > 0 && (
                 <div className="flex space-x-1">
                     {topCategories.map((cat) => (

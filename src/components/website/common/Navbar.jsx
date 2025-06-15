@@ -42,7 +42,7 @@ export default function NavBar({ services, categories }) {
                         <BigNav services={services} categories={categories} />
 
                         {/* Mobile Hamburger */}
-                        <div className="md:hidden flex items-center space-x-3">
+                        <div className="xl:hidden flex items-center space-x-3">
                             <LoginButton className="px-3 py-1.5 rounded-lg hover:bg-gray-100" />
                             <button
                                 className="text-gray-700 hover:text-gray-900"
