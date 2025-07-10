@@ -7,7 +7,7 @@ import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbP
 import EnquiryForm from '@/components/website/EnquiryForm';
 import ScrollableServiceSections from '@/components/website/ScrollableServiceSections';
 import TabbedDocuments from '@/components/website/TabbedDocuments';
-import { getHomePageData } from '@/lib/main/getHomePageData';
+import { getCategories, getServices } from '@/lib/main/getHomePageData';
 import { getServerSession } from 'next-auth';
 
 
@@ -49,7 +49,11 @@ export async function generateMetadata({ params }) {
 
 async function Page({ params }) {
 
-    const { services, categories } = await getHomePageData();
+    const servicesData = await getServices();
+    const services = servicesData?.data || [];
+    const categoriesData = await getCategories();
+    const categories = categoriesData?.data || [];
+
     const service = await getServiceBySlug(params.slug);
     // console.log(service)
     if (!service) {

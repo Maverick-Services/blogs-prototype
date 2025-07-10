@@ -8,13 +8,19 @@ import { LegalSolutions } from "@/components/website/home/LegalSolutions";
 import ServicesByCategory from "@/components/website/home/ServicesByCategory";
 import Testimonials from "@/components/website/home/Testimonials";
 import WhyChooseUs from "@/components/website/home/WhyChooseUs";
-import { getHomePageData } from "@/lib/main/getHomePageData";
+import { getCategories, getServices } from "@/lib/main/getHomePageData";
 
 export default async function Home() {
 
-  const { services, categories } = await getHomePageData();
+  // const { categories } = await getHomePageData();
   // console.log(services);
   // console.log(categories);
+
+  const servicesData = await getServices();
+  const services = servicesData?.data || [];
+  const categoriesData = await getCategories();
+  const categories = categoriesData?.data || [];
+
   return (
     <div className="">
       <NavBar services={services} categories={categories} />

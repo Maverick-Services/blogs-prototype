@@ -1,26 +1,27 @@
-import clientPromise from "../mongodbClient";
+import axios from "axios";
+// import clientPromise from "../mongodbClient";
 
-export async function getServices() {
-    try {
-        const client = await clientPromise;
-        const db = client.db();
-        return await db.collection("services").find({}).toArray();
-    } catch (e) {
-        console.error(e);
-        return [];
-    }
-}
+// export async function getServices() {
+//     try {
+//         const client = await clientPromise;
+//         const db = client.db();
+//         return await db.collection("services").find({}).toArray();
+//     } catch (e) {
+//         console.error(e);
+//         return [];
+//     }
+// }
 
-export async function getCategories() {
-    try {
-        const client = await clientPromise;
-        const db = client.db();
-        return await db.collection("categories").find({}).toArray();
-    } catch (e) {
-        console.error(e);
-        return [];
-    }
-}
+// export async function getCategories() {
+//     try {
+//         const client = await clientPromise;
+//         const db = client.db();
+//         return await db.collection("categories").find({}).toArray();
+//     } catch (e) {
+//         console.error(e);
+//         return [];
+//     }
+// }
 
 export async function getHomePageData() {
     try {
@@ -39,9 +40,23 @@ export async function getHomePageData() {
     }
 }
 
+export const getServices = async () => {
+    try {
+        const data = await axios.get(`${process.env.NEXT_PUBLIC_SITE_URL}/api/web/services`)
+        return data.data || [];
+    } catch (error) {
+        console.log(error)
+    }
+}
 
-
-
+export const getCategories = async () => {
+    try {
+        const data = await axios.get(`${process.env.NEXT_PUBLIC_SITE_URL}/api/web/categories`)
+        return data.data || [];
+    } catch (error) {
+        console.log(error)
+    }
+}
 
 
 

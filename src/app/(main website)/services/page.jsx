@@ -1,9 +1,12 @@
 import React from 'react'
 import ServicesClient from './components/ServicesClient'
-import { getHomePageData } from '@/lib/main/getHomePageData';
+import { getCategories, getServices } from '@/lib/main/getHomePageData';
 
 export default async function Page() {
-    const { services, categories } = await getHomePageData();
+    const servicesData = await getServices();
+    const services = servicesData?.data || [];
+    const categoriesData = await getCategories();
+    const categories = categoriesData?.data || [];
 
     return <ServicesClient services={services} categories={categories} />
 }

@@ -1,14 +1,17 @@
 // app/getService/[id]/page.jsx
 import React from 'react'
 import WebsiteLayout from '@/components/website/WebsiteLayout';
-import { getHomePageData } from '@/lib/main/getHomePageData';
+import { getCategories, getHomePageData, getServices } from '@/lib/main/getHomePageData';
 import { getSubServiceById } from '@/lib/main/getSubServiceById'
 import Image from 'next/image';
 import SubServiceClient from './components/SubServiceClient';
 
 export default async function page({ params }) {
+    const servicesData = await getServices();
+    const services = servicesData?.data || [];
+    const categoriesData = await getCategories();
+    const categories = categoriesData?.data || [];
 
-    const { services, categories } = await getHomePageData();
     const subService = await getSubServiceById(params.id)
     console.log(subService)
 

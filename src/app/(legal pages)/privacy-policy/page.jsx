@@ -1,13 +1,18 @@
 // app/privacy-policy/page.jsx
 import WebsiteLayout from "@/components/website/WebsiteLayout";
-import { getHomePageData } from "@/lib/main/getHomePageData";
+import { getCategories, getServices } from "@/lib/main/getHomePageData";
 import { getPrivacyPolicy } from "@/lib/main/getStaticData";
 import ReactMarkdown from 'react-markdown';
 import styles from './components/post.module.css';
 import rehypeRaw from 'rehype-raw';
 
 export default async function page() {
-    const { services, categories } = await getHomePageData();
+
+    const servicesData = await getServices();
+    const services = servicesData?.data || [];
+    const categoriesData = await getCategories();
+    const categories = categoriesData?.data || [];
+
     const privacyPolicy = await getPrivacyPolicy();
 
     return (

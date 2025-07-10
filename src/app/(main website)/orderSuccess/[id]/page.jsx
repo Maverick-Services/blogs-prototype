@@ -1,12 +1,16 @@
 // app/orderSuccess/page.jsx
 import WebsiteLayout from "@/components/website/WebsiteLayout";
-import { getHomePageData } from "@/lib/main/getHomePageData";
+import { getCategories, getServices } from "@/lib/main/getHomePageData";
 import { getOrderById } from "@/lib/main/getOrders";
 
 export default async function page({ params }) {
-    const { services, categories } = await getHomePageData();
+    const servicesData = await getServices();
+    const services = servicesData?.data || [];
+    const categoriesData = await getCategories();
+    const categories = categoriesData?.data || [];
+
     const order = await getOrderById(params.id)
-    console.log(order)
+    // console.log(order)
 
     return (
         <WebsiteLayout services={services} categories={categories}>

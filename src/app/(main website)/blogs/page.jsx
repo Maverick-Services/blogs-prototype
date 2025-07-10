@@ -1,11 +1,15 @@
 // app/blogs/page.jsx
 import React from 'react';
-import { getHomePageData } from '@/lib/main/getHomePageData';
+import { getCategories, getServices } from '@/lib/main/getHomePageData';
 import BlogsClient from './components/BlogsClient';
 import { getBlogsData } from '@/lib/main/getBlogsData';
 
 export default async function page() {
-    const { services, categories } = await getHomePageData();
+    const servicesData = await getServices();
+    const services = servicesData?.data || [];
+    const categoriesData = await getCategories();
+    const categories = categoriesData?.data || [];
+
     const blogs = await getBlogsData();
     console.log(blogs)
 

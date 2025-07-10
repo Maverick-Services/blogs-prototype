@@ -4,7 +4,7 @@ import EnquiryForm from '@/components/website/EnquiryForm';
 import TalkToLawyerCard from '@/components/website/TalkToLawyerCard';
 import WebsiteLayout from '@/components/website/WebsiteLayout';
 import { getBlogBySlug } from '@/lib/main/getBlogsData';
-import { getHomePageData } from '@/lib/main/getHomePageData';
+import { getCategories, getServices } from '@/lib/main/getHomePageData';
 import React from 'react'
 import BlogData from '../components/BlogData';
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator, } from '@/components/ui/breadcrumb';
@@ -42,7 +42,10 @@ import LatestBlogs from '@/components/website/LatestBlogs';
 // }
 
 export default async function page({ params }) {
-    const { services, categories } = await getHomePageData();
+    const servicesData = await getServices();
+    const services = servicesData?.data || [];
+    const categoriesData = await getCategories();
+    const categories = categoriesData?.data || [];
 
     const slug = await params
     const blog = await getBlogBySlug(slug.slug)
