@@ -17,9 +17,9 @@ export default async function Home() {
   // console.log(categories);
 
   const servicesData = await getServices();
-  const services = servicesData?.data || [];
+  const services = servicesData.data;
   const categoriesData = await getCategories();
-  const categories = categoriesData?.data || [];
+  const categories = categoriesData.data;
 
   return (
     <div className="">
