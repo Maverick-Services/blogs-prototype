@@ -23,7 +23,7 @@ export default function NavBar({ services, categories }) {
     return (
         <>
             <nav className={`w-full z-50 transition-all duration-300 ${scrolled ? 'bg-white shadow-md py-0' : 'bg-white py-2'}`}>
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-0">
                     <div className="flex items-center justify-between h-16">
                         {/* Logo */}
                         <Link href="/" className="flex items-center space-x-2">
@@ -31,8 +31,8 @@ export default function NavBar({ services, categories }) {
                                 <Image
                                     alt="logo"
                                     src="/logo.png"
-                                    height={300}
-                                    width={300}
+                                    height={1000}
+                                    width={1000}
                                     className="h-12 w-auto"
                                 />
                             </div>

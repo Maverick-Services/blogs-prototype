@@ -18,7 +18,7 @@ export default function BigNav({ services, categories }) {
         svcList.filter((s) => Array.isArray(s.categories) && s.categories.includes(catId)).slice(0, 4)
 
     return (
-        <div className="hidden xl:flex items-center space-x-4">
+        <div className="hidden xl:flex items-center space-x-2">
             {topCategories.length > 0 && (
                 <div className="flex space-x-1">
                     {topCategories.map((cat) => (
@@ -29,7 +29,7 @@ export default function BigNav({ services, categories }) {
                             onMouseLeave={() => setActiveDropdown(null)}
                         >
                             <button
-                                className={`flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-all duration-200 ${activeDropdown === cat._id
+                                className={`flex items-center px-2 py-3 text-sm font-medium rounded-lg transition-all duration-200 ${activeDropdown === cat._id
                                     ? `text-white bg-[${primaryColor}]`
                                     : `text-gray-700 hover:text-white hover:bg-[${primaryColor}]`
                                     }`}
@@ -123,16 +123,16 @@ export default function BigNav({ services, categories }) {
                         All Services
                     </Link>
 
-                    <Link
+                    {/* <Link
                         href="/blogs"
                         className="flex items-center px-4 py-3 text-sm font-medium text-gray-700 hover:text-white hover:bg-[#003366] rounded-lg transition-colors duration-200"
                     >
                         Blogs
-                    </Link>
+                    </Link> */}
                 </div>
             )}
 
-            <div className="ml-4 flex items-center space-x-3">
+            <div className="ml-2 flex items-center space-x-3">
                 <LoginButton className="px-4 py-2 rounded-lg hover:bg-gray-100" />
                 <Link href="/contact-us">
                     <button className="bg-[#003366] text-white px-5 py-2.5 rounded-lg text-sm font-medium hover:bg-[#002244] transition-colors flex items-center">
