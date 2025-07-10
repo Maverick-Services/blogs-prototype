@@ -44,7 +44,7 @@ export default function Step1BasicDetails() {
     const [imageURLPreview, setImageURLPreview] = useState(watch('imageURL') || null);
     const [isDialogOpen, setIsDialogOpen] = useState(false);
 
-    const selectedCats = watch('categories') || [];
+    const selectedCats = watch('categories') || []; 
     const selectedTags = watch('tags') || [];
 
     // Helper to toggle an ID in categories or tags

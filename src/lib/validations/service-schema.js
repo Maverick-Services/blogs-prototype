@@ -25,7 +25,7 @@ export const ServiceFormSchema = z.object({
         .array(z.string())
         .min(1, 'Select at least one tag'),
     status: z.boolean(),
-    featured: z.boolean(),
+    // featured: z.boolean(),
 
     // Step 2 fields
     pageHeading: z.string().min(1, 'Page Heading is required'),
