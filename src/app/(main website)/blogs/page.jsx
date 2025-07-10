@@ -10,8 +10,8 @@ export default async function page() {
     const categoriesData = await getCategories();
     const categories = categoriesData?.data || [];
 
-    const blogs = await getBlogsData();
-    console.log(blogs)
+    const blogsData = await getBlogsData();
+    const blogs = blogsData?.data || [];
 
     return (
         <BlogsClient
@@ -19,6 +19,5 @@ export default async function page() {
             categories={categories}
             allBlogs={blogs}
         />
-        // <p>lajfdklasjf;lkasjdf</p>
     );
 }

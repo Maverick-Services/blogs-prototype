@@ -23,22 +23,22 @@ import axios from "axios";
 //     }
 // }
 
-export async function getHomePageData() {
-    try {
-        const [services, categories] = await Promise.all([
-            getServices(),
-            getCategories()
-        ]);
+// export async function getHomePageData() {
+//     try {
+//         const [services, categories] = await Promise.all([
+//             getServices(),
+//             getCategories()
+//         ]);
 
-        return {
-            services: JSON.parse(JSON.stringify(services)),
-            categories: JSON.parse(JSON.stringify(categories))
-        };
-    } catch (error) {
-        console.error('Error fetching data:', error);
-        return { services: [], categories: [] };
-    }
-}
+//         return {
+//             services: JSON.parse(JSON.stringify(services)),
+//             categories: JSON.parse(JSON.stringify(categories))
+//         };
+//     } catch (error) {
+//         console.error('Error fetching data:', error);
+//         return { services: [], categories: [] };
+//     }
+// }
 
 export const getServices = async () => {
     try {

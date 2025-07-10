@@ -48,8 +48,10 @@ export default async function page({ params }) {
     const categories = categoriesData?.data || [];
 
     const slug = await params
-    const blog = await getBlogBySlug(slug.slug)
-    console.log(blog)
+    const blogData = await getBlogBySlug(slug.slug)
+    const blog = blogData.data;
+
+    // console.log(blog)
     // const relatedServices = getRelatedServices(
     //     blog.tags || [],
     //     services.data || [],

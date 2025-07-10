@@ -11,11 +11,6 @@ import WhyChooseUs from "@/components/website/home/WhyChooseUs";
 import { getCategories, getServices } from "@/lib/main/getHomePageData";
 
 export default async function Home() {
-
-  // const { categories } = await getHomePageData();
-  // console.log(services);
-  // console.log(categories);
-
   const servicesData = await getServices();
   const services = servicesData.data;
   const categoriesData = await getCategories();
@@ -24,7 +19,6 @@ export default async function Home() {
   return (
     <div className="">
       <NavBar services={services} categories={categories} />
-      {/* <HeroSection /> */}
       <HeroSection2 />
       <ServicesByCategory services={services} categories={categories} />
       <ConnectWithLawyer />
