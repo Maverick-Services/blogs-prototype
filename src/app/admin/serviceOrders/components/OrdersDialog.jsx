@@ -20,12 +20,14 @@ import {
 import {
     Dialog,
     DialogContent,
+    DialogFooter,
     DialogHeader,
     DialogTitle,
     DialogTrigger
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import GSTBillDownload from "@/components/GSTBill";
 
 export default function OrderDetailsDialog({ order }) {
     const formatDate = (dateString) => {
@@ -86,7 +88,7 @@ export default function OrderDetailsDialog({ order }) {
                 </div>
 
                 {/* Main Content */}
-                <div className="p-5 grid grid-cols-1 md:grid-cols-2 gap-5">
+                <div className="px-5 grid grid-cols-1 md:grid-cols-2 gap-5">
                     {/* Left Column */}
                     <div className="space-y-5">
                         {/* Service Information */}
@@ -255,7 +257,14 @@ export default function OrderDetailsDialog({ order }) {
                         </div>
                     </div>
                 </div>
+
+                {order.status === 'completed' &&
+                    <div className="p-3 w-full flex items-end justify-end">
+                        <GSTBillDownload billData={order} />
+                    </div>
+                }
             </DialogContent>
+
         </Dialog>
     );
 }
