@@ -59,10 +59,8 @@ const blogSchema = new mongoose.Schema({
 
 
 blogSchema.index({ status: 1 });
-blogSchema.index({ featured: 1 });
 blogSchema.index({ categories: 1, status: 1 });
 blogSchema.index({ slug: 1, status: 1 });
-blogSchema.index({ featured: 1, status: 1 });
 blogSchema.index({ tags: 1, status: 1 });
 
 const Blog = mongoose.models.Blog || mongoose.model('Blog', blogSchema);
