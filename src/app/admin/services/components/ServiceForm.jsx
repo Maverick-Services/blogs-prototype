@@ -85,9 +85,14 @@ export default function ServiceForm({ defaultValues, onSubmit, loading, error })
     return (
         <FormProvider {...methods}>
             <form
-                onSubmit={methods.handleSubmit(onSubmit)}
-                className=""
+                onSubmit={(e) => {
+                    e.preventDefault(); // Prevent premature submit
+                    if (currentStep === steps.length - 1) {
+                        methods.handleSubmit(onSubmit)(e);
+                    }
+                }}
                 noValidate
+                className=""
             >
                 {/* Elegant Step Indicator */}
                 <div className="relative mt-4 mb-4">
@@ -161,8 +166,8 @@ export default function ServiceForm({ defaultValues, onSubmit, loading, error })
                 {/* {error && <p className='text-red-700'>Error: {error}</p>} */}
 
                 {/* Navigation Buttons */}
-                <div className="flex justify-between pt-1">
-                    <Button
+                <div className="flex justify-end pt-1">
+                    {/* <Button
                         type="button"
                         variant="outline"
                         onClick={onPrevious}
@@ -170,28 +175,31 @@ export default function ServiceForm({ defaultValues, onSubmit, loading, error })
                         className="min-w-[120px] border-gray-300 text-gray-700 hover:bg-gray-50"
                     >
                         Previous
-                    </Button>
+                    </Button> */}
 
-                    {currentStep < steps.length - 1 ? (
-                        <Button
-                            type="button"
-                            onClick={onNext}
-                            className="min-w-[120px] bg-indigo-500 hover:bg-indigo-600 text-white"
-                        >
-                            Continue
-                        </Button>
-                    ) : (
-                        <Button
-                            type="submit"
-                            className="min-w-[120px] bg-indigo-500 hover:bg-indigo-600 text-white"
-                            disabled={loading}
+                    {currentStep >= steps.length - 1 && (
+                        //     <Button
+                        //         type="button"
+                        //         onClick={onNext}
+                        //         disabled={loading || currentStep !== steps.length - 1}
+                        //         className="min-w-[120px] bg-indigo-500 hover:bg-indigo-600 text-white"
+                        //     >
+                        //         Continue
+                        //     </Button>
+                        // ) : (
+                        <div className='flex items-center w-full justify-end'>
+                            <Button
+                                type="submit"
+                                className="min-w-[120px] bg-indigo-500 hover:bg-indigo-600 text-white mt-3"
+                                disabled={loading}
 
-                        >
-                            {loading ? (
-                                <Loader2 className="animate-spin h-5 w-5 mr-2" />
-                            ) : null}
-                            Submit
-                        </Button>
+                            >
+                                {loading ? (
+                                    <Loader2 className="animate-spin h-5 w-5 mr-2" />
+                                ) : null}
+                                Submit
+                            </Button>
+                        </div>
                     )}
                 </div>
             </form>
