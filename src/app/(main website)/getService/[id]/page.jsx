@@ -1,7 +1,7 @@
 // app/getService/[id]/page.jsx
 import React from 'react'
 import WebsiteLayout from '@/components/website/WebsiteLayout';
-import { getCategories, getHomePageData, getServices } from '@/lib/main/getHomePageData';
+import { getCategories, getServices } from '@/lib/main/getHomePageData';
 import { getSubServiceById } from '@/lib/main/getSubServiceById'
 import Image from 'next/image';
 import SubServiceClient from './components/SubServiceClient';
