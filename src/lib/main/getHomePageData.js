@@ -40,36 +40,78 @@ import axios from "axios";
 //     }
 // }
 
+// export const getServices = async () => {
+//     try {
+//         const data = await axios.get(`${process.env.NEXT_PUBLIC_SITE_URL}/api/web/services`,
+//             {
+//                 headers: {
+//                     "Cache-Control": "no-store"
+//                 }
+//             }
+//         )
+//         return data.data || [];
+//     } catch (error) {
+//         console.log(error)
+//     }
+// }
+
+// export const getCategories = async () => {
+//     try {
+//         const data = await axios.get(`${process.env.NEXT_PUBLIC_SITE_URL}/api/web/categories`,
+//             {
+//                 headers: {
+//                     "Cache-Control": "no-store"
+//                 }
+//             }
+//         )
+//         return data.data || [];
+//     } catch (error) {
+//         console.log(error)
+//     }
+// }
+
 export const getServices = async () => {
     try {
-        const data = await axios.get(`${process.env.NEXT_PUBLIC_SITE_URL}/api/web/services`,
-            {
-                headers: {
-                    "Cache-Control": "no-store"
-                }
+        const res = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/web/services`, {
+            cache: 'no-store', // prevents caching
+            headers: {
+                'Content-Type': 'application/json'
             }
-        )
-        return data.data || [];
+        });
+
+        if (!res.ok) {
+            throw new Error('Failed to fetch services');
+        }
+
+        const data = await res.json();
+        return data || [];
     } catch (error) {
-        console.log(error)
+        console.log('Error fetching services:', error);
+        return [];
     }
-}
+};
+
 
 export const getCategories = async () => {
     try {
-        const data = await axios.get(`${process.env.NEXT_PUBLIC_SITE_URL}/api/web/categories`,
-            {
-                headers: {
-                    "Cache-Control": "no-store"
-                }
+        const res = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/web/categories`, {
+            cache: 'no-store',
+            headers: {
+                'Content-Type': 'application/json'
             }
-        )
-        return data.data || [];
-    } catch (error) {
-        console.log(error)
-    }
-}
+        });
 
+        if (!res.ok) {
+            throw new Error('Failed to fetch categories');
+        }
+
+        const data = await res.json();
+        return data || [];
+    } catch (error) {
+        console.log('Error fetching categories:', error);
+        return [];
+    }
+};
 
 
 
