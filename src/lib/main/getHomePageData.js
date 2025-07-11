@@ -42,7 +42,13 @@ import axios from "axios";
 
 export const getServices = async () => {
     try {
-        const data = await axios.get(`${process.env.NEXT_PUBLIC_SITE_URL}/api/web/services`)
+        const data = await axios.get(`${process.env.NEXT_PUBLIC_SITE_URL}/api/web/services`,
+            {
+                headers: {
+                    "Cache-Control": "no-store"
+                }
+            }
+        )
         return data.data || [];
     } catch (error) {
         console.log(error)
@@ -51,7 +57,13 @@ export const getServices = async () => {
 
 export const getCategories = async () => {
     try {
-        const data = await axios.get(`${process.env.NEXT_PUBLIC_SITE_URL}/api/web/categories`)
+        const data = await axios.get(`${process.env.NEXT_PUBLIC_SITE_URL}/api/web/categories`,
+            {
+                headers: {
+                    "Cache-Control": "no-store"
+                }
+            }
+        )
         return data.data || [];
     } catch (error) {
         console.log(error)
