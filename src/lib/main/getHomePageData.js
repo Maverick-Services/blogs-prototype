@@ -73,10 +73,7 @@ import axios from "axios";
 export const getServices = async () => {
     try {
         const res = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/web/services`, {
-            cache: 'no-store', // prevents caching
-            headers: {
-                'Content-Type': 'application/json'
-            }
+            cache: 'no-store',
         });
 
         if (!res.ok) {
@@ -84,7 +81,7 @@ export const getServices = async () => {
         }
 
         const data = await res.json();
-        return data || [];
+        return data.data || [];
     } catch (error) {
         console.log('Error fetching services:', error);
         return [];
@@ -106,7 +103,7 @@ export const getCategories = async () => {
         }
 
         const data = await res.json();
-        return data || [];
+        return data.data || [];
     } catch (error) {
         console.log('Error fetching categories:', error);
         return [];
