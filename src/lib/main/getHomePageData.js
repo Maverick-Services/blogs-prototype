@@ -73,7 +73,7 @@ import axios from "axios";
 export const getServices = async () => {
     try {
         const res = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/web/services`, {
-            cache: 'no-store',
+            next: { revalidate: 60 }, // 🔥 this handles ISR
         });
 
         if (!res.ok) {
@@ -88,11 +88,10 @@ export const getServices = async () => {
     }
 };
 
-
 export const getCategories = async () => {
     try {
         const res = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/web/categories`, {
-            cache: 'no-store',
+            next: { revalidate: 60 },
         });
 
         if (!res.ok) {
@@ -106,6 +105,7 @@ export const getCategories = async () => {
         return [];
     }
 };
+
 
 
 
