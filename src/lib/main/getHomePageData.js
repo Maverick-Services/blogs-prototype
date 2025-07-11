@@ -93,9 +93,6 @@ export const getCategories = async () => {
     try {
         const res = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/web/categories`, {
             cache: 'no-store',
-            headers: {
-                'Content-Type': 'application/json'
-            }
         });
 
         if (!res.ok) {
