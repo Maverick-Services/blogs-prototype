@@ -81,7 +81,7 @@ export const getServices = async () => {
         }
 
         const data = await res.json();
-        return data.data || [];
+        return data || [];
     } catch (error) {
         console.log('Error fetching services:', error);
         return [];
@@ -103,7 +103,7 @@ export const getCategories = async () => {
         }
 
         const data = await res.json();
-        return data.data || [];
+        return data || [];
     } catch (error) {
         console.log('Error fetching categories:', error);
         return [];

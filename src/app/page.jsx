@@ -16,6 +16,9 @@ export default async function Home() {
   const categoriesData = await getCategories();
   const categories = categoriesData.data;
 
+  console.log(services)
+  console.log(categories)
+
   return (
     <div className="">
       <NavBar services={services} categories={categories} />
