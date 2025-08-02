@@ -79,7 +79,7 @@ export const ConnectWithLawyer = () => {
                 {/* Right: Text content */}
                 <div className="w-full lg:w-1/2 text-center lg:text-left px-4">
                     <div className="max-w-lg mx-auto lg:mx-0">
-                        <div className="inline-block px-4 py-1.5 rounded-full bg-indigo-100 text-indigo-600 font-medium mb-6">
+                        <div className="inline-block px-4 py-1.5 rounded-full bg-indigo-100 text-indigo-600 font-medium mb-3">
                             Expert Consultation
                         </div>
 
@@ -105,14 +105,14 @@ export const ConnectWithLawyer = () => {
                                     <span className="text-gray-700">No hidden fees</span>
                                 </div>
 
-                                <div className="flex items-center gap-2">
+                                {/* <div className="flex items-center gap-2">
                                     <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center">
                                         <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                                         </svg>
                                     </div>
                                     <span className="text-gray-700">24/7 support</span>
-                                </div>
+                                </div> */}
 
                                 <div className="flex items-center gap-2">
                                     <div className="w-8 h-8 rounded-full bg-purple-100 flex items-center justify-center">
@@ -130,7 +130,7 @@ export const ConnectWithLawyer = () => {
                             </div>
                         </div>
 
-                        <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm inline-block">
+                        {/* <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm inline-block">
                             <div className="flex items-center gap-4">
                                 <div className="flex-shrink-0">
                                     <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center">
@@ -141,10 +141,10 @@ export const ConnectWithLawyer = () => {
                                 </div>
                                 <div>
                                     <p className="text-sm text-gray-500">Call us directly</p>
-                                    {/* <p className="text-lg font-bold text-gray-800">7485755698</p> */}
+                                    <p className="text-lg font-bold text-gray-800">7485755698</p>
                                 </div>
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </div>

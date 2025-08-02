@@ -11,7 +11,7 @@ export default function WebsiteLayout({ services, categories, children }) {
                 <NavBar services={services} categories={categories} />
             </div>
 
-            <div className='min-h-screen bg-gradient-to-b from-[#f8fafc] to-[#eef2f7]'>
+            <div className='min-h-screen pt-20 bg-gradient-to-b from-[#f8fafc] to-[#eef2f7]'>
                 {children}
             </div>
 

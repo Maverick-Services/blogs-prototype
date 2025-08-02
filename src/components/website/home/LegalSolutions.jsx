@@ -74,7 +74,7 @@ export const LegalSolutions = () => {
                     >
                         legal solution platform in your hand
                         <motion.div
-                            className="absolute bottom-0 left-0 w-full h-1 bg-[#ff9900]"
+                            className=" bottom-0 left-0 w-full h-1 bg-[#ff9900]"
                             initial={{ width: 0 }}
                             whileInView={{ width: "100%" }}
                             viewport={{ once: true }}

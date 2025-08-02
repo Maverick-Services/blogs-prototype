@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 
 export default function ServicesByCategory({ services, categories }) {
-    const displayCategories = categories.slice(0, 4);
+    const displayCategories = categories.slice(0, 9);
 
 
     // Animation variants
@@ -24,7 +24,7 @@ export default function ServicesByCategory({ services, categories }) {
     };
 
     return (
-        <section className="pt-20 pb-32 relative overflow-hidden bg-gradient-to-br from-[#f0f8ff] via-[#cae2f7] to-[#92bdff]">
+        <section className="pt-12 pb-16 relative overflow-hidden bg-gradient-to-br from-[#f0f8ff] via-[#cae2f7] to-[#92bdff]">
             {/* Background elements */}
             <div className="absolute top-0 left-0 w-full h-full">
                 <div className="absolute top-20 -right-20 w-80 h-80 rounded-full bg-blue-100 opacity-40"></div>
@@ -36,8 +36,8 @@ export default function ServicesByCategory({ services, categories }) {
             <div className="absolute top-40 left-20 w-16 h-16 rounded-lg bg-blue-200 opacity-20 rotate-45"></div>
             <div className="absolute bottom-40 right-24 w-20 h-20 rounded-full bg-teal-200 opacity-20"></div>
 
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-                <div className="text-center mb-16">
+            <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                <div className="text-center mb-6">
                     <motion.h2
                         initial={{ opacity: 0, y: -20 }}
                         whileInView={{ opacity: 1, y: 0 }}
@@ -70,12 +70,12 @@ export default function ServicesByCategory({ services, categories }) {
                     initial="hidden"
                     whileInView="show"
                     viewport={{ once: true, margin: "-100px" }}
-                    className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8"
+                    className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3"
                 >
                     {displayCategories.map((category) => {
                         const matchedServices = services.filter(
                             service => service.categories.includes(category._id)
-                        ).slice(0, 4);
+                        ).slice(0, 7);
 
                         return (
                             <motion.div
@@ -83,7 +83,7 @@ export default function ServicesByCategory({ services, categories }) {
                                 variants={item}
                                 whileHover={{ y: -10 }}
                                 transition={{ duration: 0.1 }}
-                                className="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 flex flex-col transform transition-all duration-300 hover:shadow-2xl"
+                                className="bg-white rounded-sm shadow-xl overflow-hidden border border-gray-100 flex flex-col transform transition-all duration-300 hover:shadow-2xl"
                             >
                                 <div className="relative h-52 overflow-hidden">
                                     <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/50 z-10"></div>
@@ -99,7 +99,7 @@ export default function ServicesByCategory({ services, categories }) {
                                     </div>
                                 </div>
 
-                                <div className="p-6 flex-1 flex flex-col">
+                                <div className="p-4 flex-1 flex flex-col">
                                     <ul className="space-y-3 mb-6 flex-1">
                                         {matchedServices.map((service) => (
                                             <li key={service._id} className="flex items-start">

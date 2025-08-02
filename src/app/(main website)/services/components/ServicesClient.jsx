@@ -11,6 +11,8 @@ export default function ServicesClient({ services, categories }) {
         ? services
         : services.filter(s => s.categories.includes(selectedCategory))
 
+    const categoryName = categories?.find(c => c._id === selectedCategory)?.name || "Services";
+
     return (
         <WebsiteLayout services={services} categories={categories}>
             <div className='mb-10'>
@@ -27,8 +29,8 @@ export default function ServicesClient({ services, categories }) {
                 </div>
 
                 {/* Main Content */}
-                <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
-                    <div className='flex flex-col lg:flex-row gap-8 mb-12'>
+                <div className='max-w-[1450px] mx-auto px-4 sm:px-6 lg:px-8'>
+                    <div className='flex flex-col lg:flex-row gap-4 mb-12'>
                         {/* Left Sidebar - Sticky on desktop */}
                         <div className='w-full lg:w-1/4 sm:flex flex-col gap-6 hidden'>
                             <div className='sticky top-24'>
@@ -46,11 +48,11 @@ export default function ServicesClient({ services, categories }) {
 
                         {/* Services Grid */}
                         <div className='w-full lg:w-3/4'>
-                            <div className='mb-6 flex justify-between items-center'>
+                            <div className='mb-2 mt-2 flex justify-between items-center'>
                                 <h2 className='text-2xl font-bold text-gray-800'>
                                     {selectedCategory === 'all'
                                         ? 'All Services'
-                                        : `Services`
+                                        : categoryName
                                     }
                                 </h2>
                                 <span className='text-gray-500'>

@@ -19,14 +19,16 @@ export default async function Home() {
   return (
     <div className="">
       <NavBar services={services} categories={categories} />
-      <HeroSection2 />
-      <ServicesByCategory services={services} categories={categories} />
-      <ConnectWithLawyer />
-      <LegalSolutions />
-      <Testimonials />
-      <WhyChooseUs />
-      <Contact />
-      <Footer />
+      <div className="pt-20">
+        <HeroSection2 />
+        <ServicesByCategory services={services} categories={categories} />
+        <ConnectWithLawyer />
+        <LegalSolutions />
+        <Testimonials />
+        <WhyChooseUs />
+        <Contact />
+        <Footer />
+      </div>
     </div>
   );
 }

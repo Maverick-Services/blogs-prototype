@@ -31,7 +31,7 @@ function HeroSection2() {
     }, [slides.length]);
 
     return (
-        <div className="relative w-full h-[92vh] overflow-hidden">
+        <div className="relative w-full h-[70vh] overflow-hidden">
             {/* Sliding Image Carousel */}
             <div className="absolute inset-0 overflow-hidden z-0">
                 <motion.div
@@ -44,7 +44,7 @@ function HeroSection2() {
                             <img
                                 src={slide.image}
                                 alt={slide.title}
-                                className="w-full h-full object-cover"
+                                className="w-full h-full object-cover object-top"
                             />
                         </div>
                     ))}
@@ -91,7 +91,7 @@ function HeroSection2() {
                     >
                         <Link href={'/talk-to-lawyer'}>
                             <button className="bg-blue-800 hover:bg-blue-900 text-white font-bold py-3 px-8 rounded-lg transition duration-300 shadow-lg">
-                                Talk to Expert
+                                Talk to Tax Expert
                             </button>
                         </Link>
                         <Link href={'/services'}>
