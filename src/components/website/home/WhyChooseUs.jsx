@@ -2,12 +2,12 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import {
-    FaBalanceScale,
-    FaClock,
-    FaShieldAlt,
-    FaChartBar,
-    FaSmile,
-    FaRocket,
+    FaFileInvoiceDollar,
+    FaRupeeSign,
+    FaBriefcase,
+    FaCalendarCheck,
+    FaTags,
+    FaUserTie,
     FaHandshake
 } from 'react-icons/fa';
 
@@ -16,39 +16,39 @@ export default function WhyChooseUs() {
 
     const features = [
         {
-            title: "Expert Legal Team",
-            description: "Skilled professionals you can trust",
-            icon: <FaBalanceScale className="text-2xl" />,
-            color: "from-blue-500 to-indigo-500"
+            title: "GST Registration & Filing",
+            description: "Seamless GST services with expert guidance",
+            icon: <FaFileInvoiceDollar className="text-2xl" />,
+            color: "from-yellow-500 to-amber-500"
         },
         {
-            title: "Fast Process",
-            description: "Quick and smooth service delivery",
-            icon: <FaClock className="text-2xl" />,
-            color: "from-amber-500 to-orange-500"
+            title: "Income Tax Filing",
+            description: "Accurate & hassle-free ITR filing",
+            icon: <FaRupeeSign className="text-2xl" />,
+            color: "from-green-500 to-emerald-500"
         },
         {
-            title: "Startup-Focused",
-            description: "Legal help tailored for startups",
-            icon: <FaRocket className="text-2xl" />,
+            title: "Business Incorporation",
+            description: "Register your company effortlessly",
+            icon: <FaBriefcase className="text-2xl" />,
+            color: "from-indigo-500 to-blue-500"
+        },
+        {
+            title: "Compliance Management",
+            description: "Never miss a deadline with us",
+            icon: <FaCalendarCheck className="text-2xl" />,
+            color: "from-red-500 to-rose-500"
+        },
+        {
+            title: "Affordable Pricing",
+            description: "Fixed packages with no hidden fees",
+            icon: <FaTags className="text-2xl" />,
             color: "from-purple-500 to-fuchsia-500"
         },
         {
-            title: "Transparent Pricing",
-            description: "No hidden costs, ever",
-            icon: <FaChartBar className="text-2xl" />,
-            color: "from-emerald-500 to-teal-500"
-        },
-        {
-            title: "Dedicated Support",
-            description: "We're here when you need us",
-            icon: <FaHandshake className="text-2xl" />,
-            color: "from-rose-500 to-pink-500"
-        },
-        {
-            title: "Complete Legal Services",
-            description: "All legal needs, one platform",
-            icon: <FaShieldAlt className="text-2xl" />,
+            title: "Expert CA/CS Support",
+            description: "Work with qualified professionals",
+            icon: <FaUserTie className="text-2xl" />,
             color: "from-cyan-500 to-sky-500"
         }
     ];
@@ -172,18 +172,19 @@ export default function WhyChooseUs() {
                         <div className="mt-2 text-gray-600">Client Satisfaction</div>
                     </div>
                     <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-lg text-center">
-                        <div className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600">500+</div>
+                        <div className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600">1000+</div>
                         <div className="mt-2 text-gray-600">Happy Clients</div>
                     </div>
                     <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-lg text-center">
-                        <div className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600">24/7</div>
-                        <div className="mt-2 text-gray-600">Support Available</div>
+                        <div className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600">300+</div>
+                        <div className="mt-2 text-gray-600">Legal Filings Completed</div>
                     </div>
                     <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-lg text-center">
-                        <div className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600">10+</div>
+                        <div className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600">25+</div>
                         <div className="mt-2 text-gray-600">Years Experience</div>
                     </div>
                 </div>
+
             </div>
         </section>
     );

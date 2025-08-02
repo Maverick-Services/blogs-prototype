@@ -37,11 +37,12 @@ export default async function Testimonials() {
             <div className='w-11/12 md:max-w-7xl py-16 lg:px-16 mx-auto flex flex-col gap-12'>
                 {/* Heading */}
                 <div className="max-w-3xl mx-auto px-4 text-center">
-                    <h2 className="text-white text-2xl md:text-3xl">Trusted by</h2>
+                    <h2 className="text-white text-2xl md:text-3xl">Simplifying Tax & GST Compliance</h2>
                     <h3 className="text-white text-3xl md:text-5xl font-bold">
-                        Professionals Across India
+                        Trusted by Many Businesses
                     </h3>
                 </div>
+
 
                 {/* Cards */}
                 <div className="w-full mx-auto py-10 flex flex-col md:flex-row gap-y-16 sm:gap-8">

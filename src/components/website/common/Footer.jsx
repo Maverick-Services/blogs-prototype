@@ -151,8 +151,7 @@ export default function Footer() {
                     <div>
                         <h3 className="text-xl font-bold mb-3 pb-2 border-b-2 border-[#0055aa] inline-block">Best Services</h3>
                         <p className="text-gray-300 mb-3">
-                            Providing comprehensive legal solutions to help your business thrive in today's competitive environment.
-                            Subscribe to our newsletter for legal updates and business insights.
+                            Offering expert tax and GST solutions to help your business stay compliant and grow with confidence. Subscribe to our newsletter for the latest tax tips, compliance updates, and financial insights.
                         </p>
 
                         {/* <form className="space-y-4">

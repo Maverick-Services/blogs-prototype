@@ -8,7 +8,6 @@ import rehypeRaw from 'rehype-raw';
 import Link from 'next/link';
 import remarkGfm from 'remark-gfm'; // Import the plugin
 
-
 const serviceBigDescription = [
     {
         name: 'Design',
@@ -102,11 +101,11 @@ export default function ScrollableServiceSections({ serviceBigDescription }) {
     return (
         <div className="max-w-7xl mx-auto py-16 ">
             {/* Prevent sidebar stretch by aligning items to start */}
-            <div className="flex flex-col lg:flex-row gap-8">
+            <div className="flex flex-col lg:flex-row gap-4">
                 {/* Sidebar */}
-                <div className="max-[640px]:hidden lg:w-1/4 lg:sticky lg:top-6 lg:h-fit lg:max-h-screen">
-                    <div className="rounded-2xl bg-gradient-to-b from-white to-[#f0f7ff] shadow-xl border border-[#00336620] p-6">
-                        <div className="mb-6">
+                <div className="max-[640px]:hidden lg:w-1/4 lg:sticky lg:top-26 lg:h-fit lg:max-h-screen">
+                    <div className="rounded-sm bg-gradient-to-b from-white to-[#f0f7ff] shadow-xl border border-[#00336620] p-6">
+                        <div className="mb-4">
                             <h3 className="text-xl font-bold text-[#003366] mb-2">Services</h3>
                             <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
                                 <motion.div
@@ -119,12 +118,12 @@ export default function ScrollableServiceSections({ serviceBigDescription }) {
                         </div>
 
                         <LayoutGroup>
-                            <ul className="space-y-3 relative">
+                            <ul className="space-y-2 relative">
                                 {serviceBigDescription.map(({ name }, index) => (
                                     <li key={index}>
                                         <button
                                             onClick={() => scrollToSection(index)}
-                                            className={`w-full text-left py-4 px-4 rounded-xl transition-all duration-300 flex items-start ${activeIndex === index
+                                            className={`w-full text-left py-2 px-2 rounded-xl transition-all duration-300 flex items-start ${activeIndex === index
                                                 ? 'bg-[#003366] text-white shadow-lg'
                                                 : 'bg-white text-[#003366] hover:bg-[#e6f0ff] border border-[#00336620]'
                                                 }`}
@@ -145,27 +144,17 @@ export default function ScrollableServiceSections({ serviceBigDescription }) {
                                 ))}
                             </ul>
                         </LayoutGroup>
-
-                        <div className="mt-8 bg-gradient-to-r from-[#003366] to-[#0055aa] rounded-xl p-4 text-white">
-                            <div className="font-bold text-sm mb-1">Need Assistance?</div>
-                            <div className="text-xs opacity-90 mb-2">Our experts are ready to help</div>
-                            <Link href={'/talk-to-lawyer'}>
-                                <button className="bg-white text-[#003366] text-sm font-medium py-2 px-4 rounded-lg hover:bg-opacity-90 transition-all">
-                                    Contact Support
-                                </button>
-                            </Link>
-                        </div>
                     </div>
                 </div>
 
                 {/* Content Section */}
-                <div className="w-full lg:w-3/4 space-y-12">
+                <div className="w-full lg:w-3/4 space-y-4">
                     {serviceBigDescription.map(({ title, content }, index) => (
                         <section
                             key={index}
                             data-index={index}
                             ref={(el) => (sectionRefs.current[index] = el)}
-                            className={`scroll-mt-24 p-8 rounded-2xl transition-all duration-300 ${activeIndex === index
+                            className={`scroll-mt-24 p-8 rounded-sm transition-all duration-300 ${activeIndex === index
                                 ? 'bg-gradient-to-br from-white to-[#f0f7ff] shadow-xl border border-[#00336620]'
                                 : 'bg-white'
                                 }`}

@@ -20,7 +20,7 @@ export const LegalSolutions = () => {
             icon: '/icons/icon2.png',
             icon_bg: "#e6f0ff",
             heading: "Digital Signature Certificate (DSC)",
-            desc: "Get your DSC quickly for secure and verified online transactions."
+            desc: "Secure your digital identity for filing GST, ROC, and other government compliances."
         },
         {
             icon: '/icons/icon3.png',
@@ -31,14 +31,14 @@ export const LegalSolutions = () => {
         {
             icon: '/icons/icon4.png',
             icon_bg: "#e6f0ff",
-            heading: "Udyam Registration",
-            desc: "Register your business as a micro, small, or medium enterprise effortlessly."
+            heading: "GST Return Filing",
+            desc: "Avoid penalties with timely and accurate GST return filing by experts."
         },
         {
             icon: '/icons/icon5.png',
             icon_bg: "#e6f0ff",
-            heading: "MSME Registration",
-            desc: "Unlock benefits and recognition with hassle-free MSME registration."
+            heading: "Income Tax Filing",
+            desc: "Get expert help to file your personal or business income tax returns on time."
         },
         {
             icon: '/icons/icon6.png',
@@ -47,6 +47,7 @@ export const LegalSolutions = () => {
             desc: "Ensure smooth tax operations with fast and accurate GST registration."
         }
     ];
+
 
     return (
         <div className="relative bg-gradient-to-br from-gray-50 to-white py-16 lg:px-4 text-center w-full overflow-hidden">

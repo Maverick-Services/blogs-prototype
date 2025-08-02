@@ -13,7 +13,7 @@ function HeroSection2() {
         },
         {
             title: "Corporate Tax Specialists",
-            subtitle: "Optimizing Business Tax Structures Since 2005",
+            subtitle: "Optimizing Business Tax Structures Since 2000",
             image: "/hero2.jpg"
         },
         {

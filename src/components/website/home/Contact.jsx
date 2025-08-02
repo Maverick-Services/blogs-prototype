@@ -4,7 +4,7 @@ import { FaMapMarkerAlt, FaPhone, FaEnvelope, FaClock, FaBuilding, FaWhatsapp } 
 
 export default function Contact() {
     return (
-        <section className="relative overflow-hidden py-20 px-4 bg-gradient-to-br from-[#f0f8ff] to-[#e6f7ff]">
+        <section className="relative overflow-hidden pb-20 pt-10 px-4 bg-gradient-to-br from-[#f0f8ff] to-[#e6f7ff]">
             {/* Decorative elements */}
             <div className="absolute top-0 left-0 w-full h-full">
                 <div className="absolute top-20 -right-20 w-80 h-80 rounded-full bg-blue-100 opacity-40"></div>
@@ -24,10 +24,10 @@ export default function Contact() {
                         <span className="text-sm font-medium text-blue-600">Get in Touch</span>
                     </div>
                     <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-                        Connect With Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00564F] to-teal-600">Legal Experts</span>
+                        Connect With Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00564F] to-teal-600">Tax Experts</span>
                     </h2>
                     <p className="max-w-2xl mx-auto text-lg text-gray-600">
-                        Have questions or need assistance? Our team is ready to provide personalized legal guidance.
+                        Have questions or need assistance? Our team is ready to provide personalized GST & Taxation guidance.
                     </p>
                 </div>
 
@@ -128,7 +128,7 @@ export default function Contact() {
                             <ContactForm />
 
                             {/* Additional info */}
-                            <div className="mt-10 pt-8 border-t border-gray-200">
+                            {/* <div className="mt-10 pt-8 border-t border-gray-200">
                                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                                     <div className="bg-blue-50 rounded-xl p-4 text-center">
                                         <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-blue-100 text-blue-600 mb-3">
@@ -154,7 +154,7 @@ export default function Contact() {
                                         <p className="text-gray-600">contact@legalexperts.com</p>
                                     </div>
                                 </div>
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                 </div>
