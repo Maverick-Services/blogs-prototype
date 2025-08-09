@@ -55,7 +55,7 @@ const serviceSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Tag'
     }],
-    status: { // active or inactive
+    status: {
         type: Boolean,
         default: true
     },

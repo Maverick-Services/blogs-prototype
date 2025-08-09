@@ -6,7 +6,6 @@ import { motion } from 'framer-motion';
 export default function ServicesByCategory({ services, categories }) {
     const displayCategories = categories.slice(0, 9);
 
-
     // Animation variants
     const container = {
         hidden: { opacity: 0 },

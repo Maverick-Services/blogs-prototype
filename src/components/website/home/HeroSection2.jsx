@@ -31,7 +31,7 @@ function HeroSection2() {
     }, [slides.length]);
 
     return (
-        <div className="relative w-full h-[70vh] overflow-hidden">
+        <div className="relative w-full h-[55vh] overflow-hidden">
             {/* Sliding Image Carousel */}
             <div className="absolute inset-0 overflow-hidden z-0">
                 <motion.div

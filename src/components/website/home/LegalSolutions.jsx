@@ -73,7 +73,7 @@ export const LegalSolutions = () => {
                         viewport={{ once: true }}
                         transition={{ delay: 0.2, duration: 0.5 }}
                     >
-                        legal solution platform in your hand
+                        Taxation and Legal solution platform in your hand
                         <motion.div
                             className=" bottom-0 left-0 w-full h-1 bg-[#ff9900]"
                             initial={{ width: 0 }}

@@ -86,7 +86,7 @@ export const ConnectWithLawyer = () => {
                         <h2 className="text-4xl md:text-5xl font-bold text-gray-800 leading-tight mb-6">
                             Connect with our <br />
                             <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">
-                                Taxation Experts
+                                Advocate/ CA/ Taxation Experts
                             </span>
                         </h2>
 
