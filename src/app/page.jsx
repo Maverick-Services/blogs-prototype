@@ -1,4 +1,5 @@
 // app/page.jsx
+import CallButton from "@/components/website/CallButton";
 import Footer from "@/components/website/common/Footer";
 import NavBar from "@/components/website/common/Navbar";
 import { ConnectWithLawyer } from "@/components/website/home/ConnectWithLawyer";
@@ -28,6 +29,7 @@ export default async function Home() {
         <WhyChooseUs />
         <Contact />
         <Footer />
+        <CallButton />
       </div>
     </div>
   );

@@ -2,6 +2,7 @@
 import React from 'react'
 import Footer from '@/components/website/common/Footer'
 import NavBar from '@/components/website/common/Navbar'
+import CallButton from './CallButton'
 
 export default function WebsiteLayout({ services, categories, children }) {
 
@@ -15,6 +16,7 @@ export default function WebsiteLayout({ services, categories, children }) {
                 {children}
             </div>
 
+            <CallButton />
             <Footer />
         </div>
     )
