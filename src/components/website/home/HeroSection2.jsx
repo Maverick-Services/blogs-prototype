@@ -104,7 +104,7 @@ function HeroSection2() {
             </div>
 
             {/* Carousel Indicators */}
-            <div className="absolute bottom-8 left-0 right-0 flex justify-center space-x-2 z-20">
+            <div className="absolute bottom-5 sm:bottom-8 left-0 right-0 flex justify-center space-x-2 z-20">
                 {slides.map((_, index) => (
                     <button
                         key={index}

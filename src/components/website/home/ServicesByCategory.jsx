@@ -144,7 +144,7 @@ export default function ServicesByCategory({ services, categories }) {
                 >
                     <Link
                         href="/services"
-                        className="inline-block px-8 py-4 text-lg font-bold bg-white text-indigo-700 rounded-full border-2 border-indigo-200 shadow-md hover:bg-indigo-50 hover:shadow-lg transition-all duration-300 hover:scale-[1.02]"
+                        className="inline-block z-50 px-8 py-4 text-lg font-bold bg-white text-indigo-700 rounded-full border-2 border-indigo-200 shadow-md hover:bg-indigo-50 hover:shadow-lg transition-all duration-300 hover:scale-[1.02]"
                     >
                         View All Services
                         <svg className="w-5 h-5 inline-block ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -155,7 +155,7 @@ export default function ServicesByCategory({ services, categories }) {
             </div>
 
             {/* Decorative bottom element */}
-            <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#EEF4FF] to-transparent z-10"></div>
+            <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#EEF4FF] to-transparent z-1"></div>
         </section>
     );
 }
