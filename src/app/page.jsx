@@ -8,6 +8,7 @@ import HeroSection2 from "@/components/website/home/HeroSection2";
 import { LegalSolutions } from "@/components/website/home/LegalSolutions";
 import ServicesByCategory from "@/components/website/home/ServicesByCategory";
 import Testimonials from "@/components/website/home/Testimonials";
+import VideoSection from "@/components/website/home/VideoSection";
 import WhyChooseUs from "@/components/website/home/WhyChooseUs";
 import { getCategories, getServices } from "@/lib/main/getHomePageData";
 
@@ -25,6 +26,7 @@ export default async function Home() {
         <ServicesByCategory services={services} categories={categories} />
         <ConnectWithLawyer />
         <LegalSolutions />
+        <VideoSection/>
         <Testimonials />
         <WhyChooseUs />
         <Contact />

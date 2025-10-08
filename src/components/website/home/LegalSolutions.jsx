@@ -53,7 +53,7 @@ export const LegalSolutions = () => {
         <div className="relative bg-gradient-to-br from-gray-50 to-white py-16 lg:px-4 text-center w-full overflow-hidden">
             {/* Decorative elements */}
             <div className="absolute top-0 left-0 w-full h-48 bg-gradient-to-r from-indigo-50 to-indigo-50 transform -skew-y-3 -translate-y-20"></div>
-            <div className="absolute bottom-0 right-0 w-64 h-64 rounded-full bg-[#003366]/5 translate-x-1/2 translate-y-1/2"></div>
+            <div className="absolute bottom-40 right-0 w-64 h-64 rounded-full bg-[#003366]/5 translate-x-1/2 translate-y-1/2"></div>
 
             <div className="max-w-7xl mx-auto relative z-10">
                 <motion.div
