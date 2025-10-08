@@ -69,7 +69,7 @@ export default function Footer() {
                                 </div>
                                 <div>
                                     <h4 className="font-semibold">Our Office</h4>
-                                    <p className="text-gray-300">123 Legal Street, New Delhi, India</p>
+                                    <p className="text-gray-300">1334/1 1st Floor, Haibowal Khurd, Ludhiana, Punjab, 141001</p>
                                 </div>
                             </div>
 
@@ -82,7 +82,7 @@ export default function Footer() {
                                 </div>
                                 <div>
                                     <h4 className="font-semibold">Email Us</h4>
-                                    <p className="text-gray-300">contact@yourlegalfirm.com</p>
+                                    <p className="text-gray-300">baggarajiv@gmail.com</p>
                                 </div>
                             </div>
 
@@ -94,7 +94,7 @@ export default function Footer() {
                                 </div>
                                 <div>
                                     <h4 className="font-semibold">Call Us</h4>
-                                    <p className="text-gray-300">+91 98765 43210</p>
+                                    <p className="text-gray-300">+91 7696 000 201</p>
                                 </div>
                             </div>
                         </div>
@@ -170,7 +170,7 @@ export default function Footer() {
                             </button>
                         </form> */}
 
-                        <div className="mt-8">
+                        {/* <div className="mt-8">
                             <h4 className="font-semibold mb-4">Follow Us</h4>
                             <div className="flex gap-3">
                                 {socialLinks.map((social, index) => (
@@ -186,7 +186,7 @@ export default function Footer() {
                                     </a>
                                 ))}
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
 

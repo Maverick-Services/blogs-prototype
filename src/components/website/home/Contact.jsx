@@ -50,11 +50,11 @@ export default function Contact() {
                                     </div>
                                     <div className="ml-4">
                                         <h4 className="font-bold text-gray-800 mb-1">Address</h4>
-                                        <p className="text-gray-600">123 Legal Street, New Delhi, India – 110001</p>
+                                        <p className="text-gray-600">1334/1 1st Floor, Haibowal Khurd, Ludhiana, Punjab, 141001</p>
                                     </div>
                                 </div>
 
-                                <div className="flex items-start">
+                                {/* <div className="flex items-start">
                                     <div className="flex-shrink-0 mt-1 w-12 h-12 rounded-full bg-teal-50 flex items-center justify-center">
                                         <FaBuilding className="text-[#00564F] text-xl" />
                                     </div>
@@ -62,7 +62,7 @@ export default function Contact() {
                                         <h4 className="font-bold text-gray-800 mb-1">Office</h4>
                                         <p className="text-gray-600">Legal Tower, 5th Floor, Suite 502</p>
                                     </div>
-                                </div>
+                                </div> */}
 
                                 <div className="flex items-start">
                                     <div className="flex-shrink-0 mt-1 w-12 h-12 rounded-full bg-cyan-50 flex items-center justify-center">
@@ -70,7 +70,7 @@ export default function Contact() {
                                     </div>
                                     <div className="ml-4">
                                         <h4 className="font-bold text-gray-800 mb-1">Phone</h4>
-                                        <p className="text-gray-600">+91 98765 43210</p>
+                                        <p className="text-gray-600">+91 7696 000 201</p>
                                         <div className="mt-2 flex items-center text-sm text-green-600">
                                             <FaWhatsapp className="mr-2" />
                                             <span>Available on WhatsApp</span>
@@ -84,8 +84,7 @@ export default function Contact() {
                                     </div>
                                     <div className="ml-4">
                                         <h4 className="font-bold text-gray-800 mb-1">Email</h4>
-                                        <p className="text-gray-600">contact@legalexperts.com</p>
-                                        <p className="text-gray-600">support@legalexperts.com</p>
+                                        <p className="text-gray-600">baggarajiv@gmail.com</p>
                                     </div>
                                 </div>
 
