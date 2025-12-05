@@ -31,7 +31,7 @@ function HeroSection2() {
     }, [slides.length]);
 
     return (
-        <div className="relative w-full h-[55vh] overflow-hidden">
+        <div className="relative w-full max-[300px]:h-[70vh] h-[55vh] overflow-hidden">
             {/* Sliding Image Carousel */}
             <div className="absolute inset-0 overflow-hidden z-0">
                 <motion.div
@@ -64,7 +64,7 @@ function HeroSection2() {
                             animate={{ opacity: 1, y: 0 }}
                             exit={{ opacity: 0, y: 20 }}
                             transition={{ duration: 0.5, delay: 0.2 }}
-                            className="text-4xl md:text-6xl font-bold text-yellow-200 mb-4 font-poppins"
+                            className="max-[300px]:text-3xl text-4xl md:text-6xl font-bold text-yellow-200 mb-4 font-poppins"
                         >
                             {slides[currentSlide].title}
                         </motion.h1>
@@ -77,7 +77,7 @@ function HeroSection2() {
                             animate={{ opacity: 1, y: 0 }}
                             exit={{ opacity: 0, y: 20 }}
                             transition={{ duration: 0.5, delay: 0.4 }}
-                            className="text-xl md:text-2xl text-white mb-8 max-w-2xl mx-auto"
+                            className="max-[300px]:text-base text-xl md:text-2xl text-white mb-8 max-w-2xl mx-auto"
                         >
                             {slides[currentSlide].subtitle}
                         </motion.p>
@@ -90,12 +90,12 @@ function HeroSection2() {
                         className="flex flex-col sm:flex-row gap-4 justify-center"
                     >
                         <Link href={'/talk-to-lawyer'}>
-                            <button className="bg-blue-800 hover:bg-blue-900 text-white font-bold py-3 px-8 rounded-lg transition duration-300 shadow-lg">
+                            <button className="bg-blue-800 hover:bg-blue-900 text-white font-bold max-[300px]:py-2 max-[300px]:px-5 py-3 px-8 rounded-lg transition duration-300 shadow-lg">
                                 Talk to Tax Expert
                             </button>
                         </Link>
                         <Link href={'/services'}>
-                            <button className="bg-white/10 backdrop-blur-sm border-2 border-white text-white hover:bg-white hover:text-blue-900 font-bold py-3 px-8 rounded-lg transition duration-300 shadow-lg">
+                            <button className="bg-white/10 backdrop-blur-sm border-2 border-white text-white hover:bg-white hover:text-blue-900 font-bold py-3 px-8 rounded-lg transition duration-300 shadow-lg max-[300px]:py-2 max-[300px]:px-5">
                                 Our Services
                             </button>
                         </Link>

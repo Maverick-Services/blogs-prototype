@@ -45,7 +45,7 @@ function VideoSection() {
                         <div className="relative bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden">
                             <div className="relative pb-[56.25%] rounded-2xl overflow-hidden">
                                 <iframe
-                                    src="https://www.youtube.com/embed/Thwl-xK4S3k"
+                                    src="https://www.youtube.com/embed/WL8A6g1r0A8?si=gZuJengIO0-pdVeY"
                                     title="YouTube video player"
                                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                     allowFullScreen
