@@ -34,7 +34,7 @@ export default async function Testimonials() {
 
     return (
         <section className="bg-secondary w-full" id='testimonials'>
-            <div className='w-11/12 md:max-w-7xl py-16 lg:px-16 mx-auto flex flex-col gap-12'>
+            <div className='w-11/12 md:max-w-7xl py-16 lg:px-16 mx-auto flex flex-col gap-8'>
                 {/* Heading */}
                 <div className="max-w-3xl mx-auto px-4 text-center">
                     <h2 className="text-white text-2xl md:text-3xl">Simplifying Tax & GST Compliance</h2>
@@ -45,11 +45,11 @@ export default async function Testimonials() {
 
 
                 {/* Cards */}
-                <div className="w-full mx-auto py-10 flex flex-col md:flex-row gap-y-16 sm:gap-8">
+                <div className="w-full mx-auto py-5 flex flex-col md:flex-row gap-y-16 sm:gap-7">
                     {testimonials.map((t, idx) => (
-                        <div key={idx} className="relative bg-white rounded-2xl p-4 pt-16 flex-1 shadow-lg">
+                        <div key={idx} className="relative bg-white rounded-2xl p-4 pt-10 flex-1 shadow-lg">
                             {/* Avatar */}
-                            <div className="absolute -top-12 left-1/2 transform -translate-x-1/2">
+                            {/* <div className="absolute -top-12 left-1/2 transform -translate-x-1/2">
                                 <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-white shadow-sm shadow-black/50">
                                     <Image
                                         src={t.imageURL}
@@ -59,13 +59,13 @@ export default async function Testimonials() {
                                         className='h-full w-full object-cover'
                                     />
                                 </div>
-                            </div>
+                            </div> */}
 
                             {/* Name & Role */}
                             <h4 className="text-center text-xl font-semibold text-gray-800">
                                 {t.userName}
                             </h4>
-                            <p className="text-sm text-gray-500 text-center">{t?.designation && t?.designation + ','} {t.company}</p>
+                            <p className="text-sm text-gray-500 text-center">{t?.designation && t?.designation} {t.company}</p>
 
 
                             {/* Stars */}
