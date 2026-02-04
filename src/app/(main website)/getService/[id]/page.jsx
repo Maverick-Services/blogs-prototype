@@ -5,6 +5,10 @@ import { getCategories, getServices } from '@/lib/main/getHomePageData';
 import { getSubServiceById } from '@/lib/main/getSubServiceById'
 import Image from 'next/image';
 import SubServiceClient from './components/SubServiceClient';
+import { notFound } from 'next/navigation';
+
+// Force dynamic rendering - skip static generation during build
+export const dynamic = 'force-dynamic';
 
 export default async function page({ params }) {
     const { id } = await params;
@@ -15,7 +19,11 @@ export default async function page({ params }) {
     const categories = categoriesData?.data || [];
 
     const subService = await getSubServiceById(id)
-    console.log(subService)
+    
+    // If subService is not found, show 404 page
+    if (!subService) {
+        notFound();
+    }
 
     return (
         <WebsiteLayout services={services} categories={categories}>

@@ -3,6 +3,9 @@ import WebsiteLayout from "@/components/website/WebsiteLayout";
 import { getCategories, getServices } from "@/lib/main/getHomePageData";
 import { getOrderById } from "@/lib/main/getOrders";
 
+// Force dynamic rendering - skip static generation during build
+export const dynamic = 'force-dynamic';
+
 export default async function page({ params }) {
     const { id } = await params;
     
