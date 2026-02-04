@@ -2,6 +2,10 @@ import Image from 'next/image'
 import React from 'react'
 import { LoginForm } from './login-form'
 
+export const metadata = {
+  title: "CA Vakil",
+};
+
 function page() {
     return (
         <div className="grid min-h-svh md:grid-cols-2">
@@ -17,7 +21,7 @@ function page() {
                     </a>
                 </div>
                 <div className="flex flex-1 items-center justify-center">
-                    <div className="w-full max-w-xs">
+                    <div className="w-full max-w-md">
                         <LoginForm />
                     </div>
                 </div>

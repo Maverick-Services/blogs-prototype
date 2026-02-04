@@ -73,7 +73,8 @@ import axios from "axios";
 export const getServices = async () => {
     try {
         const res = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/web/services`, {
-            next: { revalidate: 60 },
+            // next: { revalidate: 60 },
+            cache: 'no-store'
         });
 
         if (!res.ok) {

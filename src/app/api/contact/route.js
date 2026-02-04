@@ -21,7 +21,7 @@ export async function POST(request) {
         <html>
         <head>
             <meta charset="UTF-8">
-            <title>New Contact Form Submission - CA Vakeel</title>
+            <title>New Contact Form Submission - CA Vakil</title>
         </head>
         <body style="margin:0; padding:0; font-family: Arial, sans-serif; background-color: #f5f7fa;">
             <table width="100%" cellpadding="0" cellspacing="0" bgcolor="#f5f7fa">
@@ -32,7 +32,7 @@ export async function POST(request) {
                             <!-- Header -->
                             <tr>
                                 <td bgcolor="#1B3588" style="padding: 30px; text-align: center;">
-                                    <h1 style="margin:0; color: #ffffff; font-size: 24px;">CA Vakeel</h1>
+                                    <h1 style="margin:0; color: #ffffff; font-size: 24px;">CA Vakil</h1>
                                     <p style="color: #dbeafe; margin: 8px 0 0; font-size: 16px;">Contact Form Submission</p>
                                 </td>
                             </tr>
@@ -62,8 +62,8 @@ export async function POST(request) {
                                     <table width="100%" style="margin-top: 40px;">
                                         <tr>
                                             <td style="padding-top: 20px; border-top: 1px solid #e2e8f0; text-align: center; color: #64748b; font-size: 14px;">
-                                                <p>This message was sent from the CA Vakeel contact form</p>
-                                                <p>© ${new Date().getFullYear()} CA Vakeel. All rights reserved</p>
+                                                <p>This message was sent from the CA Vakil contact form</p>
+                                                <p>© ${new Date().getFullYear()} CA Vakil. All rights reserved</p>
                                             </td>
                                         </tr>
                                     </table>
@@ -78,18 +78,20 @@ export async function POST(request) {
         `
 
         const { data, error } = await resend.emails.send({
-            from: 'CA Vakeel Contact <cavakeel@resend.dev>',  // Update with your domain
-            to: 'maverick.aiproject@gmail.com',
+            from: 'support@cavakil.com',  // Update with your domain
+            to: process.env.CONTACT_EMAIL || 'maverick.aiproject@gmail.com',
             subject: `New Contact Submission from ${body.name}`,
             html: emailHtml,
         })
 
         if (error) {
+            console.error('Resend email error:', error)
             return NextResponse.json({ error }, { status: 500 })
         }
 
-        return NextResponse.json(data)
+        return NextResponse.json({ success: true, data })
     } catch (error) {
+        console.error('Error sending contact email:', error)
         return NextResponse.json({ error }, { status: 500 })
     }
 }

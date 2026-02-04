@@ -46,6 +46,11 @@ export async function PUT(req, { params }) {
         const data = await req.json();
         await connectDB();
 
+        // Ensure displayOrder is a number if provided
+        if (data.displayOrder !== undefined) {
+            data.displayOrder = parseInt(data.displayOrder, 10);
+        }
+
         // Check for duplicates
         const duplicate = await checkForDuplicate({
             name: data.name,

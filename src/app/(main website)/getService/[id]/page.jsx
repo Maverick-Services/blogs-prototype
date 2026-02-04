@@ -20,7 +20,7 @@ export default async function page({ params }) {
             <div className="max-w-4xl mx-auto px-4 py-8">
                 <div className="flex items-center gap-6 mb-8">
                     <Image
-                        src={subService.serviceId.imageURL}
+                        // src={subService.serviceId.imageURL}
                         height={200}
                         width={200}
                         alt='image'
@@ -28,12 +28,12 @@ export default async function page({ params }) {
                     />
                     <div>
                         <h1 className="text-sm text-gray-500">Service</h1>
-                        <h2 className="text-xl font-bold">{subService.serviceId.name}</h2>
+                        {/* <h2 className="text-xl font-bold">{subService.serviceId.name}</h2> */}
                     </div>
                 </div>
 
                 <div className="bg-white rounded-xl shadow-md p-6 mb-8">
-                    <h1 className="text-2xl font-bold text-gray-800 mb-2">{subService.name}</h1>
+                    {/* <h1 className="text-2xl font-bold text-gray-800 mb-2">{subService.name}</h1> */}
 
                     <div className="flex items-baseline gap-3 my-4">
                         {subService.discountedPrice ? (

@@ -3,6 +3,10 @@ import { getCategories, getServices } from '@/lib/main/getHomePageData';
 import TTLClient from './components/TTLClient';
 import { getCallPlanData } from '@/lib/main/getStaticData';
 
+export const metadata = {
+  title: "CA Vakil",
+};
+
 export default async function Page() {
     const servicesData = await getServices();
     const services = servicesData?.data || [];

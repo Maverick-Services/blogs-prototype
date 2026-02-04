@@ -6,6 +6,10 @@ import ReactMarkdown from 'react-markdown';
 import styles from './components/post.module.css';
 import rehypeRaw from 'rehype-raw';
 
+export const metadata = {
+  title: "CA Vakil",
+};
+
 export default async function page() {
 
     const servicesData = await getServices();
