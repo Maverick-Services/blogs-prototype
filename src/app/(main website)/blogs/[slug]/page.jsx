@@ -11,6 +11,10 @@ import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbP
 import { getRelatedServices } from '@/lib/main/relatedServices';
 import ServiceCard from '../components/ServiceCard';
 import LatestBlogs from '@/components/website/LatestBlogs';
+import { notFound } from 'next/navigation';
+
+// Force dynamic rendering - skip static generation during build
+export const dynamic = 'force-dynamic';
 
 
 // export async function generateMetadata({ params }) {
@@ -49,7 +53,12 @@ export default async function page({ params }) {
 
     const { slug } = await params;
     const blogData = await getBlogBySlug(slug)
-    const blog = blogData.data;
+    const blog = blogData?.data;
+
+    // If blog is not found, show 404 page
+    if (!blog) {
+        notFound();
+    }
 
     // console.log(blog)
     // const relatedServices = getRelatedServices(
