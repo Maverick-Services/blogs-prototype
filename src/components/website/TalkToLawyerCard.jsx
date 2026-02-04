@@ -13,12 +13,12 @@ export default function TalkToLawyerCard() {
             </div>
 
             <p className="text-gray-700 mb-6">
-                Get any type of legal advice from expert lawyers
+                Get any type of legal and tax advice from expert lawyers
             </p>
 
             <Link href={'/talk-to-lawyer'}>
                 <button className="bg-red-600 text-white px-6 py-3 rounded-full font-semibold hover:bg-red-700 transition">
-                    Talk to lawyer
+                    Talk to CA/Advocate
                 </button>
             </Link>
         </div>

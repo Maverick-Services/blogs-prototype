@@ -19,6 +19,9 @@ import {
     FaFileContract,
     FaInfoCircle,
     FaAddressCard,
+    FaStar,
+    FaTrophy,
+    FaNewspaper,
 } from 'react-icons/fa';
 import { Resources } from '../permissions';
 
@@ -100,6 +103,24 @@ export const ADMIN_SIDEBAR_LINKS = [
         label: 'Testimonials',
         href: '/admin/testimonials',
         icon: <FaQuoteRight />,
+    },
+    {
+        key: Resources.CLIENT_REVIEWS,
+        label: 'Client Reviews',
+        href: '/admin/client-reviews',
+        icon: <FaStar />,
+    },
+    {
+        key: Resources.SUCCESS_STORIES,
+        label: 'Success Stories',
+        href: '/admin/success-stories',
+        icon: <FaTrophy />,
+    },
+    {
+        key: Resources.MEDIA_FEATURES,
+        label: 'Media Features',
+        href: '/admin/media-features',
+        icon: <FaNewspaper />,
     },
     // new policy & info pages
     {

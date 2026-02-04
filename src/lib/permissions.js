@@ -19,6 +19,9 @@ export const Resources = {
     PRIVACY_POLICY: 'privacy-policy',
     REFUND_POLICY: 'refund-policy',
     TERMS_AND_CONDITIONS: 'terms-and-conditions',
+    CLIENT_REVIEWS: 'client-reviews',
+    SUCCESS_STORIES: 'success-stories',
+    MEDIA_FEATURES: 'media-features',
 };
 
 // ABOUT_US: 'about-us',
