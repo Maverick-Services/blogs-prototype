@@ -4,12 +4,14 @@ import { getCategories, getServices } from "@/lib/main/getHomePageData";
 import { getOrderById } from "@/lib/main/getOrders";
 
 export default async function page({ params }) {
+    const { id } = await params;
+    
     const servicesData = await getServices();
     const services = servicesData?.data || [];
     const categoriesData = await getCategories();
     const categories = categoriesData?.data || [];
 
-    const order = await getOrderById(params.id)
+    const order = await getOrderById(id)
     // console.log(order)
 
     return (

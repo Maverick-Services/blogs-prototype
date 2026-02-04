@@ -47,8 +47,8 @@ export default async function page({ params }) {
     const categoriesData = await getCategories();
     const categories = categoriesData?.data || [];
 
-    const slug = await params
-    const blogData = await getBlogBySlug(slug.slug)
+    const { slug } = await params;
+    const blogData = await getBlogBySlug(slug)
     const blog = blogData.data;
 
     // console.log(blog)

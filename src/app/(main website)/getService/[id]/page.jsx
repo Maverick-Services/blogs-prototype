@@ -7,12 +7,14 @@ import Image from 'next/image';
 import SubServiceClient from './components/SubServiceClient';
 
 export default async function page({ params }) {
+    const { id } = await params;
+    
     const servicesData = await getServices();
     const services = servicesData?.data || [];
     const categoriesData = await getCategories();
     const categories = categoriesData?.data || [];
 
-    const subService = await getSubServiceById(params.id)
+    const subService = await getSubServiceById(id)
     console.log(subService)
 
     return (
