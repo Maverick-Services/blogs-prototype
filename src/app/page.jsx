@@ -22,6 +22,9 @@ export const metadata = {
   title: "CA Vakil",
 };
 
+// Force dynamic rendering - skip static generation during build
+export const dynamic = 'force-dynamic';
+
 export default async function Home() {
   const servicesData = await getServices();
   const services = servicesData?.data || [];
