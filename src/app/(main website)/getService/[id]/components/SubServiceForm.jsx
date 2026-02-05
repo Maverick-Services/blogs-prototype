@@ -15,7 +15,7 @@ import { Input } from '@/components/ui/input'
 import { useSession } from 'next-auth/react'
 import axios from 'axios'
 import AuthDialog from '@/components/auth/LoginDialog'
-import { Loader2, User, FileText, Upload, Shield, CreditCard, CheckCircle2 } from 'lucide-react'
+import { Loader2, User, FileText, Upload, Shield, CreditCard, CheckCircle2, Gift } from 'lucide-react'
 import { Toaster } from '@/components/ui/sonner'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
@@ -28,6 +28,9 @@ export default function SubServiceForm({
     actualPrice,
     discountedPrice,
     subService,
+    isDocumentsRequired = true,
+    isDetailsRequired = true,
+    benefits = [],
 }) {
     const router = useRouter()
     // turn on real-time validation
@@ -203,6 +206,7 @@ export default function SubServiceForm({
                     noValidate
                 >
                     {/* Required Information Section */}
+                    {isDetailsRequired && requiredDetails?.length > 0 && (
                     <Card className="border-none shadow-xl overflow-hidden bg-white/50 backdrop-blur-sm">
                         <div className="bg-gradient-to-r from-[#003366] to-[#0055aa] p-5 text-white flex items-center gap-3">
                             <div className="bg-white/20 p-2 rounded-lg backdrop-blur-md">
@@ -241,8 +245,10 @@ export default function SubServiceForm({
                             </div>
                         </CardContent>
                     </Card>
+                    )}
 
                     {/* Required Documents Section */}
+                    {isDocumentsRequired && requiredDocuments?.length > 0 && (
                     <Card className="border-none shadow-xl overflow-hidden bg-white/50 backdrop-blur-sm">
                         <div className="bg-gradient-to-r from-[#003366] to-[#0055aa] p-5 text-white flex items-center gap-3">
                             <div className="bg-white/20 p-2 rounded-lg backdrop-blur-md">
@@ -317,6 +323,32 @@ export default function SubServiceForm({
                             </div>
                         </CardContent>
                     </Card>
+                    )}
+
+                    {/* Service Benefits Section */}
+                    {benefits?.length > 0 && (
+                    <Card className="border-none shadow-xl overflow-hidden bg-white/50 backdrop-blur-sm">
+                        <div className="bg-gradient-to-r from-emerald-600 to-teal-500 p-5 text-white flex items-center gap-3">
+                            <div className="bg-white/20 p-2 rounded-lg backdrop-blur-md">
+                                <Gift className="h-5 w-5" />
+                            </div>
+                            <div>
+                                <h2 className="text-lg font-bold">Why Choose This Service</h2>
+                                <p className="text-emerald-100 text-xs text-opacity-80">Benefits included with your purchase</p>
+                            </div>
+                        </div>
+                        <CardContent className="p-8 bg-white">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                {benefits.map((benefit, idx) => (
+                                    <div key={idx} className="flex items-start gap-3 p-3 rounded-lg bg-emerald-50/50 border border-emerald-100">
+                                        <CheckCircle2 className="w-5 h-5 text-emerald-600 mt-0.5 shrink-0" />
+                                        <span className="text-gray-700 font-medium">{benefit}</span>
+                                    </div>
+                                ))}
+                            </div>
+                        </CardContent>
+                    </Card>
+                    )}
 
                     {/* Payment Summary & Action */}
                     <Card className="border-none shadow-2xl bg-gradient-to-br from-gray-900 to-[#003366] text-white overflow-hidden relative">

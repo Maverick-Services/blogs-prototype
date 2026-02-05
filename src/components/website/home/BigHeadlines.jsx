@@ -30,7 +30,7 @@ const BigHeadlines = () => {
 
   const stats = [
     { number: "10,000+", label: "Cases Filed" },
-    { number: "500+", label: "Verified Experts" },
+    { number: "50+", label: "Verified Experts" },
     { number: "99%", label: "Success Rate" },
     { number: "24/7", label: "Support" }
   ]
@@ -139,10 +139,10 @@ const BigHeadlines = () => {
         {/* Trust Indicators */}
         <div className="text-center mt-8">
           <div className="flex flex-wrap justify-center items-center gap-6 opacity-70">
-            <div className="flex items-center gap-2 text-sm text-gray-600">
+            {/* <div className="flex items-center gap-2 text-sm text-gray-600">
               <Shield className="w-4 h-4" />
               <span>ISO 27001 Certified</span>
-            </div>
+            </div> */}
             <div className="flex items-center gap-2 text-sm text-gray-600">
               <Award className="w-4 h-4" />
               <span>Government Recognized</span>

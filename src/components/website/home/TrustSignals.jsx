@@ -271,7 +271,7 @@ const TrustSignals = () => {
           <Card className="bg-gradient-to-r from-blue-600 to-purple-600 border-0 shadow-2xl">
             <CardContent className="p-12">
               <h3 className="text-3xl font-bold text-white mb-4">
-                Join 500,000+ Happy Clients
+                Join 10,000+ Happy Clients
               </h3>
               <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
                 Experience the same exceptional service that has earned us thousands of 5-star reviews

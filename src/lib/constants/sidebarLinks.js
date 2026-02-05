@@ -148,9 +148,10 @@ export const ADMIN_SIDEBAR_LINKS = [
     //     icon: <FaInfoCircle />,
     // },
     // {
-    //     key: Resources.CONTACT_US,
-    //     label: 'Contact Us',
-    //     href: '/admin/contact-us',
-    //     icon: <FaAddressCard />,
-    // },
+    {
+        key: Resources.CONTACT_US,
+        label: 'Contact Us',
+        href: '/admin/contact-us',
+        icon: <FaAddressCard />,
+    },
 ];

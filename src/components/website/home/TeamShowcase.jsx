@@ -2,7 +2,7 @@ import Image from "next/image";
 import React from "react";
 
 const people = [
-  {
+   {
     name: " Mr. Rajiv Bagga",
     role: "Founder & CEO, CA Vakil ",
     qualification: " B.A /PGDBM/LL.B.",
@@ -12,14 +12,14 @@ const people = [
   {
     name: "Mr. Depanshu Bagga ",
     role: "CA Australia (CA ANZ) – Pursuing CA  Final. Based in Melbourne, Australia",
-    qualification: "BCom graduated accountant,",
+    qualification: "BCom Graduate Accountant,",
     focus: "an experienced professional known for accuracy, integrity, and delivering reliable legal and compliance solutions.",
     avatar: "/avatars/deepanshu.png",
   },
   {
     name: "Mr. Gaurav Bagga  ",
     role: "Admin Department ",
-    qualification: "Bachelor of BBA  ",
+    qualification: "Bachelor of Business Administration",
     focus: "A key member of the admin team, ensuring smooth day to day operations and efficient internal coordination ",
     avatar: "/avatars/gaurav.png",
   },
@@ -93,10 +93,10 @@ function TeamShowcase() {
                 </p>
               </div>
 
-              <div className="px-5 pb-5 flex items-center gap-2 text-xs text-slate-600">
+              {/* <div className="px-5 pb-5 flex items-center gap-2 text-xs text-slate-600">
                 <span className="h-2 w-2 rounded-full bg-emerald-400" />
                 Available for consultations
-              </div>
+              </div> */}
 
               {/* Hover glow */}
               <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-white/0 via-sky-50/60 to-white/0 opacity-0 transition-opacity duration-200 group-hover:opacity-100" />
