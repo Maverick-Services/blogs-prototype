@@ -11,7 +11,8 @@ import {
     Sparkles, 
     AlertCircle,
     ChevronRight,
-    PlayCircle
+    PlayCircle,
+    Gift
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -173,6 +174,28 @@ const TabbedDocuments = ({ subServices }) => {
                                         </ul>
                                     </CardContent>
                                 </Card>
+
+                                {/* Benefits Card */}
+                                {currentTab.benefits?.length > 0 && (
+                                <Card className="border-0 shadow-lg shadow-gray-100 bg-emerald-50/50 hover:bg-white hover:shadow-xl transition-all duration-300 group md:col-span-2">
+                                    <CardContent className="p-6">
+                                        <div className="flex items-center gap-3 mb-4">
+                                            <div className="p-2 bg-emerald-100 text-emerald-600 rounded-lg group-hover:scale-110 transition-transform">
+                                                <Gift className="w-5 h-5" />
+                                            </div>
+                                            <h3 className="font-bold text-gray-800">Service Benefits</h3>
+                                        </div>
+                                        <ul className="grid md:grid-cols-2 gap-3">
+                                            {currentTab.benefits.map((benefit, idx) => (
+                                                <li key={idx} className="flex items-start gap-3 text-sm text-gray-600">
+                                                    <CheckCircle2 className="w-4 h-4 text-emerald-500 mt-0.5 shrink-0" />
+                                                    <span>{benefit}</span>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </CardContent>
+                                </Card>
+                                )}
                             </div>
 
                             {/* Bottom CTA Section */}

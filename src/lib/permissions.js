@@ -22,10 +22,8 @@ export const Resources = {
     CLIENT_REVIEWS: 'client-reviews',
     SUCCESS_STORIES: 'success-stories',
     MEDIA_FEATURES: 'media-features',
+    CONTACT_US: 'contact-us',
 };
-
-// ABOUT_US: 'about-us',
-// CONTACT_US: 'contact-us',
 // Define possible actions
 export const Actions = {
     VIEW: 'view',

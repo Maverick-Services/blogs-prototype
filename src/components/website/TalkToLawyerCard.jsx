@@ -8,8 +8,9 @@ export default function TalkToLawyerCard() {
         <div className="bg-white rounded-2xl p-6 text-center shadow-md w-full">
             <h2 className="text-2xl font-bold text-primary mb-4">Call an Expert?</h2>
 
-            <div className="flex justify-center mb-4">
-                <Image src={IMAGES.LAWYWER_LOGO} alt="Lawyer Icon" width={100} height={100} />
+            <div className="flex justify-center  mb-4">
+                <Image src={IMAGES.LAWYWER_LOGO} className="mr-6" alt="Lawyer Icon" width={100} height={100} />
+                 <Image src="/cab.png" alt="Lawyer Icon" width={100} height={100} />
             </div>
 
             <p className="text-gray-700 mb-6">
